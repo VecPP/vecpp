@@ -13,6 +13,8 @@ SET( TEST_LIST
   vec/construction
   vec/operators
 
+  quat
+  
   transform
 )
 
