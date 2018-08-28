@@ -6,6 +6,7 @@
 #include <array>
 #include <cassert>
 #include <cstddef>
+#include <stdexcept>
 
 namespace VECPP_NAMESPACE {
 
@@ -15,6 +16,20 @@ struct Vec {
   using value_type = T;
 
   constexpr std::size_t size() const { return len; }
+
+  constexpr T& at(std::size_t i) {
+    if (i >= len) {
+      throw std::out_of_range("out of range vector access");
+    }
+    return data_[i];
+  }
+
+  constexpr const T& at(std::size_t i) const {
+    if (i >= len) {
+      throw std::out_of_range("out of range vector access");
+    }
+    return data_[i];
+  }
 
   constexpr T& operator[](std::size_t i) {
     assert(i < len);

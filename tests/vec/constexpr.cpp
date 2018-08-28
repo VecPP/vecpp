@@ -34,3 +34,11 @@ TEST_CASE("constexpr iterator", "[vec_constexpr]") {
 
   static_assert(total >= 9.9f);
 }
+
+TEST_CASE("constexpr bounds-checking", "[vec_access]") {
+  constexpr vecpp::Vec<float, 4> a = {1.0f, 2.0f, 3.0f, 4.0f};
+  constexpr std::size_t id = 3;
+
+  static_assert(a.at(2) == 3.0f);
+  static_assert(a.at(id) == 4.0f);
+}

@@ -55,3 +55,12 @@ TEST_CASE("use vec in const range-based for", "[vec_iterate]") {
     (void)v;
   }
 }
+
+
+TEST_CASE("Vec::at() performs bounds-checking", "[vec_access]") {
+  const vecpp::Vec<float, 4> a = {1.0f, 2.0f, 3.0f, 4.0f};
+
+  REQUIRE(a.at(0) == 1.0f);
+  REQUIRE_THROWS(a.at(4));
+  REQUIRE_THROWS(a.at(5));
+}
