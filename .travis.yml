@@ -1,0 +1,33 @@
+language: cpp
+
+dist: trusty
+
+branches:
+  except:
+  - gh-pages
+
+matrix:
+  include:
+    - os: linux
+      compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+
+script:
+    - mkdir _bld
+    - cd _bld
+    - cmake ..
+    - cmake --build .
+    - ctest --output-on-failure
+
+notifications:
+  email: false
