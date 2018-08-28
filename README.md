@@ -1,6 +1,11 @@
 # vecpp
 
-Vecpp is a simple vector math library.
+A simple vector math library.
+
+[![build][badge.build]][build]
+
+[badge.build]: https://travis-ci.org/FrancoisChabot/vecpp.svg?branch=master
+[build]: https://travis-ci.org/FrancoisChabot/abulafia
 
 vecpp has three main design goals:
 
