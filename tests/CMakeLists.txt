@@ -9,6 +9,7 @@ SET( TEST_LIST
   vec/algos
   vec/constexpr
   vec/construction
+  vec/operators
 
   transform
 )
