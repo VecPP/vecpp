@@ -3,6 +3,8 @@ include_directories(.)
 add_library(catch_main catch_main.cpp)
 
 SET( TEST_LIST
+  angle
+  
   mat/constexpr
   mat/construction
 
