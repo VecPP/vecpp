@@ -7,10 +7,10 @@ of the `include/` directory available to your compiler.
 
 You can use CMake (3.9 or above) to compile the tests and install the library.
 
-On Linux computers:
+On Linux:
 ```bash
 mkdir bld
 cd bld
 cmake -DCMAKE_INSTALL_PREFIX=insert/install/path/here ..
-make && ctest && make install
+make && make test && make install
 ```
