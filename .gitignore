@@ -1,2 +1,5 @@
 # mkdocs output
 site/
+
+# typical build folder
+_bld/
