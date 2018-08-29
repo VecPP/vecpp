@@ -5,6 +5,7 @@ dist: xenial
 branches:
   except:
   - gh-pages
+  - single_header
 
 matrix:
   include:
