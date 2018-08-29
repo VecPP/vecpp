@@ -3,11 +3,15 @@
 A simple vector math library.
 
 [![build][badge.build]][build]
+[![build_win][badge.build_win]][build_win]
 
 [badge.build]: https://travis-ci.org/FrancoisChabot/vecpp.svg?branch=master
-[build]: https://travis-ci.org/FrancoisChabot/abulafia
+[badge.build_win]: https://ci.appveyor.com/api/projects/status/t7tu1jqmc2wptl1c/branch/master?svg=true
 
-vecpp has three main design goals:
+[build]: https://travis-ci.org/FrancoisChabot/abulafia
+[build_win]: https://ci.appveyor.com/project/FrancoisChabot/vecpp/branch/master
+
+VecPP has three main design goals:
 
 * C++17
 * No undefined behavior
