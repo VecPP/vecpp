@@ -177,3 +177,18 @@ TEST_CASE("vec/cross.md", "[documentation]") {
   assert(length(cross_val-z) < 0.0001f);
   REQUIRE(length(cross_val-z) < 0.0001f);
 }
+
+
+TEST_CASE("vec/abs.md", "[documentation]") {
+  using fVec2 = vecpp::Vec<float, 2>;
+
+  fVec2 a = {10.0f, -5.0f};
+  fVec2 b = abs(a);
+
+  assert(b[0] == 10.0f);
+  assert(b[1] == 5.0f);
+
+  REQUIRE(b[0] == 10.0f);
+  REQUIRE(b[1] == 5.0f);
+}
+

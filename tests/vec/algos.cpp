@@ -28,6 +28,17 @@ TEST_CASE("max", "[vec_algos]") {
   REQUIRE(c[3] == a[3]);
 }
 
+TEST_CASE("abs", "[vec_algos]") {
+  vecpp::Vec<float, 4> a = {1.0f, -1.0f, 0.0f, -4.0f};
+
+  auto c = abs(a);
+
+  REQUIRE(c[0] == 1.0f);
+  REQUIRE(c[1] == 1.0f);
+  REQUIRE(c[2] == 0.0f);
+  REQUIRE(c[3] == 4.0f);
+}
+
 TEST_CASE("length", "[vec_algos]") {
   vecpp::Vec<float, 4> a = {0.0f, 0.0f, 0.0f, 0.0f};
   vecpp::Vec<float, 4> b = {1.0f, 0.0f, 0.0f, 0.0f};

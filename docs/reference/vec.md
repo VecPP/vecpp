@@ -47,6 +47,7 @@ Function                                  | Behavior
 [operator+](vec/op_per_mem.md)            | per-member addition
 [operator*](vec/op_per_mem.md)            | per-member multiplication
 [operator/](vec/op_per_mem.md)            | per-member division
+[abs](vec/abs.md)                         | per-member abs()
 [min](vec/min.md)                         | per-member min()
 [max](vec/min.md)                         | per-member max()
 
