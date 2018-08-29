@@ -7,6 +7,7 @@
 #include <cassert>
 #include <cstddef>
 #include <stdexcept>
+#include <iostream>
 
 namespace VECPP_NAMESPACE {
 
@@ -66,6 +67,27 @@ constexpr const T* begin(const Vec<T, len>& v) {
 template <typename T, std::size_t len>
 constexpr const T* end(const Vec<T, len>& v) {
   return v.data() + len;
+}
+
+// std::ostream support
+template <typename T, std::size_t L>
+std::ostream& operator<<(std::ostream& stream, const Vec<T, L>& vec) {
+  stream << "(";
+
+  bool first = true;
+  for(const auto& v : vec) {
+    if(!first) {
+      stream << ", ";
+    }
+    else {
+      first = false;
+    }
+
+    stream << v;
+  }
+
+  stream << ")";
+  return stream;
 }
 
 // Comparisons

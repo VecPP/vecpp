@@ -25,12 +25,13 @@ operator=                           | ovewrite the vector with another vector
 
 ## Non-member functions
 
-### Range support
+### Language support
 
 Function                            | Behavior
 ------------------------------------|------------------------
 [begin](vec/begin.md)               | iterator to the beginning
-[end](vec/end.md)                 | iterator to the end
+[end](vec/end.md)                   | iterator to the end
+[operator<<](vec/format.md)         | print to stream
 
 ### Per-member operations
 

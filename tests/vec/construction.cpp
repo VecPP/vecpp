@@ -2,6 +2,8 @@
 
 #include "vecpp/vecpp.h"
 
+#include <sstream>
+
 TEST_CASE("Default construction compiles without warning", "[vec_construct]") {
   vecpp::Vec<float, 2> a;
   (void)a;
@@ -63,4 +65,15 @@ TEST_CASE("Vec::at() performs bounds-checking", "[vec_access]") {
   REQUIRE(a.at(0) == 1.0f);
   REQUIRE_THROWS(a.at(4));
   REQUIRE_THROWS(a.at(5));
+}
+
+
+TEST_CASE("Outputs to iostream", "[vec_format]") {
+  const vecpp::Vec<int, 4> a = {0, 1 , 2, 3};
+
+  std::ostringstream stream;
+
+  stream << a;
+
+  REQUIRE(stream.str() == "(0, 1, 2, 3)");
 }
