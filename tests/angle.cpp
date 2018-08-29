@@ -173,5 +173,5 @@ TEST_CASE("constexpr usage", "[angle]") {
   constexpr Angle a = 30.0_deg;
   constexpr Angle b = 90.0_deg;
 
-  static_assert(std::abs((3.0f * a - b).as_deg()) < 0.0001f);
+  static_assert((3.0f * a - b).as_deg() < 0.0001f);
 }

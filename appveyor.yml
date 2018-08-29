@@ -1,0 +1,13 @@
+branches:
+    only:
+        - master
+skip_tags: true
+matrix:
+    fast_finish: true
+image: Visual Studio 2017
+build_script:
+    - mkdir _bld
+    - cd _bld
+    - cmake -G "Visual Studio 15 2017" ..
+    - cmake --build .
+    - ctest

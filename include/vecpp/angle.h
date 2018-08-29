@@ -188,7 +188,7 @@ constexpr Angle<T> Angle<T>::from_rad(const T& v) {
   // Unfortunately, std::fmod is not constexpr, so we have to roll our own...
   T constrained = v + pi<T>;
 
-  T div = std::floor(constrained / two_pi<T>);
+  T div = static_cast<T>(static_cast<long long int>(constrained / two_pi<T>));
   constrained -= div * two_pi<T>;
 
   if (constrained <= T(0)) {
