@@ -29,8 +29,8 @@ struct Quat {
 template <typename T>
 constexpr Quat<T> Quat<T>::angle_axis(const Angle<T>& angle,
                                       const Vec<T, 3>& axis) {
-  const T s = std::sin(angle.as_rad() * T(0.5));
-  const T c = std::cos(angle.as_rad() * T(0.5));
+  const T s = sin(angle * T(0.5));
+  const T c = cos(angle * T(0.5));
 
   return {c, axis[0] * s, axis[1] * s, axis[2] * s};
 }

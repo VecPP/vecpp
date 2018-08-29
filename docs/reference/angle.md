@@ -61,3 +61,9 @@ Function                                  | Behavior
 Function                                            | Behavior
 ----------------------------------------------------|------------------------
 [operator-<sub>(unary)</sub>](angle/unary_minus.md) | negation
+
+### Trigonometric functions
+Function                                            | Behavior
+----------------------------------------------------|------------------------
+sin                                                 | sine
+cos                                                 | cosine
