@@ -24,10 +24,10 @@ class Angle {
   static constexpr Angle from_deg(const value_type&);
 
   // The argument MUST be in the ]-PI, PI] range.
-  static constexpr Angle from_constrained_rad(const value_type&);
+  static constexpr Angle from_clamped_rad(const value_type&);
 
   // The argument MUST be in the ]-180, 180] range.
-  static constexpr Angle from_constrained_deg(const value_type&);
+  static constexpr Angle from_clamped_deg(const value_type&);
 
   constexpr value_type as_deg() const;
   constexpr value_type as_rad() const;
@@ -48,7 +48,7 @@ constexpr Angle<T> operator-(const Angle<T>& rhs) {
     value = -value;
   }
 
-  return Angle<T>::from_constrained_rad(value);
+  return Angle<T>::from_clamped_rad(value);
 }
 
 template <typename T>
@@ -63,7 +63,7 @@ constexpr Angle<T>& operator+=(Angle<T>& lhs, const Angle<T>& rhs) {
     val += two_pi<T>;
   }
 
-  lhs = Angle<T>::from_constrained_rad(val);
+  lhs = Angle<T>::from_clamped_rad(val);
 
   return lhs;
 }
@@ -87,7 +87,7 @@ constexpr Angle<T>& operator-=(Angle<T>& lhs, const Angle<T>& rhs) {
     val += two_pi<T>;
   }
 
-  lhs = Angle<T>::from_constrained_rad(val);
+  lhs = Angle<T>::from_clamped_rad(val);
 
   return lhs;
 }
@@ -172,15 +172,15 @@ template <typename T>
 constexpr Angle<T>::Angle(const T& v) : value_(v) {}
 
 template <typename T>
-constexpr Angle<T> Angle<T>::from_constrained_rad(const T& v) {
+constexpr Angle<T> Angle<T>::from_clamped_rad(const T& v) {
   assert(v > -pi<float> && v <= pi<float>);
 
   return Angle<T>(v);
 }
 
 template <typename T>
-constexpr Angle<T> Angle<T>::from_constrained_deg(const T& v) {
-  return from_constrained_rad(v / T(180) * pi<T>);
+constexpr Angle<T> Angle<T>::from_clamped_deg(const T& v) {
+  return from_clamped_rad(v / T(180) * pi<T>);
 }
 
 template <typename T>
@@ -197,7 +197,7 @@ constexpr Angle<T> Angle<T>::from_rad(const T& v) {
 
   constrained -= pi<T>;
 
-  return from_constrained_rad(constrained);
+  return from_clamped_rad(constrained);
 }
 
 template <typename T>
