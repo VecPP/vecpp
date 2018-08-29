@@ -15,6 +15,11 @@ vecpp has three main design goals:
 * constexpr everything
 * Be useful within a 3D simulation engine
 
+## Documentation
+
+The full documentation matching the current state of the master branch can be found 
+[here](https://francoischabot.github.io/vecpp/).
+
 ## What about GLM?
 
 GLM is an amazing library, and currently, odds are pretty good that it's going to be a better match than vecpp for whatever you are trying to do. That being said...
