@@ -1,7 +1,8 @@
 #include "catch.hpp"
 
-#include "vecpp/vecpp.h"
 #include <numeric>
+#include <sstream>
+#include "vecpp/vecpp.h"
 
 // Every code sample present in the documentation must be present
 // here. We do not want to have any non-compiling code present in the doc.
@@ -23,13 +24,13 @@ TEST_CASE("vec/constructor.md", "[documentation]") {
   (void)y_axis_copy;
 }
 
-
 float sum_elements(const vecpp::Vec<float, 3>& v) {
   return std::accumulate(begin(v), end(v), 0.0f);
 }
 
 TEST_CASE("vec/begin.md", "[documentation]") {
-  REQUIRE(sum_elements(vecpp::Vec<float, 3>{1.0f, 2.0f, 3.0f}) == 1.0f+2.0f+3.0f);
+  REQUIRE(sum_elements(vecpp::Vec<float, 3>{1.0f, 2.0f, 3.0f}) ==
+          1.0f + 2.0f + 3.0f);
 }
 
 TEST_CASE("vec/op_cmp.md", "[documentation]") {
@@ -43,11 +44,11 @@ TEST_CASE("vec/op_cmp.md", "[documentation]") {
 
 TEST_CASE("vec/max.md", "[documentation]") {
   using fVec2 = vecpp::Vec<float, 2>;
-  
+
   fVec2 a = {10.0f, 5.0f};
   fVec2 b = {5.0f, 6.0f};
 
-  fVec2 c = max(a,b);
+  fVec2 c = max(a, b);
   assert(c[0] == 10.0f);
   assert(c[1] == 6.0f);
 
@@ -57,11 +58,11 @@ TEST_CASE("vec/max.md", "[documentation]") {
 
 TEST_CASE("vec/min.md", "[documentation]") {
   using fVec2 = vecpp::Vec<float, 2>;
-  
+
   fVec2 a = {10.0f, 5.0f};
   fVec2 b = {5.0f, 6.0f};
 
-  fVec2 c = min(a,b);
+  fVec2 c = min(a, b);
   assert(c[0] == 5.0f);
   assert(c[1] == 5.0f);
 
@@ -98,7 +99,6 @@ TEST_CASE("vec/op_per_mem_compound.md", "[documentation]") {
   REQUIRE(a[0] == 10.0f + 5.0f);
   REQUIRE(a[1] == 5.0f + 6.0f);
 }
-
 
 TEST_CASE("vec/unary_minus.md", "[documentation]") {
   using fVec2 = vecpp::Vec<float, 2>;
@@ -174,10 +174,9 @@ TEST_CASE("vec/cross.md", "[documentation]") {
 
   fVec3 cross_val = cross(x, y);
 
-  assert(length(cross_val-z) < 0.0001f);
-  REQUIRE(length(cross_val-z) < 0.0001f);
+  assert(length(cross_val - z) < 0.0001f);
+  REQUIRE(length(cross_val - z) < 0.0001f);
 }
-
 
 TEST_CASE("vec/abs.md", "[documentation]") {
   using fVec2 = vecpp::Vec<float, 2>;
@@ -192,3 +191,77 @@ TEST_CASE("vec/abs.md", "[documentation]") {
   REQUIRE(b[1] == 5.0f);
 }
 
+TEST_CASE("angle/from.md", "[documentation]") {
+  using Angle = vecpp::Angle<float>;
+
+  auto angle_a = Angle::from_deg(90.0f);
+  auto angle_b = Angle::from_deg(270.0f);
+
+  std::ostringstream stream;
+  stream << angle_a << ", " << angle_b << "\n";
+
+  REQUIRE(stream.str() == "90°, -90°\n");
+}
+
+TEST_CASE("angle/as.md", "[documentation]") {
+  using Angle = vecpp::Angle<float>;
+
+  auto angle = Angle::from_deg(90.0f);
+
+  std::ostringstream stream;
+  stream << angle.as_rad() << "\n";
+
+  REQUIRE(stream.str() == "1.5708\n");
+}
+
+TEST_CASE("angle/op_cmp.md", "[documentation]") {
+  using Angle = vecpp::Angle<float>;
+
+  auto angle_a = Angle::from_deg(91.f);
+  auto angle_b = Angle::from_deg(450.0f);
+
+  assert(angle_a > angle_b);
+  REQUIRE(angle_a > angle_b);
+}
+
+TEST_CASE("angle/arithmetic.md", "[documentation]") {
+  using Angle = vecpp::Angle<float>;
+
+  auto angle_a = Angle::from_deg(90.0f);
+  auto angle_b = Angle::from_deg(180.0f);
+
+  auto angle_c = angle_a + angle_b;
+
+  std::ostringstream stream;
+  stream << angle_c << "\n";
+
+  REQUIRE(stream.str() == "-90°\n");
+}
+
+TEST_CASE("angle/arithmetic_inplace.md", "[documentation]") {
+  using Angle = vecpp::Angle<float>;
+
+  auto angle_a = Angle::from_deg(90.0f);
+  auto angle_b = Angle::from_deg(180.0f);
+
+  angle_a += angle_b;
+
+  std::ostringstream stream;
+  stream << angle_a << "\n";
+
+  REQUIRE(stream.str() == "-90°\n");
+}
+
+TEST_CASE("angle/unary_minus.md", "[documentation]") {
+  using Angle = vecpp::Angle<float>;
+
+  auto angle_a = Angle::from_deg(90.0f);
+  auto angle_b = Angle::from_deg(180.0f);
+
+  std::ostringstream stream;
+  stream << -angle_a << " " << -angle_b << "\n";
+
+  REQUIRE(stream.str() == "-90° 180°\n");
+}
+
+using Angle = vecpp::Angle<float>;

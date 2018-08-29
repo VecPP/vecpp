@@ -5,4 +5,5 @@ nav:
   - User Guide:
     - Installation: user-guide/installation.md
   - Reference guide:
-    - Vec: reference/vec.md
+    - Angle: reference/angle.md
+    - Vector: reference/vec.md
