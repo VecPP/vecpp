@@ -28,7 +28,7 @@ install:
 script:
     - mkdir _bld
     - cd _bld
-    - cmake ..
+    - cmake -DVECPP_BUILD_SINGLE_HEADER=ON ..
     - cmake --build .
     - ctest --output-on-failure
     - cd ..

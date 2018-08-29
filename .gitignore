@@ -1,3 +1,5 @@
+include/vecpp/vecpp_single.h
+
 # mkdocs output
 site/
 
