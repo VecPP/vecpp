@@ -8,7 +8,7 @@ A simple vector math library.
 [badge.build]: https://travis-ci.org/FrancoisChabot/vecpp.svg?branch=master
 [badge.build_win]: https://ci.appveyor.com/api/projects/status/t7tu1jqmc2wptl1c/branch/master?svg=true
 
-[build]: https://travis-ci.org/FrancoisChabot/abulafia
+[build]: https://travis-ci.org/FrancoisChabot/vecpp
 [build_win]: https://ci.appveyor.com/project/FrancoisChabot/vecpp/branch/master
 
 VecPP has three main design goals:
