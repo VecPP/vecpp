@@ -17,3 +17,10 @@ TEST_CASE("simple vector rotate", "[quat]") {
 
   REQUIRE_THAT(length(r_x * u_y - u_z), WithinAbs(0.0f, 0.0001f));
 }
+
+TEST_CASE("angle_axis_constexp", "[quat]") {
+  using fQuat = vecpp::Quat<float>;
+  constexpr fQuat r_x = fQuat::angle_axis(fAngle::from_deg(90.0f), {1.0f, 0.0f, 0.0f});
+
+  (void)r_x;
+}
