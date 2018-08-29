@@ -7,11 +7,11 @@
         
         
         
-        <link rel="shortcut icon" href="../../../img/favicon.ico">
-        <title>Begin - VecPP documentation</title>
-        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Angle - VecPP documentation</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
@@ -39,7 +39,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../../..">VecPP documentation</a>
+                    <a class="navbar-brand" href="../..">VecPP documentation</a>
                 </div>
 
                 <!-- Expanded navigation -->
@@ -47,27 +47,27 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li >
-                                <a href="../../..">Home</a>
+                                <a href="../..">Home</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../../../user-guide/installation/">Installation</a>
+    <a href="../../user-guide/installation/">Installation</a>
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference guide <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li >
-    <a href="../../angle/">Angle</a>
+<li class="active">
+    <a href="./">Angle</a>
 </li>
                                     
 <li >
-    <a href="../">Vector</a>
+    <a href="../vec/">Vector</a>
 </li>
                                 </ul>
                             </li>
@@ -79,6 +79,16 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
+                            <li >
+                                <a rel="next" href="../../user-guide/installation/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../vec/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -87,58 +97,178 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#vecppbeginvecppvec">vecpp::begin(vecpp::Vec)</a></li>
-            <li><a href="#parameters">Parameters</a></li>
-            <li><a href="#return-value">Return value</a></li>
-            <li><a href="#example">Example</a></li>
-            <li><a href="#see-also">See also</a></li>
+        <li class="main active"><a href="#angle">Angle</a></li>
+            <li><a href="#member-types">Member types</a></li>
+            <li><a href="#member-functions">Member functions</a></li>
+            <li><a href="#non-member-functions">Non-member functions</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p><a href="../../../">vecpp</a> :: <a href="../">Vec&lt;typename, size_t></a></p>
-<h2 id="vecppbeginvecppvec">vecpp::begin(vecpp::Vec)</h2>
-<pre><code>template&lt;typename T, std::size_t L&gt;
-constexpr T* begin(Vec&lt;T,L&gt;&amp; v);
+<h1 id="angle">Angle</h1>
+<pre><code>template&lt;typename T&gt;
+struct Angle;
 </code></pre>
 
-<pre><code>template&lt;typename T, std::size_t L&gt;
-constexpr const T* begin(const Vec&lt;T,L&gt;&amp; v);  
-</code></pre>
-
-<p>Returns an iterator to the first element of the vector. This can be used 
-directly, or indirectly through a range-based for loop.</p>
-<h3 id="parameters">Parameters</h3>
+<p>Angle is a wrapper type around a representation that helps manage angles in a
+consistent manner.</p>
+<p>Angle values are always kepts within the ]-PI, PI] range at all times.</p>
+<h2 id="member-types">Member types</h2>
 <table>
 <thead>
 <tr>
-<th>Argument</th>
-<th>Role</th>
+<th>Member Type</th>
+<th>Definition</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>v</strong></td>
-<td>The vector to get the iterator from</td>
+<td>value_type</td>
+<td>T</td>
 </tr>
 </tbody>
 </table>
-<h3 id="return-value">Return value</h3>
-<p>Iterator to the first element.</p>
-<h3 id="example">Example</h3>
-<pre><code>#include &quot;vecpp/vecpp.h&quot;
-
-#include &lt;numeric&gt;
-
-float sum_elements(const vecpp::Vec&lt;float, 3&gt;&amp; v) {
-  return std::accumulate(begin(v), end(v), 0.0f);
-}
-</code></pre>
-
-<h3 id="see-also">See also</h3>
-<ul>
-<li><a href="../end/">end</a> : Returns an iterator to the end.</li>
-</ul></div>
+<h2 id="member-functions">Member functions</h2>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(destructor)</td>
+<td>does nothing</td>
+</tr>
+<tr>
+<td>operator=</td>
+<td>ovewrite the angle with another angle</td>
+</tr>
+<tr>
+<td><a href="from/">from_deg</a></td>
+<td>new angle from a degree value</td>
+</tr>
+<tr>
+<td><a href="from/">from_rad</a></td>
+<td>new angle from a radian value</td>
+</tr>
+<tr>
+<td><a href="from_clamped/">from_clamped_deg</a></td>
+<td>unsafe new angle from a degree value</td>
+</tr>
+<tr>
+<td><a href="from_clamped/">from_clamped_rad</a></td>
+<td>unsafe new angle from a radian value</td>
+</tr>
+<tr>
+<td><a href="as/">as_deg</a></td>
+<td>get the angle value as radians</td>
+</tr>
+<tr>
+<td><a href="as/">as_rad</a></td>
+<td>get the angle value as degrees</td>
+</tr>
+</tbody>
+</table>
+<h2 id="non-member-functions">Non-member functions</h2>
+<h3 id="language-support">Language support</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="format/">operator&lt;&lt;</a></td>
+<td>print to stream</td>
+</tr>
+</tbody>
+</table>
+<h3 id="binary-operations">Binary operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="op_cmp/">operator==</a></td>
+<td>compares two angles for equality</td>
+</tr>
+<tr>
+<td><a href="op_cmp/">operator!=</a></td>
+<td>compares two angles for inequality</td>
+</tr>
+<tr>
+<td><a href="op_cmp/">operator&lt;</a></td>
+<td>compares two angles</td>
+</tr>
+<tr>
+<td><a href="op_cmp/">operator&lt;=</a></td>
+<td>compares two angles</td>
+</tr>
+<tr>
+<td><a href="op_cmp/">operator&gt;</a></td>
+<td>compares two angles</td>
+</tr>
+<tr>
+<td><a href="op_cmp/">operator&gt;=</a></td>
+<td>compares two angles</td>
+</tr>
+<tr>
+<td><a href="arithmetic_inplace/">operator-=</a></td>
+<td>in-place diff angles</td>
+</tr>
+<tr>
+<td><a href="arithmetic_inplace/">operator+=</a></td>
+<td>in-place add angles</td>
+</tr>
+<tr>
+<td><a href="arithmetic/">operator-</a></td>
+<td>diff angles</td>
+</tr>
+<tr>
+<td><a href="arithmetic/">operator+</a></td>
+<td>add angles</td>
+</tr>
+<tr>
+<td><a href="scale_inplace/">operator*=</a></td>
+<td>in-place scale angle</td>
+</tr>
+<tr>
+<td><a href="scale_inplace/">operator/=</a></td>
+<td>in-place scale angle</td>
+</tr>
+<tr>
+<td><a href="scale/">operator*</a></td>
+<td>scale angle</td>
+</tr>
+<tr>
+<td><a href="scale/">operator/</a></td>
+<td>scale angle</td>
+</tr>
+</tbody>
+</table>
+<h3 id="unary-operations">Unary operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="unary_minus/">operator-<sub>(unary)</sub></a></td>
+<td>negation</td>
+</tr>
+</tbody>
+</table></div>
         </div>
 
         <footer class="col-md-12">
@@ -146,11 +276,11 @@ float sum_elements(const vecpp::Vec&lt;float, 3&gt;&amp; v) {
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = "../../..",
+            var base_url = "../..",
                 shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
         </script>
-        <script src="../../../js/base.js" defer></script>
-        <script src="../../../search/main.js" defer></script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
     <div class="modal-dialog">

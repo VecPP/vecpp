@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../../img/favicon.ico">
-        <title>Begin - VecPP documentation</title>
+        <title>From - VecPP documentation</title>
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../../css/base.css" rel="stylesheet">
@@ -63,11 +63,11 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../../angle/">Angle</a>
+    <a href="../">Angle</a>
 </li>
                                     
 <li >
-    <a href="../">Vector</a>
+    <a href="../../vec/">Vector</a>
 </li>
                                 </ul>
                             </li>
@@ -87,7 +87,7 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#vecppbeginvecppvec">vecpp::begin(vecpp::Vec)</a></li>
+        <li class="main active"><a href="#vecppanglefrom_degfrom_rad">vecpp::Angle::from_deg,from_rad</a></li>
             <li><a href="#parameters">Parameters</a></li>
             <li><a href="#return-value">Return value</a></li>
             <li><a href="#example">Example</a></li>
@@ -96,18 +96,14 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p><a href="../../../">vecpp</a> :: <a href="../">Vec&lt;typename, size_t></a></p>
-<h2 id="vecppbeginvecppvec">vecpp::begin(vecpp::Vec)</h2>
-<pre><code>template&lt;typename T, std::size_t L&gt;
-constexpr T* begin(Vec&lt;T,L&gt;&amp; v);
+<p><a href="../../../">vecpp</a> :: <a href="../">Angle&lt;typename></a></p>
+<h2 id="vecppanglefrom_degfrom_rad">vecpp::Angle::from_deg,from_rad</h2>
+<pre><code>static constexpr Angle from_deg(const T&amp; val);
+static constexpr Angle from_rad(const T&amp; val);
 </code></pre>
 
-<pre><code>template&lt;typename T, std::size_t L&gt;
-constexpr const T* begin(const Vec&lt;T,L&gt;&amp; v);  
-</code></pre>
-
-<p>Returns an iterator to the first element of the vector. This can be used 
-directly, or indirectly through a range-based for loop.</p>
+<p>Creates a new Angle from a raw value in a given unit.</p>
+<p>The angle will be re-mapped in the ]-PI,PI] radians range.</p>
 <h3 id="parameters">Parameters</h3>
 <table>
 <thead>
@@ -118,26 +114,34 @@ directly, or indirectly through a range-based for loop.</p>
 </thead>
 <tbody>
 <tr>
-<td><strong>v</strong></td>
-<td>The vector to get the iterator from</td>
+<td><strong>val</strong></td>
+<td>The raw angle value in the matching unit</td>
 </tr>
 </tbody>
 </table>
 <h3 id="return-value">Return value</h3>
-<p>Iterator to the first element.</p>
+<p>An Angle instance representing the angle.</p>
 <h3 id="example">Example</h3>
 <pre><code>#include &quot;vecpp/vecpp.h&quot;
+#include &lt;iostream&gt;
 
-#include &lt;numeric&gt;
+int main() {
+  using Angle = vecpp::Angle&lt;float&gt;;
 
-float sum_elements(const vecpp::Vec&lt;float, 3&gt;&amp; v) {
-  return std::accumulate(begin(v), end(v), 0.0f);
+  auto angle_a = Angle::from_deg(90.0f);
+  auto angle_b = Angle::from_deg(270.0f);
+
+  std::cout &lt;&lt; angle_a &lt;&lt; &quot;, &quot; &lt;&lt; angle_b &lt;&lt; &quot;\n&quot;;
 }
+</code></pre>
+
+<p>Output:</p>
+<pre><code>90°, -90°
 </code></pre>
 
 <h3 id="see-also">See also</h3>
 <ul>
-<li><a href="../end/">end</a> : Returns an iterator to the end.</li>
+<li><a href="../from_clamped/">from_clamped_*</a> : Create from clamped value.</li>
 </ul></div>
         </div>
 

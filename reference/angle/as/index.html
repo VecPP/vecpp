@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../../img/favicon.ico">
-        <title>Begin - VecPP documentation</title>
+        <title>As - VecPP documentation</title>
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../../css/base.css" rel="stylesheet">
@@ -63,11 +63,11 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../../angle/">Angle</a>
+    <a href="../">Angle</a>
 </li>
                                     
 <li >
-    <a href="../">Vector</a>
+    <a href="../../vec/">Vector</a>
 </li>
                                 </ul>
                             </li>
@@ -87,58 +87,38 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#vecppbeginvecppvec">vecpp::begin(vecpp::Vec)</a></li>
-            <li><a href="#parameters">Parameters</a></li>
+        <li class="main active"><a href="#vecppangleas_degas_rad">vecpp::Angle::as_deg,as_rad</a></li>
             <li><a href="#return-value">Return value</a></li>
             <li><a href="#example">Example</a></li>
-            <li><a href="#see-also">See also</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p><a href="../../../">vecpp</a> :: <a href="../">Vec&lt;typename, size_t></a></p>
-<h2 id="vecppbeginvecppvec">vecpp::begin(vecpp::Vec)</h2>
-<pre><code>template&lt;typename T, std::size_t L&gt;
-constexpr T* begin(Vec&lt;T,L&gt;&amp; v);
+<p><a href="../../../">vecpp</a> :: <a href="../">Angle&lt;typename></a></p>
+<h2 id="vecppangleas_degas_rad">vecpp::Angle::as_deg,as_rad</h2>
+<pre><code>constexpr T as_deg() const;
+constexpr T as_rad() const;
 </code></pre>
 
-<pre><code>template&lt;typename T, std::size_t L&gt;
-constexpr const T* begin(const Vec&lt;T,L&gt;&amp; v);  
-</code></pre>
-
-<p>Returns an iterator to the first element of the vector. This can be used 
-directly, or indirectly through a range-based for loop.</p>
-<h3 id="parameters">Parameters</h3>
-<table>
-<thead>
-<tr>
-<th>Argument</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>v</strong></td>
-<td>The vector to get the iterator from</td>
-</tr>
-</tbody>
-</table>
+<p>Obtain the numerical value of the angle in the requested unit.</p>
 <h3 id="return-value">Return value</h3>
-<p>Iterator to the first element.</p>
+<p>A scalar value containing the angle within the requested unit.</p>
 <h3 id="example">Example</h3>
 <pre><code>#include &quot;vecpp/vecpp.h&quot;
+#include &lt;iostream&gt;
 
-#include &lt;numeric&gt;
+int main() {
+  using Angle = vecpp::Angle&lt;float&gt;;
 
-float sum_elements(const vecpp::Vec&lt;float, 3&gt;&amp; v) {
-  return std::accumulate(begin(v), end(v), 0.0f);
+  auto angle = Angle::from_deg(90.0f);
+
+  std::cout &lt;&lt; angle.as_rad() &lt;&lt; &quot;\n&quot;;
 }
 </code></pre>
 
-<h3 id="see-also">See also</h3>
-<ul>
-<li><a href="../end/">end</a> : Returns an iterator to the end.</li>
-</ul></div>
+<p>Output:</p>
+<pre><code>1.5708
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">
