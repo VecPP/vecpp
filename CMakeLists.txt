@@ -46,7 +46,7 @@ if(VECPP_BUILD_SINGLE_HEADER)
     COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/header_compiler/header_compiler.py 
       --output=${SINGLE_INCLUDE_FILE}
       --notice=${NOTICE_FILE}
-      --header_guard="ABULAFIA_SINGLE_INCLUDE_H_"
+      --header_guard="VECPP_SINGLE_INCLUDE_H_"
       --input=${CMAKE_CURRENT_SOURCE_DIR}/include/vecpp/vecpp.h)
 
   add_custom_target(generate_single_include ALL DEPENDS ${SINGLE_INCLUDE_FILE})
