@@ -8,7 +8,8 @@ TEST_CASE("Default construction compiles without warning", "[mat_construct]") {
 }
 
 TEST_CASE("Can create zero matrix", "[mat_construct]") {
-  auto a = vecpp::Mat<float, 4, 4>::zero;
+  using Mat = vecpp::Mat<float, 4, 4>;
+  auto a = vecpp::zero<Mat>;
 
   for (int i = 0; i < 4; ++i) {
     for (int j = 0; j < 4; ++j) {
@@ -18,7 +19,9 @@ TEST_CASE("Can create zero matrix", "[mat_construct]") {
 }
 
 TEST_CASE("Can create identity matrix", "[mat_construct]") {
-  auto a = vecpp::Mat<float, 4, 4>::identity;
+  using Mat = vecpp::Mat<float, 4, 4>;
+
+  auto a = vecpp::identity<Mat>;
 
   REQUIRE(a * a == a);
 }

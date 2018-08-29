@@ -22,10 +22,7 @@ struct Mat {
   const col_type* data() const { return data_.data(); }
 
   static constexpr Mat make_identity();
-
-  static constexpr Mat identity = make_identity();
-  static constexpr Mat zero = {T(0)};
-
+  static constexpr Mat make_zero();
 
   // Left public for aggregate initialization.
   std::array<col_type, col_count> data_;
@@ -52,16 +49,20 @@ constexpr bool operator!=(const Mat<T, C, R>& lhs, const Mat<T, C, R>& rhs) {
   return false;
 }
 
-template <typename T, std::size_t col_count, std::size_t row_count>
-constexpr Mat<T, col_count, row_count>
-Mat<T, col_count, row_count>::make_identity() {
-  Mat<T, col_count, row_count> result = zero;
+template <typename T, std::size_t C, std::size_t R>
+constexpr Mat<T, C, R> Mat<T, C, R>::make_identity() {
+  Mat<T, C, R> result = {0};
 
-  for (std::size_t i = 0; i < std::min(col_count, row_count); ++i) {
+  for (std::size_t i = 0; i < std::min(C, R); ++i) {
     result[i][i] = T(1);
   }
 
   return result;
+}
+
+template <typename T, std::size_t C, std::size_t R>
+constexpr Mat<T, C, R> Mat<T, C, R>::make_zero() {
+  return {0};
 }
 }
 #endif

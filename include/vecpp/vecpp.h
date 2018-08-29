@@ -1,6 +1,7 @@
 #include "vecpp/config.h"
 
 #include "vecpp/angle.h"
+#include "vecpp/constants.h"
 #include "vecpp/mat.h"
 #include "vecpp/mat_gen.h"
 #include "vecpp/mat_mul.h"
