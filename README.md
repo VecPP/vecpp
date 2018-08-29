@@ -19,6 +19,11 @@ A simple vector math library.
 * constexpr everything
 * Be useful within a 3D simulation engine
 
+## Documentation
+
+The full documentation matching the current state of the master branch can be 
+found [here](https://francoischabot.github.io/vecpp/).
+
 ## Installation
 
 Vecpp is a header-only library. As such all you need to do is to make the 
@@ -65,7 +70,7 @@ are cloning the git repository, it will not be present. You can have to generate
 ```bash
 cd vecpp/source/dir/location
 git submodule init
-git submodule iniupdate
+git submodule update
 mkdir _bld
 cd _bld
 cmake -DVECPP_BUILD_SINGLE_HEADER=ON ..
@@ -82,11 +87,6 @@ namespace or macro in your project, you can override it by defining the
 #define VECPP_NAMESPACE vpp
 #include "vecpp/vecpp.h"
 ```
-
-## Documentation
-
-The full documentation matching the current state of the master branch can be 
-found [here](https://francoischabot.github.io/vecpp/).
 
 ## Acknowledgements
 
