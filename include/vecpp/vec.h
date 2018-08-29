@@ -161,17 +161,38 @@ constexpr Vec<T, L> operator/(const Vec<T, L>& lhs, const Vec<T, L>& rhs) {
 }
 
 template <typename T, std::size_t L>
+constexpr Vec<T, L>& operator*=(Vec<T, L>& lhs, const T& rhs) {
+  for (std::size_t i = 0; i < L; ++i) {
+    lhs[i] *= rhs;
+  }
+  return lhs;
+}
+
+template <typename T, std::size_t L>
 constexpr Vec<T, L> operator*(const Vec<T, L>& lhs, const T& rhs) {
   Vec<T, L> result = lhs;
-  for (std::size_t i = 0; i < L; ++i) {
-    result[i] *= rhs;
-  }
+  result *= rhs;
   return result;
 }
 
 template <typename T, std::size_t L>
 constexpr Vec<T, L> operator*(const T& lhs, const Vec<T, L>& rhs) {
   return rhs * lhs;
+}
+
+template <typename T, std::size_t L>
+constexpr Vec<T, L>& operator/=(Vec<T, L>& lhs, const T& rhs) {
+  for (std::size_t i = 0; i < L; ++i) {
+    lhs[i] /= rhs;
+  }
+  return lhs;
+}
+
+template <typename T, std::size_t L>
+constexpr Vec<T, L> operator/(const Vec<T, L>& lhs, const T& rhs) {
+  Vec<T, L> result = lhs;
+  result /= rhs;
+  return result;
 }
 
 // Algorithm disptach

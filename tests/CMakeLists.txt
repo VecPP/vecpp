@@ -4,7 +4,8 @@ add_library(catch_main catch_main.cpp)
 
 SET( TEST_LIST
   angle
-  
+  documentation
+
   mat/constexpr
   mat/construction
 
