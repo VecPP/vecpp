@@ -37,6 +37,7 @@ class Angle {
   constexpr value_type as_deg() const;
   constexpr value_type as_rad() const;
 
+  constexpr value_type raw() const;
  private:
   value_type value_;
 
@@ -138,32 +139,32 @@ constexpr Angle<T> operator/(const Angle<T>& lhs, const T& rhs) {
 // COMPARISONS
 template <typename T>
 constexpr bool operator==(const Angle<T>& lhs, const Angle<T>& rhs) {
-  return lhs.as_rad() == rhs.as_rad();
+  return lhs.raw() == rhs.raw();
 }
 
 template <typename T>
 constexpr bool operator!=(const Angle<T>& lhs, const Angle<T>& rhs) {
-  return lhs.as_rad() != rhs.as_rad();
+  return lhs.raw() != rhs.raw();
 }
 
 template <typename T>
 constexpr bool operator<(const Angle<T>& lhs, const Angle<T>& rhs) {
-  return lhs.as_rad() < rhs.as_rad();
+  return lhs.raw() < rhs.raw();
 }
 
 template <typename T>
 constexpr bool operator>(const Angle<T>& lhs, const Angle<T>& rhs) {
-  return lhs.as_rad() > rhs.as_rad();
+  return lhs.raw() > rhs.raw();
 }
 
 template <typename T>
 constexpr bool operator<=(const Angle<T>& lhs, const Angle<T>& rhs) {
-  return lhs.as_rad() <= rhs.as_rad();
+  return lhs.raw() <= rhs.raw();
 }
 
 template <typename T>
 constexpr bool operator>=(const Angle<T>& lhs, const Angle<T>& rhs) {
-  return lhs.as_rad() >= rhs.as_rad();
+  return lhs.raw() >= rhs.raw();
 }
 
 // IOSTREAM
@@ -218,6 +219,11 @@ constexpr T Angle<T>::as_deg() const {
 
 template <typename T>
 constexpr T Angle<T>::as_rad() const {
+  return value_;
+}
+
+template <typename T>
+constexpr value_type Angle<T>::raw() const {
   return value_;
 }
 }
