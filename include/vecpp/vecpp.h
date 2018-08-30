@@ -15,6 +15,7 @@
 #include "vecpp/mat/mat.h"
 #include "vecpp/mat/mat_gen.h"
 #include "vecpp/mat/mat_mul.h"
+#include "vecpp/mat/operations.h"
 
 #include "vecpp/quat/quat.h"
 
