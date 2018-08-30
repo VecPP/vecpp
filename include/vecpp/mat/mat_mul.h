@@ -2,7 +2,8 @@
 #define VECPP_MAT_MUL_H_INCLUDED
 
 #include "vecpp/config.h"
-#include "vecpp/mat.h"
+
+#include "vecpp/mat/mat.h"
 
 namespace VECPP_NAMESPACE {
 

@@ -2,7 +2,7 @@
 #define VECPP_MAT_H_INCLUDED
 
 #include "vecpp/config.h"
-#include "vecpp/vec.h"
+#include "vecpp/vec/vec.h"
 
 #include <array>
 #include <cstddef>

@@ -3,8 +3,8 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/angle.h"
-#include "vecpp/vec.h"
+#include "vecpp/angle/angle.h"
+#include "vecpp/vec/vec.h"
 
 #include <array>
 #include <cmath>

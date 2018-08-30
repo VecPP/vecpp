@@ -2,10 +2,11 @@
 #define VECPP_ANGLE_H_INCLUDED
 
 #include "vecpp/config.h"
-#include "vecpp/pi.h"
+
+#include "vecpp/scalar/constants.h"
+#include "vecpp/scalar/operations.h"
 
 #include <cassert>
-#include <cmath>
 #include <iostream>
 #include <type_traits>
 
@@ -14,9 +15,6 @@ namespace VECPP_NAMESPACE {
 // Angle always represents value within the ]-PI,PI] radians range.
 template <typename T>
 class Angle {
-  static_assert(std::is_floating_point<T>::value,
-                "Only Angles of floating point types are allowed");
-
  public:
   using value_type = T;
 
@@ -215,36 +213,6 @@ template <typename T>
 constexpr T Angle<T>::as_rad() const {
   return value_;
 }
-
-// Trigonometry
-
-// Calculates the sin and cos of an angle at once
-// TODO: These placeholder taylor series expansion implementation
-// are temporary, and need to be replaced with something better! 
-template <typename T>
-constexpr T sin(const Angle<T>& a) {
-  constexpr std::array<T, 5> taylor_factors = {
-    -6, 120, -5040, 362880, -39916800
-  };
-
-  T r = a.as_rad();
-  T r_2 = r*r;
-
-  T result = r;
-
-  for(auto f : taylor_factors) {
-    r *= r_2;
-    result += r / f;
-  }
-
-  return result;
-}
-
-template <typename T>
-constexpr T cos(const Angle<T>& a) {
-  return sin(a + Angle<T>::from_rad(half_pi<T>)); 
-}
-
 }
 
 #endif

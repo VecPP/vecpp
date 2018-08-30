@@ -1,6 +1,8 @@
 #ifndef VECPP_CONFIG_H_INCLUDED
 #define VECPP_CONFIG_H_INCLUDED
 
+#include <cassert>
+
 #define VECPP_VERSION_MAJOR 0
 #define VECPP_VERSION_MINOR 0
 #define VECPP_VERSION_PATCH 1
