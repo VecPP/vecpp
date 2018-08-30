@@ -10,13 +10,23 @@
 
 #include "vecpp/config.h"
 
+#include "vecpp/scalar/operations.h"
 #include "vecpp/vec/vec.h"
+
+#include <algorithm>
 
 namespace VECPP_NAMESPACE {
 
+// Cross product
+template <typename T>
+constexpr Vec<T, 3> cross(const Vec<T, 3>& lhs, const Vec<T, 3>& rhs) {
+  return {lhs[1] * rhs[2] - lhs[2] * rhs[1], lhs[2] * rhs[0] - lhs[0] * rhs[2],
+          lhs[0] * rhs[1] - lhs[1] * rhs[0]};
+}
+
 // Dot product
 template <typename T, std::size_t L>
-constexpr auto dot(const Vec<T, 3>& lhs, const Vec<T, 3>& rhs) {
+constexpr T dot(const Vec<T, 3>& lhs, const Vec<T, 3>& rhs) {
   T result = 0;
 
   for (std::size_t i = 0; i < L; ++i) {
@@ -28,21 +38,15 @@ constexpr auto dot(const Vec<T, 3>& lhs, const Vec<T, 3>& rhs) {
 
 // Vector legnth
 template <typename T, std::size_t L>
-constexpr auto length(const Vec<T, L>& v) {
+constexpr T length(const Vec<T, L>& v) {
   return sqrt(dot(v, v));
-}
-
-// Cross product
-template <typename T>
-constexpr Vec<T, 3> cross(const Vec<T, 3>& lhs, const Vec<T, 3>& rhs) {
-  return {lhs[1] * rhs[2] - lhs[2] * rhs[1], lhs[2] * rhs[0] - lhs[0] * rhs[2],
-          lhs[0] * rhs[1] - lhs[1] * rhs[0]};
 }
 
 // Normalize
 template <typename T, std::size_t L>
-constexpr auto normalize(const Vec<T, 3>& v) {
+constexpr Vec<T, 3> normalize(const Vec<T, 3>& v) {
   return v / length(v);
 }
+
 }
 #endif

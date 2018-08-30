@@ -225,31 +225,6 @@ constexpr Vec<T, L> operator/(const Vec<T, L>& lhs, const T& rhs) {
 }
 
 // Algorithm disptach
-template <typename T, std::size_t L>
-constexpr Vec<T, L> min(const Vec<T, L>& lhs, const Vec<T, L>& rhs) {
-  Vec<T, L> result = {0};
-  for (std::size_t i = 0; i < L; ++i) {
-    result[i] = std::min(lhs[i], rhs[i]);
-  }
-  return result;
-}
 
-template <typename T, std::size_t L>
-constexpr Vec<T, L> max(const Vec<T, L>& lhs, const Vec<T, L>& rhs) {
-  Vec<T, L> result = {0};
-  for (std::size_t i = 0; i < L; ++i) {
-    result[i] = std::max(lhs[i], rhs[i]);
-  }
-  return result;
-}
-
-template <typename T, std::size_t L>
-constexpr Vec<T, L> abs(const Vec<T, L>& vec) {
-  Vec<T, L> result = {0};
-  for (std::size_t i = 0; i < L; ++i) {
-    result[i] = std::abs(vec[i]);
-  }
-  return result;
-}
 }
 #endif

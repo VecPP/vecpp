@@ -23,6 +23,7 @@
 #include "vecpp/scalar/operations.h"
 
 #include "vecpp/vec/operations.h"
+#include "vecpp/vec/operations_per_member.h"
 #include "vecpp/vec/vec.h"
 
 #include "vecpp/constants.h"
