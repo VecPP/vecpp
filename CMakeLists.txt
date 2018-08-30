@@ -7,7 +7,10 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Header compilation depends on a git submodule being loaded, so it's
+# off bby default.
 option(VECPP_BUILD_SINGLE_HEADER "Build the vecpp_single.h header" OFF)
+option(VECPP_BUILD_TESTS "Build tests" ON)
 
 include_directories(
   include
@@ -16,8 +19,8 @@ include_directories(
 if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra")
-endif(MSVC)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -Werror")
+endif()
 
 if(VECPP_BUILD_SINGLE_HEADER)
 
@@ -55,5 +58,7 @@ endif()
 #install headers
 install(DIRECTORY include/vecpp DESTINATION include)
 
-enable_testing()
-add_subdirectory(tests)
+if(VECPP_BUILD_TESTS)
+  enable_testing()
+  add_subdirectory(tests)
+endif()
