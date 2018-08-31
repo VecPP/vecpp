@@ -15,6 +15,7 @@ namespace VECPP_NAMESPACE {
   using Flags = int;
 
   namespace flags {
+    // Force usage of slower, but constexpr-friendly compile-time algorithms.
     constexpr int compile_time = 1;
   }
 
