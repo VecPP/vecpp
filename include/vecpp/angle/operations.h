@@ -40,7 +40,7 @@ constexpr T sin(const Angle<T, f>& a) {
     return result;
   }
   else {
-    return std::sin(a.as_rad());
+    return non_cste::sin(a.as_rad());
   }
 }
 
@@ -50,7 +50,7 @@ constexpr T cos(const Angle<T, f>& a) {
     return sin(a + Angle<T, f>::from_rad(half_pi<T>)); 
   }
   else {
-    return std::cos(a.as_rad());
+    return non_cste::cos(a.as_rad());
   }
 }
 
@@ -60,7 +60,7 @@ constexpr T tan(const Angle<T, f>& a) {
     return sin(a) / cos(a); 
   }
   else {
-    return std::tan(a.as_rad());
+    return non_cste::tan(a.as_rad());
   }
 }
 

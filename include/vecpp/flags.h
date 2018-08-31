@@ -25,5 +25,7 @@ namespace VECPP_NAMESPACE {
   constexpr bool is_ct(Flags f) {
     return f && flags::compile_time != 0;
   }
+
+  
 }
 #endif

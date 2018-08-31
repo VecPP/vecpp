@@ -41,12 +41,27 @@ class Angle {
   constexpr value_type as_rad() const;
 
   constexpr value_type raw() const;
+
+  template <int new_flags>
+  constexpr operator Angle<T, new_flags>() const;
+
  private:
   value_type value_;
 
   // Constructs an angle from a constrained radian value.
   explicit constexpr Angle(const T&);
 };
+
+template <typename T, Flags f>
+constexpr Angle<T, f | flags::compile_time> ct(const Angle<T,f>& v) {
+  return v;
+}
+
+template <typename T, Flags f>
+template <int new_flags>
+constexpr Angle<T, f>::operator Angle<T, new_flags>() const {
+  return Angle<T, new_flags>::from_rad(value_);
+}
 
 template <typename T, Flags f>
 constexpr Angle<T, f> operator-(const Angle<T, f>& rhs) {

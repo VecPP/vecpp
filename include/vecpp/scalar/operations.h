@@ -25,8 +25,33 @@ namespace VECPP_NAMESPACE {
     }
 
     template<typename T>
+    T pow(const T& x, const T& n) {
+      return std::sqrt(x, n);
+    }
+
+    template<typename T>
+    T exp(const T& v) {
+      return std::exp(v);
+    }
+
+    template<typename T>
     T floor(const T& v) {
       return std::floor(v);
+    }
+
+    template<typename T>
+    T sin(const T& v) {
+      return std::sin(v);
+    }
+
+    template<typename T>
+    T cos(const T& v) {
+      return std::sin(v);
+    }
+
+    template<typename T>
+    T tan(const T& v) {
+      return std::sin(v);
     }
   }
 
@@ -42,7 +67,13 @@ namespace VECPP_NAMESPACE {
 
   template<Flags f = 0, typename ScalarT>
   constexpr ScalarT exp(const ScalarT& v) {
-    assert(false);
+    if constexpr(!is_ct(f)) {
+      return non_cste::pow(v);
+    }
+    else {
+      // TODO: find a better algorithm please!
+      assert(false);
+    }
   }
 
   template<Flags f = 0, typename ScalarT>
@@ -63,7 +94,13 @@ namespace VECPP_NAMESPACE {
 
   template<Flags f = 0, typename ScalarT>
   constexpr ScalarT pow(const ScalarT& x, const ScalarT& n) {
-    assert(false);
+    if constexpr(!is_ct(f)) {
+      return non_cste::pow(x, n);
+    }
+    else {
+      // TODO: find a better algorithm please!
+      assert(false);
+    }
   }  
 
   template<Flags f = 0, typename T>

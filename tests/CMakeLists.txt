@@ -11,6 +11,8 @@ SET( TEST_LIST
   vec/operators
 
   quat
+
+  scalar
 )
 
 foreach(TEST_PATH ${TEST_LIST})

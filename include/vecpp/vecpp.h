@@ -7,14 +7,16 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/angle/angle.h"
-#include "vecpp/angle/operations.h"
-
-#include "vecpp/quat/quat.h"
+#include "vecpp/flags.h"
 
 #include "vecpp/scalar/constants.h"
 #include "vecpp/scalar/operations.h"
 
+#include "vecpp/angle/angle.h"
+#include "vecpp/angle/operations.h"
+
 #include "vecpp/vec/operations.h"
 #include "vecpp/vec/operations_per_member.h"
 #include "vecpp/vec/vec.h"
+
+#include "vecpp/quat/quat.h"
