@@ -10,7 +10,6 @@ SET( TEST_LIST
   mat/construction
 
   vec/algos
-  vec/constexpr
   vec/construction
   vec/operators
 
