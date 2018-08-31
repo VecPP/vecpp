@@ -7,8 +7,6 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/constants.h"
-
 #include "vecpp/angle/angle.h"
 #include "vecpp/angle/operations.h"
 
@@ -20,5 +18,3 @@
 #include "vecpp/vec/operations.h"
 #include "vecpp/vec/operations_per_member.h"
 #include "vecpp/vec/vec.h"
-
-#include "vecpp/constants.h"
