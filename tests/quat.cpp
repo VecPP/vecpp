@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #ifdef VECPP_TEST_SINGLE_HEADER
-#include "vecpp/single_header.h"
+#include "vecpp/vecpp_single.h"
 #else
 #include "vecpp/vecpp.h"
 #endif
