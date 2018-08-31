@@ -1,6 +1,10 @@
 #include "catch.hpp"
 
+#ifdef VECPP_TEST_SINGLE_HEADER
+#include "vecpp/single_header.h"
+#else
 #include "vecpp/vecpp.h"
+#endif
 
 using Catch::Matchers::WithinAbs;
 

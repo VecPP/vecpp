@@ -24,7 +24,14 @@ foreach(TEST_PATH ${TEST_LIST})
 endforeach()
 
 if(VECPP_BUILD_SINGLE_HEADER)
-  add_executable(test_single_header single_header.cpp)
-  target_link_libraries(test_single_header catch_main)
-  add_test(test_single_header test_single_header)
+  foreach(TEST_PATH ${TEST_LIST})
+    STRING(REPLACE "/" "_" TGT_NAME ${TEST_PATH})
+    add_executable("${TGT_NAME}_sh" ${TEST_PATH}.cpp)
+    target_compile_definitions(${TGT_NAME}_sh
+      PRIVATE VECPP_TEST_SINGLE_HEADER
+    )
+
+    target_link_libraries("${TGT_NAME}_sh" catch_main)
+    add_test("${TGT_NAME}_sh" "${TGT_NAME}_sh")
+  endforeach()
 endif()

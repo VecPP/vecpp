@@ -1,9 +1,12 @@
 #include "catch.hpp"
 
+#ifdef VECPP_TEST_SINGLE_HEADER
+#include "vecpp/single_header.h"
+#else
 #include "vecpp/vecpp.h"
+#endif
 
 #include <sstream>
-
 
 TEST_CASE("Static members assignment", "[vec_construct]") {
   using Vec = vecpp::Vec<float, 2>;

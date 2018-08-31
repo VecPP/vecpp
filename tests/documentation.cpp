@@ -2,7 +2,12 @@
 
 #include <numeric>
 #include <sstream>
+
+#ifdef VECPP_TEST_SINGLE_HEADER
+#include "vecpp/single_header.h"
+#else
 #include "vecpp/vecpp.h"
+#endif
 
 // Every code sample present in the documentation must be present
 // here. We do not want to have any non-compiling code present in the doc.

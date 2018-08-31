@@ -1,7 +1,10 @@
 #include "catch.hpp"
 
+#ifdef VECPP_TEST_SINGLE_HEADER
+#include "vecpp/single_header.h"
+#else
 #include "vecpp/vecpp.h"
-
+#endif
 namespace angle_literals_float {
 constexpr vecpp::Angle<float> operator""_deg(long double v) {
   return vecpp::Angle<float>::from_deg(float(v));

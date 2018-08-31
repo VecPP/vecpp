@@ -1,6 +1,10 @@
 #include "catch.hpp"
 
+#ifdef VECPP_TEST_SINGLE_HEADER
+#include "vecpp/single_header.h"
+#else
 #include "vecpp/vecpp.h"
+#endif
 
 using fQuat = vecpp::Quat<float>;
 using fVec3 = vecpp::Vec<float, 3>;
