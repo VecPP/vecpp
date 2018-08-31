@@ -6,9 +6,6 @@ SET( TEST_LIST
   angle
   documentation
 
-  mat/constexpr
-  mat/construction
-
   vec/algos
   vec/construction
   vec/operators
