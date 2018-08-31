@@ -140,33 +140,33 @@ constexpr Angle<T, f> operator/(const Angle<T, f>& lhs, const T& rhs) {
 }
 
 // COMPARISONS
-template <typename T, Flags f>
-constexpr bool operator==(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
+template <typename T, Flags f1, Flags f2>
+constexpr bool operator==(const Angle<T, f1>& lhs, const Angle<T, f2>& rhs) {
   return lhs.raw() == rhs.raw();
 }
 
-template <typename T, Flags f>
-constexpr bool operator!=(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
+template <typename T, Flags f1, Flags f2>
+constexpr bool operator!=(const Angle<T, f1>& lhs, const Angle<T, f2>& rhs) {
   return lhs.raw() != rhs.raw();
 }
 
-template <typename T, Flags f>
-constexpr bool operator<(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
+template <typename T, Flags f1, Flags f2>
+constexpr bool operator<(const Angle<T, f1>& lhs, const Angle<T, f2>& rhs) {
   return lhs.raw() < rhs.raw();
 }
 
-template <typename T, Flags f>
-constexpr bool operator>(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
+template <typename T, Flags f1, Flags f2>
+constexpr bool operator>(const Angle<T, f1>& lhs, const Angle<T, f2>& rhs) {
   return lhs.raw() > rhs.raw();
 }
 
-template <typename T, Flags f>
-constexpr bool operator<=(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
+template <typename T, Flags f1, Flags f2>
+constexpr bool operator<=(const Angle<T, f1>& lhs, const Angle<T, f2>& rhs) {
   return lhs.raw() <= rhs.raw();
 }
 
-template <typename T, Flags f>
-constexpr bool operator>=(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
+template <typename T, Flags f1, Flags f2>
+constexpr bool operator>=(const Angle<T, f1>& lhs, const Angle<T, f2>& rhs) {
   return lhs.raw() >= rhs.raw();
 }
 

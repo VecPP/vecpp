@@ -190,3 +190,6 @@ Then you can fix it by wrapping the offending operand with `ct()`:
 ```cpp
 constexpr Vec3 val_len = length(ct(val));
 ```
+
+**N.B.** Only use `ct()` in `constexpr`s! Its usage triggers the use of slower
+algorithms that are fine during compilation, but unsuitable for runtime.

@@ -23,7 +23,8 @@ template <typename T>
 struct Quat {
   using value_type = T;
 
-  static constexpr Quat angle_axis(const Angle<T>& angle,
+  template <Flags af>
+  static constexpr Quat angle_axis(const Angle<T, af>& angle,
                                    const Vec<T, 3>& axis);
 
   // Left public for aggregate initialization.
@@ -34,7 +35,8 @@ struct Quat {
 };
 
 template <typename T>
-constexpr Quat<T> Quat<T>::angle_axis(const Angle<T>& angle,
+template <Flags af>
+constexpr Quat<T> Quat<T>::angle_axis(const Angle<T, af>& angle,
                                       const Vec<T, 3>& axis) {
   const T s = sin(angle * T(0.5));
   const T c = cos(angle * T(0.5));
