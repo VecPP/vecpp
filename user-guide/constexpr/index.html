@@ -4,14 +4,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="None">
         
         
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>VecPP documentation</title>
-        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Compile-time evaluation - VecPP documentation</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -19,13 +19,13 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
-    <body class="homepage">
+    <body>
 
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
@@ -39,22 +39,22 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href=".">VecPP documentation</a>
+                    <a class="navbar-brand" href="../..">VecPP documentation</a>
                 </div>
 
                 <!-- Expanded navigation -->
                 <div class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="active">
-                                <a href=".">Home</a>
+                            <li >
+                                <a href="../..">Home</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="user-guide/installation/">Installation</a>
+    <a href="../installation/">Installation</a>
 </li>
                                 </ul>
                             </li>
@@ -63,11 +63,11 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="reference/angle/">Angle</a>
+    <a href="../../reference/angle/">Angle</a>
 </li>
                                     
 <li >
-    <a href="reference/vec/">Vector</a>
+    <a href="../../reference/vec/">Vector</a>
 </li>
                                 </ul>
                             </li>
@@ -79,16 +79,6 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="disabled">
-                                <a rel="next" >
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li >
-                                <a rel="prev" href="user-guide/installation/">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
                     </ul>
                 </div>
             </div>
@@ -97,16 +87,99 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#welcome-to-vecpp">Welcome to VecPP</a></li>
-            <li><a href="#acknowledgements">Acknowledgements</a></li>
+        <li class="main active"><a href="#compile-time-evaluation">Compile-time evaluation</a></li>
+            <li><a href="#constexpr-workflow">constexpr workflow</a></li>
+            <li><a href="#scalars">Scalars</a></li>
+            <li><a href="#exceptions">Exceptions</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="welcome-to-vecpp">Welcome to VecPP</h1>
-<h2 id="acknowledgements">Acknowledgements</h2>
-<h3 id="documentation">Documentation</h3>
-<p>The structure of the API reference part of this documentation is heavly inspired by the excellenent <a href="https://cppreference.com/">cppreference.com</a></p></div>
+<h1 id="compile-time-evaluation">Compile-time evaluation</h1>
+<p>Almost every single thing you can do in vecpp, you can also do during compile 
+time. </p>
+<p><em>For the most part</em>, everything works transparently. You can just use any vecpp
+construct within a constant expression, this includes </p>
+<pre><code class="cpp">
+using Vec3 = vecpp::Vec&lt;float, 3&gt;;
+using Angle = vecpp::Angle&lt;float&gt;;
+
+constexpr Vec3 unit_x = {1.0f, 0.0f, 0.0f};
+constexpr Vec3 unit_y = {0.0f, 1.0f, 0.0f};
+constexpr Vec3 unit_z = {0.0f, 0.0f, 1.0f};
+
+constexpr float x_dot_y = dot(unit_x, unit_y);
+constexpr Vec3 y_cross_z = dot(unit_y, unit_z);
+
+constexpr Angle rotation = Angle::from_deg(45.0f);
+</code></pre>
+
+<p>We say "for the most part", because fully implementing <code>vecpp</code> in <code>constexpr</code>,
+while possible, would come at the cost of runtime performance. Specifically some
+operations, such as <code>sqrt()</code> have extremely fast hardware support available to 
+them on some platforms, and implementing such operations as constexpr-friendly 
+alternatives would lock our users out from them, which is unnaceptible.</p>
+<p>Unfortunately, it is currently impossible in standard C++ to write a function 
+that has a compile-time switch for <code>constexpr</code> and <code>non-constexpr</code> 
+implementations, so we have taken the following approach:</p>
+<ul>
+<li>If an operation's algorithm is identical between constexpr and non-constexpr
+versions, it will simply work. </li>
+<li>Otherwise, algorithm selection will be driven by a <code>Flags</code> template parameter 
+that will always default to the fast runtime-algorithm.</li>
+<li>If you attempt to use a ct-branching algorithm to generate a 
+<code>constexpr</code> value without foricing it into the <code>constexpr</code>-friendly path, you
+WILL get a compile error.</li>
+</ul>
+<h2 id="constexpr-workflow"><code>constexpr</code> workflow</h2>
+<p>The user workflow is simple:</p>
+<ol>
+<li>Assume that everything transparently works as constexpr.</li>
+<li>If you encounter a compile error that says something along the lines of
+<code>call to non-constexpr function...</code>: <ul>
+<li>wrap the offending parameters into a <code>vecpp::ct()</code> call.</li>
+</ul>
+</li>
+</ol>
+<p>For example:</p>
+<pre><code class="cpp">
+using vecpp::ct;
+using Vec3 = vecpp::Vec&lt;float, 3&gt;;
+
+
+constexpr Vec3 my_vec = {1.0f, 4.0f, 0.0f};
+//constexpr float my_vec_len = length(my_vec); // Error, needs non-constexpr sqrt()
+constexpr float my_vec_len = length(ct(my_vec)); // all clear
+</code></pre>
+
+<h2 id="scalars">Scalars</h2>
+<p>Scalar operations use a slightly nicer APi:</p>
+<pre><code class="cpp">constexpr vecpp::Flags ctf = vecpp::flags::compile_time;
+
+constexpr sqrt_val = vecpp::sqrt&lt;ctf&gt;(16.0f);
+</code></pre>
+
+<p>Now at this point, you are probably wondering: "Why can't I use that nicer API"
+with vectors? Wouldn;t the following be a lot nicer?</p>
+<pre><code class="cpp">// ****************** NOT REAL CODE ****************** // 
+using Vec3 = vecpp::Vec&lt;float, 3&gt;;
+constexpr vecpp::Flags ctf = vecpp::flags::compile_time;
+
+constexpr Vec3 my_vec = {1.0f, 4.0f, 0.0f};
+constexpr float my_vec_len = length&lt;ctf&gt;(my_vec); 
+// ****************** NOT REAL CODE ****************** //
+</code></pre>
+
+<p>Well, yes, that would indeed be a lot nicer, and frankly easy to implement. </p>
+<p>The problem with that is that it cannot be applied to operators, which will 
+become a massive pain once we start playing with matrices. And we want to avoid 
+having multiple ways of doing the same thing.  </p>
+<h2 id="exceptions">Exceptions</h2>
+<ul>
+<li>Uninitialized values cannot be employed in <code>constexpr</code> contexts, whereas vecpp
+generalyy allows them at the user's discretion.</li>
+</ul>
+<p>That's it</p></div>
         </div>
 
         <footer class="col-md-12">
@@ -114,11 +187,11 @@
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = ".",
+            var base_url = "../..",
                 shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
         </script>
-        <script src="js/base.js" defer></script>
-        <script src="search/main.js" defer></script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
     <div class="modal-dialog">
@@ -186,8 +259,3 @@
 
     </body>
 </html>
-
-<!--
-MkDocs version : 1.0.3
-Build Date UTC : 2018-08-31 21:43:50
--->
