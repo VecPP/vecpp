@@ -42,11 +42,19 @@ namespace VECPP_NAMESPACE {
     assert(false);
   }  
 
-  template<typename ScalarT>
-  constexpr ScalarT sqrt(const ScalarT& v) {
-    assert(false);
-  }
+  template<typename T>
+  constexpr T sqrt(const T& v) {
+    if(v == T(0)) {
+      return v;
+    }
 
-  
+    T r = v;
+    // A lazy newton-rhapson for now.
+    for(int i = 0 ; i < 100; ++i) {
+      r -= (r*r - v) / (r * T(2));
+    }
+
+    return r;
+  }
 }
 #endif

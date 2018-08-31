@@ -223,7 +223,7 @@ constexpr T Angle<T>::as_rad() const {
 }
 
 template <typename T>
-constexpr value_type Angle<T>::raw() const {
+constexpr T Angle<T>::raw() const {
   return value_;
 }
 }

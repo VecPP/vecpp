@@ -26,7 +26,7 @@ constexpr Vec<T, 3> cross(const Vec<T, 3>& lhs, const Vec<T, 3>& rhs) {
 
 // Dot product
 template <typename T, std::size_t L>
-constexpr T dot(const Vec<T, 3>& lhs, const Vec<T, 3>& rhs) {
+constexpr T dot(const Vec<T, L>& lhs, const Vec<T, L>& rhs) {
   T result = 0;
 
   for (std::size_t i = 0; i < L; ++i) {
