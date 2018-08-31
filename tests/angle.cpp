@@ -6,23 +6,25 @@
 #include "vecpp/vecpp.h"
 #endif
 
+constexpr vecpp::Flags ctf = vecpp::flags::compile_time;
+
 namespace angle_literals_float {
 constexpr vecpp::Angle<float> operator""_deg(long double v) {
-  return vecpp::Angle<float>::from_deg(float(v));
+  return vecpp::Angle<float>::from_deg<ctf>(float(v));
 }
 
 constexpr vecpp::Angle<float> operator""_rad(long double v) {
-  return vecpp::Angle<float>::from_rad(float(v));
+  return vecpp::Angle<float>::from_rad<ctf>(float(v));
 }
 }
 
 namespace angle_literals_double {
 constexpr vecpp::Angle<double> operator""_deg(long double v) {
-  return vecpp::Angle<double>::from_deg(double(v));
+  return vecpp::Angle<double>::from_deg<ctf>(double(v));
 }
 
 constexpr vecpp::Angle<double> operator""_rad(long double v) {
-  return vecpp::Angle<double>::from_rad(double(v));
+  return vecpp::Angle<double>::from_rad<ctf>(double(v));
 }
 }
 

@@ -47,7 +47,7 @@ constexpr T sin(const Angle<T, f>& a) {
 template <typename T, Flags f>
 constexpr T cos(const Angle<T, f>& a) {
   if constexpr(is_ct(f)) {
-    return sin(a + Angle<T, f>::from_rad(half_pi<T>)); 
+    return sin(a + Angle<T, f>::template from_rad<f>(half_pi<T>)); 
   }
   else {
     return non_cste::cos(a.as_rad());
