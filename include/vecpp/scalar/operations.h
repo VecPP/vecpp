@@ -79,7 +79,7 @@ namespace VECPP_NAMESPACE {
   template<Flags f = 0, typename ScalarT>
   constexpr ScalarT floor(const ScalarT& v) {
     if constexpr(!is_ct(f)) {
-      return std::floor(v);
+      return non_cste::floor(v);
     }
     else {
       // TODO: find a better algorithm please!
