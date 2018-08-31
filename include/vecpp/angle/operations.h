@@ -12,39 +12,56 @@
 
 #include "vecpp/angle/angle.h"
 
+#include <cmath>
+
 namespace VECPP_NAMESPACE {
 
 // Trigonometry
 
 // TODO: These placeholder taylor series expansion implementation
 // are temporary, and need to be replaced with something better! 
-template <typename T>
-constexpr T sin(const Angle<T>& a) {
-  constexpr std::array<T, 5> taylor_factors = {
-    -6, 120, -5040, 362880, -39916800
-  };
+template <typename T, Flags f>
+constexpr T sin(const Angle<T, f>& a) {
+  if constexpr(is_ct(f)) {
+    constexpr std::array<T, 5> taylor_factors = {
+      -6, 120, -5040, 362880, -39916800
+    };
 
-  T r = a.as_rad();
-  T r_2 = r*r;
+    T r = a.as_rad();
+    T r_2 = r*r;
 
-  T result = r;
+    T result = r;
 
-  for(auto f : taylor_factors) {
-    r *= r_2;
-    result += r / f;
+    for(auto factor : taylor_factors) {
+      r *= r_2;
+      result += r / factor;
+    }
+
+    return result;
   }
-
-  return result;
+  else {
+    return std::sin(a.as_rad());
+  }
 }
 
-template <typename T>
-constexpr T cos(const Angle<T>& a) {
-  return sin(a + Angle<T>::from_rad(half_pi<T>)); 
+template <typename T, Flags f>
+constexpr T cos(const Angle<T, f>& a) {
+  if constexpr(is_ct(f)) {
+    return sin(a + Angle<T, f>::from_rad(half_pi<T>)); 
+  }
+  else {
+    return std::cos(a.as_rad());
+  }
 }
 
-template <typename T>
-constexpr T tan(const Angle<T>& a) {
-  return sin(a) / cos(a); 
+template <typename T, Flags f>
+constexpr T tan(const Angle<T, f>& a) {
+  if constexpr(is_ct(f)) {
+    return sin(a) / cos(a); 
+  }
+  else {
+    return std::tan(a.as_rad());
+  }
 }
 
 }

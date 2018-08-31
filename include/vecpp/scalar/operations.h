@@ -12,6 +12,8 @@
 
 #include "vecpp/flags.h"
 
+#include <cmath>
+
 namespace VECPP_NAMESPACE {
   
   namespace non_cste {
@@ -20,7 +22,12 @@ namespace VECPP_NAMESPACE {
     template<typename T>
     T sqrt(const T& v) {
       return std::sqrt(v);
-    }    
+    }
+
+    template<typename T>
+    T floor(const T& v) {
+      return std::floor(v);
+    }
   }
 
   template<Flags f = 0, typename ScalarT>
@@ -40,12 +47,18 @@ namespace VECPP_NAMESPACE {
 
   template<Flags f = 0, typename ScalarT>
   constexpr ScalarT floor(const ScalarT& v) {
-    assert(false);
+    if constexpr(!is_ct(f)) {
+      return std::floor(v);
+    }
+    else {
+      // TODO: find a better algorithm please!
+      return static_cast<long long>(v);
+    }
   }
 
   template<Flags f = 0, typename ScalarT>
   constexpr ScalarT fmod(const ScalarT& v, const ScalarT& d) {
-    return v - floor<f>(v / d) * div;
+    return v - floor<f>(v / d) * d;
   }
 
   template<Flags f = 0, typename ScalarT>

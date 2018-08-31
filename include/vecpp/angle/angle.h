@@ -10,6 +10,7 @@
 
 #include "vecpp/config.h"
 
+#include "vecpp/flags.h"
 #include "vecpp/scalar/constants.h"
 #include "vecpp/scalar/operations.h"
 
@@ -20,10 +21,12 @@
 namespace VECPP_NAMESPACE {
 
 // Angle always represents value within the ]-PI,PI] radians range.
-template <typename T>
+template <typename T, Flags f=0>
 class Angle {
  public:
   using value_type = T;
+
+  static constexpr Flags flags = f;
 
   static constexpr Angle from_rad(const value_type&);
   static constexpr Angle from_deg(const value_type&);
@@ -45,8 +48,8 @@ class Angle {
   explicit constexpr Angle(const T&);
 };
 
-template <typename T>
-constexpr Angle<T> operator-(const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr Angle<T, f> operator-(const Angle<T, f>& rhs) {
   T value = rhs.as_rad();
 
   // Special case, we keep positive pi.
@@ -54,11 +57,11 @@ constexpr Angle<T> operator-(const Angle<T>& rhs) {
     value = -value;
   }
 
-  return Angle<T>::from_clamped_rad(value);
+  return Angle<T, f>::from_clamped_rad(value);
 }
 
-template <typename T>
-constexpr Angle<T>& operator+=(Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr Angle<T, f>& operator+=(Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   T val = lhs.as_rad() + rhs.as_rad();
 
   // Since both lhs and rhs are in the ]-PI,PI] range, the sum is in the
@@ -69,20 +72,20 @@ constexpr Angle<T>& operator+=(Angle<T>& lhs, const Angle<T>& rhs) {
     val += two_pi<T>;
   }
 
-  lhs = Angle<T>::from_clamped_rad(val);
+  lhs = Angle<T, f>::from_clamped_rad(val);
 
   return lhs;
 }
 
-template <typename T>
-constexpr Angle<T> operator+(const Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr Angle<T, f> operator+(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   auto result = lhs;
   result += rhs;
   return result;
 }
 
-template <typename T>
-constexpr Angle<T>& operator-=(Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr Angle<T, f>& operator-=(Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   T val = lhs.as_rad() - rhs.as_rad();
 
   // Since both lhs and rhs are in the ]-PI,PI] range, the difference is in the
@@ -93,109 +96,105 @@ constexpr Angle<T>& operator-=(Angle<T>& lhs, const Angle<T>& rhs) {
     val += two_pi<T>;
   }
 
-  lhs = Angle<T>::from_clamped_rad(val);
+  lhs = Angle<T, f>::from_clamped_rad(val);
 
   return lhs;
 }
 
-template <typename T>
-constexpr Angle<T> operator-(const Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr Angle<T, f> operator-(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   auto result = lhs;
   result -= rhs;
   return result;
 }
 
-template <typename T>
-constexpr Angle<T>& operator*=(Angle<T>& lhs, const T& rhs) {
-  lhs = Angle<T>::from_rad(lhs.as_rad() * rhs);
+template <typename T, Flags f>
+constexpr Angle<T, f>& operator*=(Angle<T, f>& lhs, const T& rhs) {
+  lhs = Angle<T, f>::from_rad(lhs.as_rad() * rhs);
   return lhs;
 }
 
-template <typename T>
-constexpr Angle<T> operator*(const Angle<T>& lhs, const T& rhs) {
+template <typename T, Flags f>
+constexpr Angle<T, f> operator*(const Angle<T, f>& lhs, const T& rhs) {
   auto result = lhs;
   result *= rhs;
   return result;
 }
 
-template <typename T>
-constexpr Angle<T> operator*(const T& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr Angle<T, f> operator*(const T& lhs, const Angle<T, f>& rhs) {
   return rhs * lhs;
 }
 
-template <typename T>
-constexpr Angle<T>& operator/=(Angle<T>& lhs, const T& rhs) {
-  lhs = Angle<T>::from_rad(lhs.as_rad() / rhs);
+template <typename T, Flags f>
+constexpr Angle<T, f>& operator/=(Angle<T, f>& lhs, const T& rhs) {
+  lhs = Angle<T, f>::from_rad(lhs.as_rad() / rhs);
   return lhs;
 }
 
-template <typename T>
-constexpr Angle<T> operator/(const Angle<T>& lhs, const T& rhs) {
+template <typename T, Flags f>
+constexpr Angle<T, f> operator/(const Angle<T, f>& lhs, const T& rhs) {
   auto result = lhs;
   result /= rhs;
   return result;
 }
 
 // COMPARISONS
-template <typename T>
-constexpr bool operator==(const Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr bool operator==(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   return lhs.raw() == rhs.raw();
 }
 
-template <typename T>
-constexpr bool operator!=(const Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr bool operator!=(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   return lhs.raw() != rhs.raw();
 }
 
-template <typename T>
-constexpr bool operator<(const Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr bool operator<(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   return lhs.raw() < rhs.raw();
 }
 
-template <typename T>
-constexpr bool operator>(const Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr bool operator>(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   return lhs.raw() > rhs.raw();
 }
 
-template <typename T>
-constexpr bool operator<=(const Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr bool operator<=(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   return lhs.raw() <= rhs.raw();
 }
 
-template <typename T>
-constexpr bool operator>=(const Angle<T>& lhs, const Angle<T>& rhs) {
+template <typename T, Flags f>
+constexpr bool operator>=(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
   return lhs.raw() >= rhs.raw();
 }
 
 // IOSTREAM
-template <typename T>
-std::ostream& operator<<(std::ostream& stream, const Angle<T>& v) {
+template <typename T, Flags f>
+std::ostream& operator<<(std::ostream& stream, const Angle<T, f>& v) {
   return stream << v.as_deg() << "°";
 }
 
 // CONSTRUCTION
-template <typename T>
-constexpr Angle<T>::Angle(const T& v) : value_(v) {}
+template <typename T, Flags f>
+constexpr Angle<T, f>::Angle(const T& v) : value_(v) {}
 
-template <typename T>
-constexpr Angle<T> Angle<T>::from_clamped_rad(const T& v) {
+template <typename T, Flags f>
+constexpr Angle<T, f> Angle<T, f>::from_clamped_rad(const T& v) {
   assert(v > -pi<float> && v <= pi<float>);
 
-  return Angle<T>(v);
+  return Angle<T, f>(v);
 }
 
-template <typename T>
-constexpr Angle<T> Angle<T>::from_clamped_deg(const T& v) {
+template <typename T, Flags f>
+constexpr Angle<T, f> Angle<T, f>::from_clamped_deg(const T& v) {
   return from_clamped_rad(v / T(180) * pi<T>);
 }
 
-template <typename T>
-constexpr Angle<T> Angle<T>::from_rad(const T& v) {
-  // Unfortunately, std::fmod is not constexpr, so we have to roll our own...
-  T constrained = v + pi<T>;
-
-  T div = static_cast<T>(static_cast<long long int>(constrained / two_pi<T>));
-  constrained -= div * two_pi<T>;
+template <typename T, Flags f>
+constexpr Angle<T, f> Angle<T, f>::from_rad(const T& v) {
+  T constrained = fmod<f>(v + pi<T>, two_pi<T>);
 
   if (constrained <= T(0)) {
     constrained += two_pi<T>;
@@ -206,24 +205,24 @@ constexpr Angle<T> Angle<T>::from_rad(const T& v) {
   return from_clamped_rad(constrained);
 }
 
-template <typename T>
-constexpr Angle<T> Angle<T>::from_deg(const T& v) {
+template <typename T, Flags f>
+constexpr Angle<T, f> Angle<T, f>::from_deg(const T& v) {
   return from_rad(v / T(180) * pi<T>);
 }
 
 // CONVERSION
-template <typename T>
-constexpr T Angle<T>::as_deg() const {
+template <typename T, Flags f>
+constexpr T Angle<T, f>::as_deg() const {
   return value_ * T(180) / pi<T>;
 }
 
-template <typename T>
-constexpr T Angle<T>::as_rad() const {
+template <typename T, Flags f>
+constexpr T Angle<T, f>::as_rad() const {
   return value_;
 }
 
-template <typename T>
-constexpr T Angle<T>::raw() const {
+template <typename T, Flags f>
+constexpr T Angle<T, f>::raw() const {
   return value_;
 }
 }
