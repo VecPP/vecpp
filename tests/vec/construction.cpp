@@ -4,6 +4,15 @@
 
 #include <sstream>
 
+
+TEST_CASE("Static members assignment", "[vec_construct]") {
+  using Vec = vecpp::Vec<float, 2>;
+
+  static_assert(std::is_same_v<Vec::value_type, float>);
+  static_assert(Vec::size() == 2);
+  static_assert(std::is_same_v<std::remove_cv_t<decltype(Vec::flags)>, vecpp::Flags>);
+}
+
 TEST_CASE("Default construction compiles without warning", "[vec_construct]") {
   using Vec = vecpp::Vec<float, 2>;
 
@@ -13,10 +22,10 @@ TEST_CASE("Default construction compiles without warning", "[vec_construct]") {
   }
 
   {
-    // This isn't supposed to workn in constexpr
+    // This isn't supposed to work in constexpr
     // constexpr Vec a;
     // (void)a;
-    }
+  }
 }
 
 TEST_CASE("Build vec2 from aggregate initialization", "[vec_construct]") {
@@ -85,6 +94,28 @@ TEST_CASE("use const vec in range-based for", "[vec_iterate]") {
   }
 }
 
+TEST_CASE("Vec::at() usable to access reference", "[vec_access]") {
+  using Vec = vecpp::Vec<float, 4>;
+  
+  {
+    Vec a = {1.0f, 2.0f, 3.0f, 4.0f};
+
+    a.at(2) = 10.0f;
+
+    REQUIRE(a[2] == 10.0f);
+  }
+
+  {
+    constexpr Vec a = {1.0f, 2.0f, 3.0f, 4.0f};
+    constexpr Vec b = [](){
+      Vec c = a;
+      c.at(2) = 10.0f;
+      return c;
+    }();
+    static_assert(b[2] == 10.0f);
+  }
+
+}
 
 TEST_CASE("Vec::at() performs bounds-checking", "[vec_access]") {
   using Vec = vecpp::Vec<float, 4>;

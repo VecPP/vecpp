@@ -26,7 +26,7 @@ struct Vec {
   using value_type = T;
   static constexpr Flags flags = f;
 
-  constexpr std::size_t size() const { return len; }
+  static constexpr std::size_t size() { return len; }
 
   constexpr T& at(std::size_t i) {
     if (i >= len) {
@@ -46,6 +46,7 @@ struct Vec {
     assert(i < len);
     return data_[i];
   }
+  
   constexpr const T& operator[](std::size_t i) const {
     assert(i < len);
     return data_[i];
@@ -56,7 +57,6 @@ struct Vec {
 
   // Left public for aggregate initialization.
   std::array<T, len> data_;
-
 
   // A vector is implicitely convertible to any vector differing only by flags
   template <int new_flags>
