@@ -53,7 +53,7 @@ TEST_CASE("Build vec2 from aggregate initialization", "[vec_construct]") {
 
 TEST_CASE("Vectos transparently assign accross flags", "[vec_construct]") {
   using Vec = vecpp::Vec<float, 2>;
-  using Flagged_vec = vecpp::Vec<float, 2, 2>;
+  using Flagged_vec = vecpp::Vec<float, 2, vecpp::flags::testing>;
   
   {
     Vec a = {1.0f, 2.0f};
