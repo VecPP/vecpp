@@ -19,6 +19,8 @@ A simple vector math library.
 * Be useful within a 3D simulation engine
 * Stable results under fast-math
 * No external non-stl dependencies
+* Code is easy to follow and straightforward
+* No multiple ways to achieve the same thing
 
 ## Quick Start
 
@@ -136,14 +138,13 @@ you will find it to be a lot more straightforward to navigate. Less is more.
 ### Why does vecpp not provide aliases for commonly used templates?
 
 Writing `vecpp::Vec<float, 3>` over and over again is annoying, verbose, and 
-frankly makes code hard to read. 
-
-We think that the same goes for `vecpp::Vec3`. What we really want when writing
-linear algebra code, is to just use `Vec3`.
+frankly makes code harder to read, but we think that the same goes for 
+`vecpp::Vec3`. What we really want when writing linear algebra code, is to just 
+use `Vec3`.
 
 So, we expect that users will be aliasing their commonly used types within their 
 project's namespace (or the global namespace, we don't judge). In that context, 
-all `vecpp::Vec3` or 'vecpp::Mat4' would provide is an unnecessary layer of 
+all `vecpp::Vec3` or `vecpp::Mat4` would provide is an unnecessary layer of 
 indirection between our aliases and our underlying types.
 
 Also, creating these aliases would force us to take positions on matters such as 
@@ -158,10 +159,34 @@ a lot like this:
 #include "vecpp/vecpp.h"
 
 namespace my_ns {
-  using Vec3 = vecpp::Vec<float, 3>;
   using Angle = vecpp::Angle<float>;
+  using Vec3 = vecpp::Vec<float, 3>;
   using Mat4 = vecpp::Mat<float, 4, 4>;
-  using Quat = vecpp::Quat;
+  using Quat = vecpp::Quat<float>;
 }
+```
 
+### What's with `vecpp::ct()`?
+
+Some functions need to have different implementations between runtime and 
+compile-time evaluation (sqrt() for example), and unfortunately, there
+is currently no known way to achieve that implicitely in C++17.  
+`ct()` is our workaround.
+
+The rule of thumb is: Write code as if everything magically worked.
+
+```cpp
+using Vec3 = vecpp::Vec<float, 3>;
+constexpr Vec3 val = {1.0f, 1.0f 1.0f};
+constexpr Vec3 val_len = length(val);
+```
+
+And if you see an error that looks like: 
+
+> call to non-constexpr function ‘float vecpp::sqrt_impl(float)’
+
+Then you can fix it by wrapping the offending operand with `ct()`:
+
+```cpp
+constexpr Vec3 val_len = length(ct(val));
 ```

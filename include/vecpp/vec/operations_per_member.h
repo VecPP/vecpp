@@ -17,30 +17,30 @@
 
 namespace VECPP_NAMESPACE {
 // abs
-template <typename T, std::size_t L>
-constexpr Vec<T, L> abs(const Vec<T, L>& vec) {
-  Vec<T, L> result = {0};
-  for (std::size_t i = 0; i < L; ++i) {
-    result[i] = abs(vec[i]);
+template <typename T, std::size_t l, Flags f>
+constexpr Vec<T, l, f> abs(const Vec<T, l, f>& vec) {
+  Vec<T, l, f> result = {0};
+  for (std::size_t i = 0; i < vec.size(); ++i) {
+    result[i] = abs<f>(vec[i]);
   }
   return result;
 }
 
 // max
-template <typename T, std::size_t L>
-constexpr Vec<T, L> max(const Vec<T, L>& lhs, const Vec<T, L>& rhs) {
-  Vec<T, L> result = {0};
-  for (std::size_t i = 0; i < L; ++i) {
+template <typename T, std::size_t l, Flags f>
+constexpr Vec<T, l, f> max(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
+  Vec<T, l, f> result = {0};
+  for (std::size_t i = 0; i < lhs.size(); ++i) {
     result[i] = std::max(lhs[i], rhs[i]);
   }
   return result;
 }
 
 // min
-template <typename T, std::size_t L>
-constexpr Vec<T, L> min(const Vec<T, L>& lhs, const Vec<T, L>& rhs) {
-  Vec<T, L> result = {0};
-  for (std::size_t i = 0; i < L; ++i) {
+template <typename T, std::size_t l, Flags f>
+constexpr Vec<T, l, f> min(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
+  Vec<T, l, f> result = {0};
+  for (std::size_t i = 0; i < lhs.size(); ++i) {
     result[i] = std::min(lhs[i], rhs[i]);
   }
   return result;
