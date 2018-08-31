@@ -46,12 +46,12 @@ namespace VECPP_NAMESPACE {
 
     template<typename T>
     T cos(const T& v) {
-      return std::sin(v);
+      return std::cos(v);
     }
 
     template<typename T>
     T tan(const T& v) {
-      return std::sin(v);
+      return std::tan(v);
     }
   }
 

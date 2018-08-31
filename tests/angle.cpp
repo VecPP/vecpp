@@ -31,6 +31,12 @@ using Catch::Matchers::WithinAbs;
 
 using Angle = vecpp::Angle<float>;
 
+
+template<typename T>
+constexpr bool close_vals(const T& lhs, const T& rhs) {
+  return vecpp::abs(lhs - rhs) < 0.0001f;
+}
+
 TEST_CASE("create from radians or degrees", "[angle]") {
   using namespace angle_literals_float;
 
@@ -306,5 +312,23 @@ TEST_CASE("minmax", "[angle]") {
 
     static_assert(vecpp::abs(c.as_deg() - -10.0f) < 0.0001f);
     static_assert(vecpp::abs(d.as_deg() - 10.0f) < 0.0001f);
+  }
+}
+
+TEST_CASE("basic trig", "[angle]") {
+  using namespace angle_literals_float;
+
+  {
+    REQUIRE_THAT(sin(0.0_deg), WithinAbs(0.0f, 0.0001f));
+    REQUIRE_THAT(sin(90.0_deg), WithinAbs(1.0f, 0.0001f));
+    REQUIRE_THAT(cos(0.0_deg), WithinAbs(1.0f, 0.0001f));
+    REQUIRE_THAT(cos(90.0_deg), WithinAbs(0.0f, 0.0001f));
+  }
+
+  {
+    static_assert(close_vals(sin(ct(0.0_deg)), 0.0f));
+    static_assert(close_vals(sin(ct(90.0_deg)), 1.0f));
+    static_assert(close_vals(cos(ct(0.0_deg)), 1.0f));
+    //static_assert(close_vals(cos(ct(90.0_deg)), 0.0f));
   }
 }
