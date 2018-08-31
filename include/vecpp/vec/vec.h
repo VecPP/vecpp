@@ -69,6 +69,11 @@ struct Vec {
   }
 };
 
+template <typename T, std::size_t l,Flags f>
+constexpr Vec<T, l, f | flags::compile_time> ct(const Vec<T, l, f>& v) {
+  return v;
+}
+
 // Vectors may as well be ranges.
 template <typename T, std::size_t l, Flags f>
 constexpr T* begin(Vec<T, l, f>& v) {
