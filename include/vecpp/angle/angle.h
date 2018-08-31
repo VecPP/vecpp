@@ -28,11 +28,8 @@ class Angle {
 
   static constexpr Flags flags = f;
 
-  template<Flags cf=0>
-  static constexpr Angle<T, cf> from_rad(const value_type&);
-
-  template<Flags cf=0>
-  static constexpr Angle<T, cf> from_deg(const value_type&);
+  static constexpr Angle from_rad(const value_type&);
+  static constexpr Angle from_deg(const value_type&);
 
   // The argument MUST be in the ]-PI, PI] range.
   static constexpr Angle from_clamped_rad(const value_type&);
@@ -211,9 +208,8 @@ constexpr Angle<T, f> Angle<T, f>::from_clamped_deg(const T& v) {
 }
 
 template <typename T, Flags f>
-template<Flags cf>
-constexpr Angle<T, cf> Angle<T, f>::from_rad(const T& v) {
-  T constrained = fmod<cf>(v + pi<T>, two_pi<T>);
+constexpr Angle<T, f> Angle<T, f>::from_rad(const T& v) {
+  T constrained = cste::fmod(v + pi<T>, two_pi<T>);
 
   if (constrained <= T(0)) {
     constrained += two_pi<T>;
@@ -225,9 +221,8 @@ constexpr Angle<T, cf> Angle<T, f>::from_rad(const T& v) {
 }
 
 template <typename T, Flags f>
-template<Flags cf>
-constexpr Angle<T, cf> Angle<T, f>::from_deg(const T& v) {
-  return from_rad<cf>(v / T(180) * pi<T>);
+constexpr Angle<T, f> Angle<T, f>::from_deg(const T& v) {
+  return from_rad(v / T(180) * pi<T>);
 }
 
 // CONVERSION

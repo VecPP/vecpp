@@ -26,12 +26,17 @@ namespace VECPP_NAMESPACE {
 
     template<typename T>
     T pow(const T& x, const T& n) {
-      return std::sqrt(x, n);
+      return std::pow(x, n);
     }
 
     template<typename T>
     T exp(const T& v) {
       return std::exp(v);
+    }
+
+    template<typename T>
+    T ceil(const T& v) {
+      return std::ceil(v);
     }
 
     template<typename T>
@@ -53,62 +58,16 @@ namespace VECPP_NAMESPACE {
     T tan(const T& v) {
       return std::tan(v);
     }
-  }
 
-  template<Flags f = 0, typename ScalarT>
-  constexpr ScalarT abs(const ScalarT& v) {
-    return v < ScalarT(0) ? -v : v;
-  }
-
-  template<Flags f = 0, typename ScalarT>
-  constexpr ScalarT ceil(const ScalarT& v) {
-    assert(false);
-  }
-
-  template<Flags f = 0, typename ScalarT>
-  constexpr ScalarT exp(const ScalarT& v) {
-    if constexpr(!is_ct(f)) {
-      return non_cste::pow(v);
-    }
-    else {
-      // TODO: find a better algorithm please!
-      assert(false);
+    template<typename T>
+    constexpr T fmod(const T& v, const T& d) {
+      return std::fmod(v, d);
     }
   }
 
-  template<Flags f = 0, typename ScalarT>
-  constexpr ScalarT floor(const ScalarT& v) {
-    if constexpr(!is_ct(f)) {
-      return non_cste::floor(v);
-    }
-    else {
-      // TODO: find a better algorithm please!
-      return static_cast<long long>(v);
-    }
-  }
-
-  template<Flags f = 0, typename ScalarT>
-  constexpr ScalarT fmod(const ScalarT& v, const ScalarT& d) {
-    return v - floor<f>(v / d) * d;
-  }
-
-  template<Flags f = 0, typename ScalarT>
-  constexpr ScalarT pow(const ScalarT& x, const ScalarT& n) {
-    if constexpr(!is_ct(f)) {
-      return non_cste::pow(x, n);
-    }
-    else {
-      // TODO: find a better algorithm please!
-      assert(false);
-    }
-  }  
-
-  template<Flags f = 0, typename T>
-  constexpr T sqrt(const T& v) {
-    if constexpr(!is_ct(f)) {
-      return non_cste::sqrt(v);
-    }
-    else {
+  namespace cste {
+    template<typename T>
+    constexpr T sqrt(const T& v) {
       if(v == T(0)) {
         return v;
       }
@@ -124,6 +83,103 @@ namespace VECPP_NAMESPACE {
       }
 
       return r;
+    }
+
+    template<typename T>
+    constexpr T pow(const T& x, const T& n) {
+      assert(false);
+    }
+
+    template<typename T>
+    constexpr T exp(const T& v) {
+      assert(false);
+    }
+
+    template<typename T>
+    constexpr T ceil(const T& v) {
+      assert(false);
+    }
+
+    template<typename T>
+    constexpr T floor(const T& v) {
+      return static_cast<T>(static_cast<long long>(v));
+    }
+
+    template<typename T>
+    constexpr T sin(const T& v) {
+      assert(false);
+    }
+
+    template<typename T>
+    constexpr T cos(const T& v) {
+      assert(false);
+    }
+
+    template<typename T>
+    constexpr T tan(const T& v) {
+      return sin(v) / cos(v);
+    }
+
+    template<typename T>
+    constexpr T fmod(const T& v, const T& d) {
+      return v - floor(v / d) * d;
+    }
+
+  }
+
+  template<Flags f = 0, typename ScalarT>
+  constexpr ScalarT abs(const ScalarT& v) {
+    return v < ScalarT(0) ? -v : v;
+  }
+
+  template<Flags f = 0, typename ScalarT>
+  constexpr ScalarT ceil(const ScalarT& v) {
+    assert(false);
+  }
+
+  template<Flags f = 0, typename ScalarT>
+  constexpr ScalarT exp(const ScalarT& v) {
+    if constexpr(!is_ct(f)) {
+      return non_cste::exp(v);
+    }
+    else {
+      // TODO: find a better algorithm please!
+      return cste::exp(v);
+    }
+  }
+
+  template<Flags f = 0, typename ScalarT>
+  constexpr ScalarT floor(const ScalarT& v) {
+    if constexpr(!is_ct(f)) {
+      return non_cste::floor(v);
+    }
+    else {
+      return cste::floor(v);
+    }
+  }
+
+  template<Flags f = 0, typename ScalarT>
+  constexpr ScalarT fmod(const ScalarT& v, const ScalarT& d) {
+    return v - floor<f>(v / d) * d;
+  }
+
+  template<Flags f = 0, typename ScalarT>
+  constexpr ScalarT pow(const ScalarT& x, const ScalarT& n) {
+    if constexpr(!is_ct(f)) {
+      return non_cste::pow(x, n);
+    }
+    else {
+      return cste::pow(x, n);
+    }
+  }  
+
+  template<Flags f = 0, typename T>
+  constexpr T sqrt(const T& v) {
+    if constexpr(!is_ct(f)) {
+      return non_cste::sqrt(v);
+    }
+    else {
+      return cste::sqrt(v);
     }
   }
 }
