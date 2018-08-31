@@ -11,6 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # off bby default.
 option(VECPP_BUILD_SINGLE_HEADER "Build the vecpp_single.h header" OFF)
 option(VECPP_BUILD_TESTS "Build tests" ON)
+option(VECPP_BUILD_FAILING_TESTS "Build failing tests" OFF)
 
 include_directories(
   include
