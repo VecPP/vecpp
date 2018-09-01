@@ -30,6 +30,7 @@ if(VECPP_BUILD_SINGLE_HEADER)
       PRIVATE VECPP_TEST_SINGLE_HEADER
     )
 
+    add_dependencies("${TGT_NAME}_sh" generate_single_include)
     target_link_libraries("${TGT_NAME}_sh" catch_main)
     add_test("${TGT_NAME}_sh" "${TGT_NAME}_sh")
   endforeach()

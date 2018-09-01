@@ -98,7 +98,7 @@ TEST_CASE("copy_and_reassign", "[angle]") {
   {
     constexpr auto a = 10.0_deg;
     constexpr auto b = a;
-    constexpr auto c = []() {
+    constexpr auto c = [=]() {
       auto tmp = 20.0_deg;
       tmp = a;
       return tmp;

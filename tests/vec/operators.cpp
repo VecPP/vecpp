@@ -29,7 +29,7 @@ TEST_CASE("vecs add", "[vec_operators]") {
 
   {
     constexpr Vec a = {2, 2};
-    constexpr Vec b = []() {
+    constexpr Vec b = [=]() {
       Vec c = a;
       c += {2, 3};
       return c;
@@ -52,7 +52,7 @@ TEST_CASE("vecs sub", "[vec_operators]") {
 
   {
     constexpr Vec a = {2, 2};
-    constexpr Vec b = []() {
+    constexpr Vec b = [=]() {
       Vec c = a;
       c -= {2, 3};
       return c;
@@ -74,7 +74,7 @@ TEST_CASE("vecs per-member mul", "[vec_operators]") {
 
   {
     constexpr Vec a = {2, 2};
-    constexpr Vec b = []() {
+    constexpr Vec b = [=]() {
       Vec c = a;
       c *= {2, 3};
       return c;
@@ -96,7 +96,7 @@ TEST_CASE("vecs per-member div", "[vec_operators]") {
   }
   {
     constexpr Vec a = {2, 3};
-    constexpr Vec b = []() {
+    constexpr Vec b = [=]() {
       Vec c = a;
       c /= {2, 3};
       return c;
