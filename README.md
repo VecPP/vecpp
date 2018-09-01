@@ -22,12 +22,25 @@ A simple vector math library.
 * Code is easy to follow and straightforward
 * No multiple ways to achieve the same thing
 
+## Documentation
+
+The full documentation matching the current state of the master branch can be 
+found [here](https://francoischabot.github.io/vecpp/).
+
 ## Quick Start
 
 ### Installation
 
 Vecpp is a header-only library. As such, all you need to do is make the 
-contents of the `include` directory avilable to your compiler
+contents of the `include` directory avilable to your compiler.
+
+Alternatively, you can simply copy "vecpp_single.h" into your
+project and use that single freestanding header. You can find it in a special `single_header` branch 
+[here](https://github.com/FrancoisChabot/vecpp/tree/single_header).
+
+**Tip:** This can be used to quickly test generated code on 
+[compiler explorer](godbolt.org). For example like 
+[this](https://gcc.godbolt.org/z/m_Gg-c).
 
 ### Vectors
 
@@ -45,65 +58,6 @@ int main() {
   std::cout << "ux . uy :" << dot(x, y) << "\n";
 }
 ```
-
-## Installation
-
-Vecpp is a header-only library. As such, all you need to do is make the 
-contents of the `include` directory avilable to your compiler and include the 
-root header like so:
-
-```
-#include "vecpp/vecpp.h"
-```
-
-### Single header 
-
-Alternatively, you can simply copy "include/vecpp/vecpp_single.h" into your
-project and use that single freestanding header.
-
-The project maintains an up-to-date version of this header, in sync with the 
-`master` branch n a special `single_header` branch 
-[here](https://github.com/FrancoisChabot/vecpp/tree/single_header)
-
-**Tip:** This can be used to quickly test generated code on 
-[compiler explorer](godbolt.org). For example like 
-[this](https://gcc.godbolt.org/z/m_Gg-c).
-
-**N.B.** The single header file is generated as part of the build process, so if 
-you are cloning the git repository, it will not be present. You can generate it 
-yourself like so: (you will need to have python installed)
-
-```bash
-cd vecpp/source/dir/location
-git submodule update --init
-mkdir _bld
-cd _bld
-cmake -DVECPP_BUILD_SINGLE_HEADER=ON ..
-make generate_single_include
-```
-
-### Namespace
-
-If, for some reason, the vecpp namespace conflicts with another top-level 
-namespace or macro in your project, you can override it by defining the 
-`VECPP_NAMESPACE` macro before including it.
-
-```cpp
-#define VECPP_NAMESPACE vpp
-#include "vecpp/vecpp.h"
-```
-
-## Documentation
-
-The full documentation matching the current state of the master branch can be 
-found [here](https://francoischabot.github.io/vecpp/).
-
-### Rebuilding documention
-
-The documentation (in the docs/ diectory) should be legible in plain text. You 
-can also generate the formatted version using [mkdocs](insert_link)
-(v1.0 or above).
-
 ## Acknowledgements
 
 - [glm](https://glm.g-truc.net) is used as a reference point for many algorithms.
