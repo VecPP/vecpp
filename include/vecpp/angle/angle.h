@@ -211,7 +211,7 @@ constexpr Angle<T, f> Angle<T, f>::from_clamped_deg(const T& v) {
 
 template <typename T, Flags f>
 constexpr Angle<T, f> Angle<T, f>::from_rad(const T& v) {
-  T constrained = cste::fmod(v + pi<T>, two_pi<T>);
+  T constrained = cste::mod(v + pi<T>, two_pi<T>);
 
   if (constrained <= T(0)) {
     constrained += two_pi<T>;

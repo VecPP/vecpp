@@ -115,7 +115,7 @@ template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> mod(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
   Vec<T, l, f> result = {0};
   for (std::size_t i = 0; i < lhs.size(); ++i) {
-    result[i] = mod(lhs[i], rhs[i]);
+    result[i] = mod<f>(lhs[i], rhs[i]);
   }
   return result;
 }

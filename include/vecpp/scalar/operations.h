@@ -75,8 +75,12 @@ T tan(const T& v) {
 }
 
 template <typename T>
-constexpr T fmod(const T& v, const T& d) {
-  return std::fmod(v, d);
+T mod(const T& v, const T& d) {
+  if constexpr (std::is_integral_v<T>) {
+    return v % d;
+  } else {
+    return std::fmod(v, d);
+  }
 }
 }  // namespace non_cste
 
@@ -160,8 +164,12 @@ constexpr T tan(const T& v) {
 }
 
 template <typename T>
-constexpr T fmod(const T& v, const T& d) {
-  return v - floor(v / d) * d;
+constexpr T mod(const T& v, const T& d) {
+  if constexpr (std::is_integral_v<T>) {
+    return v % d;
+  } else {
+    return v - floor(v / d) * d;
+  }
 }
 
 }  // namespace cste
@@ -222,8 +230,12 @@ constexpr ScalarT trunc(const ScalarT& v) {
 }
 
 template <Flags f = 0, typename ScalarT>
-constexpr ScalarT fmod(const ScalarT& v, const ScalarT& d) {
-  return v - floor<f>(v / d) * d;
+constexpr ScalarT mod(const ScalarT& v, const ScalarT& d) {
+  if constexpr (!is_ct(f)) {
+    return non_cste::mod(v, d);
+  } else {
+    return cste::mod(v, d);
+  }
 }
 
 template <Flags f = 0, typename ScalarT>

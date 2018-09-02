@@ -236,6 +236,41 @@ TEST_CASE("max", "[vec][algo]") {
   }
 }
 
+TEST_CASE("mod", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+  using iVec = vecpp::Vec<int, 4>;
+
+  SECTION("runtime") {
+    Vec a = {1.3f, 2.3f, 3.3f, 4.3f};
+    Vec b = {3.0f, 3.0f, 3.0f, 3.0f};
+
+    Vec c = mod(a, b);
+
+    iVec ia = {1, 2, 3, 4};
+    iVec ib = {3, 3, 3, 3};
+
+    iVec ic = mod(ia, ib);
+
+    REQUIRE(vec_close(c, Vec{1.3f, 2.3f, 0.3f, 1.3f}));
+    REQUIRE(ic == iVec{1, 2, 0, 1});
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {1.3f, 2.3f, 3.3f, 4.3f};
+    constexpr Vec b = {3.0f, 3.0f, 3.0f, 3.0f};
+
+    constexpr Vec c = mod(ct(a), ct(b));
+
+    constexpr iVec ia = {1, 2, 3, 4};
+    constexpr iVec ib = {3, 3, 3, 3};
+
+    constexpr iVec ic = mod(ct(ia), ct(ib));
+
+    static_assert(vec_close(c, Vec{1.3f, 2.3f, 0.3f, 1.3f}));
+    static_assert(ic == iVec{1, 2, 0, 1});
+  }
+}
+
 TEST_CASE("length", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 
