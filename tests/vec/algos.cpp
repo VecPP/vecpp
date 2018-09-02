@@ -138,6 +138,22 @@ TEST_CASE("round", "[vec][algo]") {
   }
 }
 
+TEST_CASE("sign", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
+    Vec a = {0.0f, 1.0f, -1.0f, -0.0f};
+
+    REQUIRE(sign(a) == Vec{1.0f, 1.0f, -1.0f, 1.0f});
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {0.0f, 1.0f, -1.0f, -0.0f};
+
+    static_assert(sign(ct(a)) == Vec{1.0f, 1.0f, -1.0f, 1.0f});
+  }
+}
+
 TEST_CASE("min", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 

@@ -197,6 +197,11 @@ constexpr ScalarT round(const ScalarT& v) {
 }
 
 template <Flags f = 0, typename ScalarT>
+constexpr ScalarT sign(const ScalarT& v) {
+  return v >= 0.0f ? 1.0f : -1.0f;
+}
+
+template <Flags f = 0, typename ScalarT>
 constexpr ScalarT fmod(const ScalarT& v, const ScalarT& d) {
   return v - floor<f>(v / d) * d;
 }
