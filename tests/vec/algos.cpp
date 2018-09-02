@@ -10,10 +10,82 @@ using Catch::Matchers::WithinAbs;
 
 constexpr vecpp::Flags ctf = vecpp::flags::compile_time;
 
-TEST_CASE("min", "[vec_algos]") {
+TEST_CASE("abs", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 
-  {
+  SECTION("runtime") {
+    Vec a = {1.0f, -1.0f, 0.0f, -4.0f};
+
+    auto c = abs(a);
+
+    REQUIRE(c[0] == 1.0f);
+    REQUIRE(c[1] == 1.0f);
+    REQUIRE(c[2] == 0.0f);
+    REQUIRE(c[3] == 4.0f);
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {1.0f, -1.0f, 0.0f, -4.0f};
+
+    constexpr auto c = abs(a);
+
+    static_assert(c[0] == 1.0f);
+    static_assert(c[1] == 1.0f);
+    static_assert(c[2] == 0.0f);
+    static_assert(c[3] == 4.0f);
+  }
+}
+
+TEST_CASE("ceil", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
+    Vec a = {1.0f, -1.0f, 1.3f, -1.5f};
+
+    auto c = ceil(a);
+
+    REQUIRE(c[0] == 1.0f);
+    REQUIRE(c[1] == -1.0f);
+    REQUIRE(c[2] == 2.0f);
+    REQUIRE(c[3] == -1.0f);
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {1.0f, -1.0f, 1.3f, -1.5f};
+
+    constexpr Vec c = ceil(ct(a));
+
+    static_assert(c[0] == 1.0f);
+    static_assert(c[1] == -1.0f);
+    static_assert(c[2] == 2.0f);
+    static_assert(c[3] == -1.0f);
+  }
+}
+
+TEST_CASE("floor", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
+    Vec a = {1.0f, -1.0f, 1.3f, -1.5f};
+
+    auto c = floor(a);
+
+    REQUIRE(c == Vec{1.0f, -1.0f, 1.0f, -2.0f});
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {1.0f, -1.0f, 1.3f, -1.5f};
+
+    constexpr Vec c = floor(ct(a));
+
+    static_assert(c == Vec{1.0f, -1.0f, 1.0f, -2.0f});
+  }
+}
+
+TEST_CASE("min", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
     Vec a = {1.0f, 1.0f, 1.0f, 4.0f};
     Vec b = {2.0f, 0.0f, 3.0f, 0.0f};
 
@@ -25,7 +97,7 @@ TEST_CASE("min", "[vec_algos]") {
     REQUIRE(c[3] == b[3]);
   }
 
-  {
+  SECTION("constexpr") {
     constexpr Vec a = {1.0f, 1.0f, 1.0f, 4.0f};
     constexpr Vec b = {2.0f, 0.0f, 3.0f, 0.0f};
 
@@ -38,10 +110,10 @@ TEST_CASE("min", "[vec_algos]") {
   }
 }
 
-TEST_CASE("max", "[vec_algos]") {
+TEST_CASE("max", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 
-  {
+  SECTION("runtime") {
     Vec a = {1.0f, 1.0f, 1.0f, 4.0f};
     Vec b = {2.0f, 0.0f, 3.0f, 0.0f};
 
@@ -53,7 +125,7 @@ TEST_CASE("max", "[vec_algos]") {
     REQUIRE(c[3] == a[3]);
   }
 
-  {
+  SECTION("constexpr") {
     constexpr Vec a = {1.0f, 1.0f, 1.0f, 4.0f};
     constexpr Vec b = {2.0f, 0.0f, 3.0f, 0.0f};
 
@@ -66,35 +138,10 @@ TEST_CASE("max", "[vec_algos]") {
   }
 }
 
-TEST_CASE("abs", "[vec_algos]") {
+TEST_CASE("length", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 
-  {
-    Vec a = {1.0f, -1.0f, 0.0f, -4.0f};
-
-    auto c = abs(a);
-
-    REQUIRE(c[0] == 1.0f);
-    REQUIRE(c[1] == 1.0f);
-    REQUIRE(c[2] == 0.0f);
-    REQUIRE(c[3] == 4.0f);
-  }
-
-  {
-    constexpr Vec a = {1.0f, -1.0f, 0.0f, -4.0f};
-
-    constexpr auto c = abs(a);
-
-    static_assert(c[0] == 1.0f);
-    static_assert(c[1] == 1.0f);
-    static_assert(c[2] == 0.0f);
-    static_assert(c[3] == 4.0f);
-  }
-}
-
-TEST_CASE("length", "[vec_algos]") {
-  using Vec = vecpp::Vec<float, 4>;
-  {
+  SECTION("runtime") {
     Vec a = {0.0f, 0.0f, 0.0f, 0.0f};
     Vec b = {1.0f, 0.0f, 0.0f, 0.0f};
     Vec c = {1.0f, -1.0f, 0.0f, 0.0f};
@@ -104,21 +151,22 @@ TEST_CASE("length", "[vec_algos]") {
     REQUIRE_THAT(length(c), WithinAbs(std::sqrt(2.0f), 0.00001f));
   }
 
-  {
+  SECTION("constexpr") {
     constexpr Vec a = {0.0f, 0.0f, 0.0f, 0.0f};
     constexpr Vec b = {1.0f, 0.0f, 0.0f, 0.0f};
     constexpr Vec c = {1.0f, -1.0f, 0.0f, 0.0f};
 
     static_assert(vecpp::abs(length(ct(a)) - 0.0f) < 0.00001f);
     static_assert(vecpp::abs(length(ct(b)) - 1.0f) < 0.00001f);
-    static_assert(vecpp::abs(length(ct(c)) - vecpp::sqrt<ctf>(2.0f)) < 0.00001f);
+    static_assert(vecpp::abs(length(ct(c)) - vecpp::sqrt<ctf>(2.0f)) <
+                  0.00001f);
   }
 }
 
-TEST_CASE("cross", "[vec_algos]") {
+TEST_CASE("cross", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 3>;
 
-  {
+  SECTION("runtime") {
     Vec unit_x = {1.0f, 0.0f, 0.0f};
     Vec unit_y = {0.0f, 1.0f, 0.0f};
     Vec unit_z = {0.0f, 0.0f, 1.0f};
@@ -131,7 +179,7 @@ TEST_CASE("cross", "[vec_algos]") {
                  WithinAbs(0.0f, 0.00001f));
   }
 
-  {
+  SECTION("constexpr") {
     constexpr Vec unit_x = {1.0f, 0.0f, 0.0f};
     constexpr Vec unit_y = {0.0f, 1.0f, 0.0f};
     constexpr Vec unit_z = {0.0f, 0.0f, 1.0f};
