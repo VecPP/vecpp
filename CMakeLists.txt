@@ -42,6 +42,7 @@ if(VECPP_BUILD_DOCS)
   )
 
   add_custom_target(generate_doc ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/site/index.html)
+  set_target_properties(generate_doc PROPERTIES FOLDER "prepare_for_deploy")
 endif()
 
 if(VECPP_BUILD_SINGLE_HEADER)
@@ -75,6 +76,7 @@ if(VECPP_BUILD_SINGLE_HEADER)
       --input=${CMAKE_CURRENT_SOURCE_DIR}/include/vecpp/vecpp.h)
 
   add_custom_target(generate_single_include ALL DEPENDS ${SINGLE_INCLUDE_FILE})
+  set_target_properties(generate_single_include PROPERTIES FOLDER "prepare_for_deploy")
 endif()
 
 #install headers
