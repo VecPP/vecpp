@@ -271,6 +271,64 @@ TEST_CASE("mod", "[vec][algo]") {
   }
 }
 
+TEST_CASE("clamp", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
+    Vec a = {1.0f, 1.0f, 5.0f, 4.0f};
+    Vec b = {2.0f, -1.0f, -1.0f, 0.0f};
+    Vec c = {4.0f, 4.0f, 3.0f, 0.0f};
+
+    auto d = clamp(a, b, c);
+
+    REQUIRE(d[0] == b[0]);
+    REQUIRE(d[1] == a[1]);
+    REQUIRE(d[2] == c[2]);
+    REQUIRE(d[3] == b[3]);
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {1.0f, 1.0f, 5.0f, 4.0f};
+    constexpr Vec b = {2.0f, -1.0f, -1.0f, 0.0f};
+    constexpr Vec c = {4.0f, 4.0f, 3.0f, 0.0f};
+
+    constexpr Vec d = clamp(a, b, c);
+
+    static_assert(d[0] == b[0]);
+    static_assert(d[1] == a[1]);
+    static_assert(d[2] == c[2]);
+    static_assert(d[3] == b[3]);
+  }
+}
+
+TEST_CASE("lerp", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
+    Vec a = {1.0f, 0.0f, 10.0f, 0.0f};
+    Vec b = {2.0f, 10.0f, 1.0f, 0.0f};
+    Vec c = {0.0f, 0.5f, 0.3f, 1.0f};
+
+    auto d = lerp(a, b, c);
+    auto e = lerp(a, b, 0.5f);
+
+    REQUIRE(vec_close(d, Vec{1.0f, 5.0f, 7.3f, 0.0f}));
+    REQUIRE(vec_close(e, Vec{1.5f, 5.0f, 5.5f, 0.0f}));
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {1.0f, 0.0f, 10.0f, 0.0f};
+    constexpr Vec b = {2.0f, 10.0f, 1.0f, 0.0f};
+    constexpr Vec c = {0.0f, 0.5f, 0.3f, 1.0f};
+
+    constexpr Vec d = lerp(a, b, c);
+    constexpr Vec e = lerp(a, b, 0.5f);
+
+    static_assert(vec_close(d, Vec{1.0f, 5.0f, 7.3f, 0.0f}));
+    static_assert(vec_close(e, Vec{1.5f, 5.0f, 5.5f, 0.0f}));
+  }
+}
+
 TEST_CASE("step", "[vec][step]") {
   using Vec = vecpp::Vec<float, 4>;
 

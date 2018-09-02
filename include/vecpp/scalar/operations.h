@@ -253,6 +253,28 @@ constexpr ScalarT step(const ScalarT& edge, const ScalarT& x) {
 }
 
 template <Flags f = 0, typename ScalarT>
+constexpr ScalarT min(const ScalarT& lhs, const ScalarT& rhs) {
+  return std::min(lhs, rhs);
+}
+
+template <Flags f = 0, typename ScalarT>
+constexpr ScalarT max(const ScalarT& lhs, const ScalarT& rhs) {
+  return std::max(lhs, rhs);
+}
+
+template <Flags f = 0, typename ScalarT>
+constexpr ScalarT clamp(const ScalarT& v, const ScalarT& low,
+                        const ScalarT& high) {
+  return std::clamp(v, low, high);
+}
+
+template <Flags f = 0, typename ScalarT, typename PctT>
+constexpr ScalarT lerp(const ScalarT& from, const ScalarT& to,
+                       const PctT& pct) {
+  return from + (to - from) * pct;
+}
+
+template <Flags f = 0, typename ScalarT>
 constexpr ScalarT pow(const ScalarT& x, const ScalarT& n) {
   if constexpr (!is_ct(f)) {
     return non_cste::pow(x, n);

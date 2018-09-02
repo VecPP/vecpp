@@ -95,7 +95,7 @@ template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> max(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
   Vec<T, l, f> result = {0};
   for (std::size_t i = 0; i < lhs.size(); ++i) {
-    result[i] = std::max(lhs[i], rhs[i]);
+    result[i] = max(lhs[i], rhs[i]);
   }
   return result;
 }
@@ -105,7 +105,7 @@ template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> min(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
   Vec<T, l, f> result = {0};
   for (std::size_t i = 0; i < lhs.size(); ++i) {
-    result[i] = std::min(lhs[i], rhs[i]);
+    result[i] = min(lhs[i], rhs[i]);
   }
   return result;
 }
@@ -134,21 +134,17 @@ constexpr Vec<T, l, f> step(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
 
 // clamp
 template <typename T, std::size_t l, Flags f>
-constexpr Vec<T, l, f> clamp(const Vec<T, l, f>& v, const Vec<T, l, f>& min,
-                             const Vec<T, l, f>& max) {
+constexpr Vec<T, l, f> clamp(const Vec<T, l, f>& v, const Vec<T, l, f>& low,
+                             const Vec<T, l, f>& high) {
   Vec<T, l, f> result = {0};
   for (std::size_t i = 0; i < v.size(); ++i) {
-    result[i] = clamp(v[i], min[i], max[i]);
+    result[i] = clamp<f>(v[i], low[i], high[i]);
   }
   return result;
 }
 
 // lerp
-template <typename T, std::size_t l, Flags f>
-constexpr Vec<T, l, f> lerp(const Vec<T, l, f>& from, const Vec<T, l, f>& to,
-                            const T& pct) {
-  return from + (to - from) * pct;
-}
+// Implicitely handled via the scalar implementation
 
 }  // namespace VECPP_NAMESPACE
 #endif
