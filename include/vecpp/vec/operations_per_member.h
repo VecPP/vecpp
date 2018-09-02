@@ -59,7 +59,6 @@ constexpr Vec<T, l, f> fract(const Vec<T, l, f>& v) {
   return result;
 }
 
-
 // round
 template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> round(const Vec<T, l, f>& v) {
@@ -111,7 +110,6 @@ constexpr Vec<T, l, f> min(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
   return result;
 }
 
-
 // mod
 template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> mod(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
@@ -132,12 +130,12 @@ constexpr Vec<T, l, f> step(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
   return result;
 }
 
-
 // *************** Other functions *************** //
 
 // clamp
 template <typename T, std::size_t l, Flags f>
-constexpr Vec<T, l, f> clamp(const Vec<T, l, f>& v, const Vec<T, l, f>& min, const Vec<T, l, f>& max) {
+constexpr Vec<T, l, f> clamp(const Vec<T, l, f>& v, const Vec<T, l, f>& min,
+                             const Vec<T, l, f>& max) {
   Vec<T, l, f> result = {0};
   for (std::size_t i = 0; i < v.size(); ++i) {
     result[i] = clamp(v[i], min[i], max[i]);
@@ -145,12 +143,12 @@ constexpr Vec<T, l, f> clamp(const Vec<T, l, f>& v, const Vec<T, l, f>& min, con
   return result;
 }
 
-
 // lerp
 template <typename T, std::size_t l, Flags f>
-constexpr Vec<T, l, f> lerp(const Vec<T, l, f>& from, const Vec<T, l, f>& to, const T& pct) {
+constexpr Vec<T, l, f> lerp(const Vec<T, l, f>& from, const Vec<T, l, f>& to,
+                            const T& pct) {
   return from + (to - from) * pct;
 }
 
-}
+}  // namespace VECPP_NAMESPACE
 #endif

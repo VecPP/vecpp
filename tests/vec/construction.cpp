@@ -13,7 +13,8 @@ TEST_CASE("Static members assignment", "[vec_construct]") {
 
   static_assert(std::is_same_v<Vec::value_type, float>);
   static_assert(Vec::size() == 2);
-  static_assert(std::is_same_v<std::remove_cv_t<decltype(Vec::flags)>, vecpp::Flags>);
+  static_assert(
+      std::is_same_v<std::remove_cv_t<decltype(Vec::flags)>, vecpp::Flags>);
 }
 
 TEST_CASE("Default construction compiles without warning", "[vec_construct]") {
@@ -33,7 +34,7 @@ TEST_CASE("Default construction compiles without warning", "[vec_construct]") {
 
 TEST_CASE("Build vec2 from aggregate initialization", "[vec_construct]") {
   using Vec = vecpp::Vec<float, 2>;
-  
+
   {
     Vec a = {1.0f, 2.0f};
     Vec b{1.0f, 2.0f};
@@ -57,7 +58,7 @@ TEST_CASE("Build vec2 from aggregate initialization", "[vec_construct]") {
 TEST_CASE("Vectos transparently assign accross flags", "[vec_construct]") {
   using Vec = vecpp::Vec<float, 2>;
   using Flagged_vec = vecpp::Vec<float, 2, vecpp::flags::testing>;
-  
+
   {
     Vec a = {1.0f, 2.0f};
     Flagged_vec b = a;
@@ -107,24 +108,24 @@ TEST_CASE("use const vec in range-based for", "[vec_iterate]") {
       (void)v;
     }
   }
-/*
-  {
-    constexpr Vec a = {1.0f, 2.0f, 3.0f, 4.0f};
-    constexpr float b = [=](){
-      float total = 0.0f;
-      for (auto v : a) {
-        total += v;
-      }
-      return total;
-    }();
-    static_assert(b == (1.0f + 2.0f + 3.0f + 4.0f));
-  }
-  */
+  /*
+    {
+      constexpr Vec a = {1.0f, 2.0f, 3.0f, 4.0f};
+      constexpr float b = [=](){
+        float total = 0.0f;
+        for (auto v : a) {
+          total += v;
+        }
+        return total;
+      }();
+      static_assert(b == (1.0f + 2.0f + 3.0f + 4.0f));
+    }
+    */
 }
 
 TEST_CASE("Vec::at() usable to access reference", "[vec_access]") {
   using Vec = vecpp::Vec<float, 4>;
-  
+
   {
     Vec a = {1.0f, 2.0f, 3.0f, 4.0f};
 
@@ -135,14 +136,13 @@ TEST_CASE("Vec::at() usable to access reference", "[vec_access]") {
 
   {
     constexpr Vec a = {1.0f, 2.0f, 3.0f, 4.0f};
-    constexpr Vec b = [=](){
+    constexpr Vec b = [=]() {
       Vec c = a;
       c.at(2) = 10.0f;
       return c;
     }();
     static_assert(b[2] == 10.0f);
   }
-
 }
 
 TEST_CASE("Vec::at() performs bounds-checking", "[vec_access]") {
@@ -161,15 +161,14 @@ TEST_CASE("Vec::at() performs bounds-checking", "[vec_access]") {
     static_assert(a.at(0) == 1.0f);
 
     // Intentionally does not compile:
-    // static_assert(a.at(5)); 
+    // static_assert(a.at(5));
 
     REQUIRE_THROWS(a.at(5));
   }
 }
 
-
 TEST_CASE("Outputs to iostream", "[vec_format]") {
-  const vecpp::Vec<int, 4> a = {0, 1 , 2, 3};
+  const vecpp::Vec<int, 4> a = {0, 1, 2, 3};
 
   std::ostringstream stream;
 

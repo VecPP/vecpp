@@ -19,51 +19,47 @@ namespace VECPP_NAMESPACE {
 // Trigonometry
 
 // TODO: These placeholder taylor series expansion implementation
-// are temporary, and need to be replaced with something better! 
+// are temporary, and need to be replaced with something better!
 template <typename T, Flags f>
 constexpr T sin(const Angle<T, f>& a) {
-  if constexpr(is_ct(f)) {
-    constexpr std::array<T, 5> taylor_factors = {
-      -6, 120, -5040, 362880, -39916800
-    };
+  if constexpr (is_ct(f)) {
+    constexpr std::array<T, 5> taylor_factors = {-6, 120, -5040, 362880,
+                                                 -39916800};
 
     T r = a.as_rad();
-    T r_2 = r*r;
+    T r_2 = r * r;
 
     T result = r;
 
-    for(auto factor : taylor_factors) {
+    for (auto factor : taylor_factors) {
       r *= r_2;
       result += r / factor;
     }
 
     return result;
-  }
-  else {
+  } else {
     return non_cste::sin(a.as_rad());
   }
 }
 
 template <typename T, Flags f>
 constexpr T cos(const Angle<T, f>& a) {
-  if constexpr(is_ct(f)) {
-    return sin(a + Angle<T, f>::from_rad(half_pi<T>)); 
-  }
-  else {
+  if constexpr (is_ct(f)) {
+    return sin(a + Angle<T, f>::from_rad(half_pi<T>));
+  } else {
     return non_cste::cos(a.as_rad());
   }
 }
 
 template <typename T, Flags f>
 constexpr T tan(const Angle<T, f>& a) {
-  if constexpr(is_ct(f)) {
-    return sin(a) / cos(a); 
-  }
-  else {
+  if constexpr (is_ct(f)) {
+    return sin(a) / cos(a);
+  } else {
     return non_cste::tan(a.as_rad());
   }
 }
 
-}
+}  // namespace VECPP_NAMESPACE
 
 #endif

@@ -73,5 +73,5 @@ constexpr Vec<T, 3> operator*(const Quat<T>& lhs, const Vec<T, 3>& rhs) {
 
   return rhs + ((uv * lhs.w) + uuv) * T(2);
 }
-}
+}  // namespace VECPP_NAMESPACE
 #endif

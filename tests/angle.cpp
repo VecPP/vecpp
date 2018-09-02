@@ -16,7 +16,7 @@ constexpr vecpp::Angle<float> operator""_deg(long double v) {
 constexpr vecpp::Angle<float> operator""_rad(long double v) {
   return vecpp::Angle<float>::from_rad(float(v));
 }
-}
+}  // namespace angle_literals_float
 
 namespace angle_literals_double {
 constexpr vecpp::Angle<double> operator""_deg(long double v) {
@@ -26,15 +26,14 @@ constexpr vecpp::Angle<double> operator""_deg(long double v) {
 constexpr vecpp::Angle<double> operator""_rad(long double v) {
   return vecpp::Angle<double>::from_rad(double(v));
 }
-}
+}  // namespace angle_literals_double
 
-using vecpp::pi;
 using Catch::Matchers::WithinAbs;
+using vecpp::pi;
 
 using Angle = vecpp::Angle<float>;
 
-
-template<typename T>
+template <typename T>
 constexpr bool close_vals(const T& lhs, const T& rhs) {
   return vecpp::abs(lhs - rhs) < 0.0001f;
 }

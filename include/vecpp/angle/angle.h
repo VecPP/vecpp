@@ -21,7 +21,7 @@
 namespace VECPP_NAMESPACE {
 
 // Angle always represents value within the ]-PI,PI] radians range.
-template <typename T, Flags f=0>
+template <typename T, Flags f = 0>
 class Angle {
  public:
   using value_type = T;
@@ -41,7 +41,7 @@ class Angle {
   constexpr value_type as_rad() const;
 
   constexpr value_type raw() const;
-  
+
   template <int new_flags>
   constexpr operator Angle<T, new_flags>() const;
 
@@ -53,7 +53,7 @@ class Angle {
 };
 
 template <typename T, Flags f>
-constexpr Angle<T, f | flags::compile_time> ct(const Angle<T,f>& v) {
+constexpr Angle<T, f | flags::compile_time> ct(const Angle<T, f>& v) {
   return v;
 }
 
@@ -93,7 +93,8 @@ constexpr Angle<T, f>& operator+=(Angle<T, f>& lhs, const Angle<T, f>& rhs) {
 }
 
 template <typename T, Flags f>
-constexpr Angle<T, f> operator+(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
+constexpr Angle<T, f> operator+(const Angle<T, f>& lhs,
+                                const Angle<T, f>& rhs) {
   auto result = lhs;
   result += rhs;
   return result;
@@ -117,7 +118,8 @@ constexpr Angle<T, f>& operator-=(Angle<T, f>& lhs, const Angle<T, f>& rhs) {
 }
 
 template <typename T, Flags f>
-constexpr Angle<T, f> operator-(const Angle<T, f>& lhs, const Angle<T, f>& rhs) {
+constexpr Angle<T, f> operator-(const Angle<T, f>& lhs,
+                                const Angle<T, f>& rhs) {
   auto result = lhs;
   result -= rhs;
   return result;
@@ -240,6 +242,6 @@ template <typename T, Flags f>
 constexpr T Angle<T, f>::raw() const {
   return value_;
 }
-}
+}  // namespace VECPP_NAMESPACE
 
 #endif

@@ -15,16 +15,16 @@
 #include <array>
 #include <cassert>
 #include <cstddef>
-#include <stdexcept>
 #include <iostream>
+#include <stdexcept>
 
 namespace VECPP_NAMESPACE {
 
-template <typename T, std::size_t len, Flags f=0>
+template <typename T, std::size_t len, Flags f = 0>
 struct Vec {
  public:
   using value_type = T;
-  
+
   static constexpr Flags flags = f;
   static constexpr std::size_t size() { return len; }
 
@@ -46,7 +46,7 @@ struct Vec {
     assert(i < len);
     return data_[i];
   }
-  
+
   constexpr const T& operator[](std::size_t i) const {
     assert(i < len);
     return data_[i];
@@ -62,14 +62,14 @@ struct Vec {
   template <int new_flags>
   constexpr operator Vec<T, len, new_flags>() const {
     Vec<T, len, new_flags> result = {};
-    for(std::size_t i = 0 ; i < size(); ++i) {
+    for (std::size_t i = 0; i < size(); ++i) {
       result[i] = data_[i];
     }
     return result;
   }
 };
 
-template <typename T, std::size_t l,Flags f>
+template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f | flags::compile_time> ct(const Vec<T, l, f>& v) {
   return v;
 }
@@ -101,11 +101,10 @@ std::ostream& operator<<(std::ostream& stream, const Vec<T, l, f>& vec) {
   stream << "(";
 
   bool first = true;
-  for(const auto& v : vec) {
-    if(!first) {
+  for (const auto& v : vec) {
+    if (!first) {
       stream << ", ";
-    }
-    else {
+    } else {
       first = false;
     }
 
@@ -157,7 +156,8 @@ constexpr Vec<T, l, f>& operator+=(Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
 }
 
 template <typename T, std::size_t l, Flags f>
-constexpr Vec<T, l, f> operator+(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
+constexpr Vec<T, l, f> operator+(const Vec<T, l, f>& lhs,
+                                 const Vec<T, l, f>& rhs) {
   Vec<T, l, f> result = lhs;
   result += rhs;
   return result;
@@ -172,7 +172,8 @@ constexpr Vec<T, l, f>& operator-=(Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
 }
 
 template <typename T, std::size_t l, Flags f>
-constexpr Vec<T, l, f> operator-(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
+constexpr Vec<T, l, f> operator-(const Vec<T, l, f>& lhs,
+                                 const Vec<T, l, f>& rhs) {
   Vec<T, l, f> result = lhs;
   result -= rhs;
   return result;
@@ -187,7 +188,8 @@ constexpr Vec<T, l, f>& operator*=(Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
 }
 
 template <typename T, std::size_t l, Flags f>
-constexpr Vec<T, l, f> operator*(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
+constexpr Vec<T, l, f> operator*(const Vec<T, l, f>& lhs,
+                                 const Vec<T, l, f>& rhs) {
   Vec<T, l, f> result = lhs;
   result *= rhs;
   return result;
@@ -202,7 +204,8 @@ constexpr Vec<T, l, f>& operator/=(Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
 }
 
 template <typename T, std::size_t l, Flags f>
-constexpr Vec<T, l, f> operator/(const Vec<T, l, f>& lhs, const Vec<T, l, f>& rhs) {
+constexpr Vec<T, l, f> operator/(const Vec<T, l, f>& lhs,
+                                 const Vec<T, l, f>& rhs) {
   Vec<T, l, f> result = lhs;
   result /= rhs;
   return result;
@@ -245,5 +248,5 @@ constexpr Vec<T, l, f> operator/(const Vec<T, l, f>& lhs, const T& rhs) {
 
 // Algorithm disptach
 
-}
+}  // namespace VECPP_NAMESPACE
 #endif

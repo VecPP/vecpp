@@ -12,20 +12,17 @@
 
 namespace VECPP_NAMESPACE {
 
-  using Flags = int;
+using Flags = int;
 
-  namespace flags {
-    // Force usage of slower, but constexpr-friendly compile-time algorithms.
-    constexpr int compile_time = 1;
+namespace flags {
+// Force usage of slower, but constexpr-friendly compile-time algorithms.
+constexpr int compile_time = 1;
 
-    // Has no impact whatsoever, only used in testing
-    constexpr int testing = 0x80000000;
-  }
+// Has no impact whatsoever, only used in testing
+constexpr int testing = 0x80000000;
+}  // namespace flags
 
-  constexpr bool is_ct(Flags f) {
-    return f && flags::compile_time != 0;
-  }
+constexpr bool is_ct(Flags f) { return f && flags::compile_time != 0; }
 
-  
-}
+}  // namespace VECPP_NAMESPACE
 #endif

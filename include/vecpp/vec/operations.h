@@ -20,9 +20,8 @@ namespace VECPP_NAMESPACE {
 // Cross product
 template <typename T, Flags f>
 constexpr Vec<T, 3, f> cross(const Vec<T, 3, f>& lhs, const Vec<T, 3, f>& rhs) {
-  return { lhs[1] * rhs[2] - lhs[2] * rhs[1], 
-           lhs[2] * rhs[0] - lhs[0] * rhs[2],
-           lhs[0] * rhs[1] - lhs[1] * rhs[0]};
+  return {lhs[1] * rhs[2] - lhs[2] * rhs[1], lhs[2] * rhs[0] - lhs[0] * rhs[2],
+          lhs[0] * rhs[1] - lhs[1] * rhs[0]};
 }
 
 // Dot product
@@ -49,5 +48,5 @@ constexpr Vec<T, l, f> normalize(const Vec<T, l, f>& v) {
   return v / length(v);
 }
 
-}
+}  // namespace VECPP_NAMESPACE
 #endif

@@ -24,7 +24,8 @@ TEST_CASE("simple vector rotate", "[quat]") {
 
 TEST_CASE("angle_axis_constexp", "[quat]") {
   using fQuat = vecpp::Quat<float>;
-  constexpr fQuat r_x = fQuat::angle_axis(ct(fAngle::from_deg(90.0f)), {1.0f, 0.0f, 0.0f});
+  constexpr fQuat r_x =
+      fQuat::angle_axis(ct(fAngle::from_deg(90.0f)), {1.0f, 0.0f, 0.0f});
 
   (void)r_x;
 }
