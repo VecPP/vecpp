@@ -64,7 +64,7 @@ template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> round(const Vec<T, l, f>& v) {
   Vec<T, l, f> result = {0};
   for (std::size_t i = 0; i < v.size(); ++i) {
-    result[i] = round(v[i]);
+    result[i] = round<f>(v[i]);
   }
   return result;
 }

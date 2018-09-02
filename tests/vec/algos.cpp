@@ -112,6 +112,32 @@ TEST_CASE("fract", "[vec][algo]") {
   }
 }
 
+TEST_CASE("round", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
+    Vec a = {0.1f, 0.51f, 1.3f, 1.6f};
+    Vec b = {-0.1f, -0.51f, -1.3f, -1.6f};
+
+    Vec c = round(a);
+    Vec d = round(b);
+
+    REQUIRE(vec_close(c, Vec{0.0f, 1.0f, 1.0f, 2.0f}));
+    REQUIRE(vec_close(d, Vec{0.0f, -1.0f, -1.0f, -2.0f}));
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {0.1f, 0.51f, 1.3f, 1.6f};
+    constexpr Vec b = {-0.1f, -0.51f, -1.3f, -1.6f};
+
+    constexpr Vec c = round(ct(a));
+    constexpr Vec d = round(ct(b));
+
+    static_assert(vec_close(c, Vec{0.0f, 1.0f, 1.0f, 2.0f}));
+    static_assert(vec_close(d, Vec{0.0f, -1.0f, -1.0f, -2.0f}));
+  }
+}
+
 TEST_CASE("min", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 
