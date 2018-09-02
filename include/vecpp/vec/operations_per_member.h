@@ -53,7 +53,7 @@ constexpr Vec<T, l, f> floor(const Vec<T, l, f>& v) {
 template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> fract(const Vec<T, l, f>& v) {
   Vec<T, l, f> result = {0};
-  for (std::size_t i = 0; i < lhs.size(); ++i) {
+  for (std::size_t i = 0; i < v.size(); ++i) {
     result[i] = fract(v[i]);
   }
   return result;
@@ -63,7 +63,7 @@ constexpr Vec<T, l, f> fract(const Vec<T, l, f>& v) {
 template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> round(const Vec<T, l, f>& v) {
   Vec<T, l, f> result = {0};
-  for (std::size_t i = 0; i < lhs.size(); ++i) {
+  for (std::size_t i = 0; i < v.size(); ++i) {
     result[i] = round(v[i]);
   }
   return result;
@@ -73,7 +73,7 @@ constexpr Vec<T, l, f> round(const Vec<T, l, f>& v) {
 template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> sign(const Vec<T, l, f>& v) {
   Vec<T, l, f> result = {0};
-  for (std::size_t i = 0; i < lhs.size(); ++i) {
+  for (std::size_t i = 0; i < v.size(); ++i) {
     result[i] = sign(v[i]);
   }
   return result;
@@ -83,7 +83,7 @@ constexpr Vec<T, l, f> sign(const Vec<T, l, f>& v) {
 template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> truc(const Vec<T, l, f>& v) {
   Vec<T, l, f> result = {0};
-  for (std::size_t i = 0; i < lhs.size(); ++i) {
+  for (std::size_t i = 0; i < v.size(); ++i) {
     result[i] = trunc(v[i]);
   }
   return result;
