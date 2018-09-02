@@ -11,6 +11,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # off bby default.
 option(VECPP_BUILD_SINGLE_HEADER "Build the vecpp_single.h header" OFF)
 option(VECPP_BUILD_TESTS "Build tests" ON)
+option(VECPP_BUILD_DOCS "Build documentation" OFF)
 option(VECPP_BUILD_FAILING_TESTS "Build failing tests" OFF)
 
 include_directories(
@@ -21,6 +22,26 @@ if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
 else()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -Werror -fstrict-aliasing")
+endif()
+
+if(VECPP_BUILD_DOCS)
+
+  FILE(GLOB_RECURSE
+    VECPP_DOC_SRC
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/docs/*.md
+  )
+
+  LIST(APPEND VECPP_DOC_SRC mkdocs.yml)
+
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/site/index.html
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    DEPENDS ${VECPP_DOC_SRC} 
+    COMMAND mkdocs build --verbose --clean --strict
+  )
+
+  add_custom_target(generate_doc ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/site/index.html)
 endif()
 
 if(VECPP_BUILD_SINGLE_HEADER)

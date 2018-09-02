@@ -30,11 +30,10 @@ script:
     - ctest --output-on-failure
     - cd ..
     - mkdir _bld_rel && cd _bld_rel
-    - cmake -DCMAKE_BUILD_TYPE=RELEASE -DVECPP_BUILD_SINGLE_HEADER=ON ..
+    - cmake -DCMAKE_BUILD_TYPE=RELEASE -DVECPP_BUILD_SINGLE_HEADER=ON -DVECPP_BUILD_DOCS=ON..
     - cmake --build .
     - ctest --output-on-failure
     - cd ..
-    - mkdocs build --verbose --clean --strict
     - mkdir include_single
     - cp include/vecpp/vecpp_single.h include_single/
 
