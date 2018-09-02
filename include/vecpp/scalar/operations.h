@@ -55,6 +55,11 @@ T round(const T& v) {
 }
 
 template <typename T>
+T trunc(const T& v) {
+  return std::trunc(v);
+}
+
+template <typename T>
 T sin(const T& v) {
   return std::sin(v);
 }
@@ -129,6 +134,12 @@ constexpr T round(const T& v) {
 }
 
 template <typename T>
+constexpr T trunc(const T& v) {
+  long long int x = static_cast<long long int>(v);
+  return T(x);
+}
+
+template <typename T>
 constexpr T fract(const T& v) {
   return v - floor(v);
 }
@@ -199,6 +210,15 @@ constexpr ScalarT round(const ScalarT& v) {
 template <Flags f = 0, typename ScalarT>
 constexpr ScalarT sign(const ScalarT& v) {
   return v >= 0.0f ? 1.0f : -1.0f;
+}
+
+template <Flags f = 0, typename ScalarT>
+constexpr ScalarT trunc(const ScalarT& v) {
+  if constexpr (!is_ct(f)) {
+    return non_cste::trunc(v);
+  } else {
+    return cste::trunc(v);
+  }
 }
 
 template <Flags f = 0, typename ScalarT>

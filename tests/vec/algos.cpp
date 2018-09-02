@@ -154,6 +154,32 @@ TEST_CASE("sign", "[vec][algo]") {
   }
 }
 
+TEST_CASE("trunc", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
+    Vec a = {0.1f, 0.51f, 1.3f, 1.6f};
+    Vec b = {-0.1f, -0.51f, -1.3f, -1.6f};
+
+    Vec c = trunc(a);
+    Vec d = trunc(b);
+
+    REQUIRE(vec_close(c, Vec{0.0f, 0.0f, 1.0f, 1.0f}));
+    REQUIRE(vec_close(d, Vec{0.0f, 0.0f, -1.0f, -1.0f}));
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {0.1f, 0.51f, 1.3f, 1.6f};
+    constexpr Vec b = {-0.1f, -0.51f, -1.3f, -1.6f};
+
+    constexpr Vec c = trunc(ct(a));
+    constexpr Vec d = trunc(ct(b));
+
+    static_assert(vec_close(c, Vec{0.0f, 0.0f, 1.0f, 1.0f}));
+    static_assert(vec_close(d, Vec{0.0f, 0.0f, -1.0f, -1.0f}));
+  }
+}
+
 TEST_CASE("min", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 
