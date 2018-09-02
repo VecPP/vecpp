@@ -54,7 +54,7 @@ template <typename T, std::size_t l, Flags f>
 constexpr Vec<T, l, f> fract(const Vec<T, l, f>& v) {
   Vec<T, l, f> result = {0};
   for (std::size_t i = 0; i < v.size(); ++i) {
-    result[i] = fract(v[i]);
+    result[i] = fract<f>(v[i]);
   }
   return result;
 }

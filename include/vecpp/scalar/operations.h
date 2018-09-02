@@ -45,6 +45,11 @@ T floor(const T& v) {
 }
 
 template <typename T>
+T fract(const T& v) {
+  return v - floor(v);
+}
+
+template <typename T>
 T sin(const T& v) {
   return std::sin(v);
 }
@@ -114,6 +119,11 @@ constexpr T floor(const T& v) {
 }
 
 template <typename T>
+constexpr T fract(const T& v) {
+  return v - floor(v);
+}
+
+template <typename T>
 constexpr T sin(const T& v) {
   assert(false);
 }
@@ -170,6 +180,15 @@ constexpr ScalarT floor(const ScalarT& v) {
 template <Flags f = 0, typename ScalarT>
 constexpr ScalarT fmod(const ScalarT& v, const ScalarT& d) {
   return v - floor<f>(v / d) * d;
+}
+
+template <Flags f = 0, typename ScalarT>
+constexpr ScalarT fract(const ScalarT& v) {
+  if constexpr (!is_ct(f)) {
+    return non_cste::fract(v);
+  } else {
+    return cste::fract(v);
+  }
 }
 
 template <Flags f = 0, typename ScalarT>

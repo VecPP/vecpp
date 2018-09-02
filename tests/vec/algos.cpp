@@ -10,6 +10,16 @@ using Catch::Matchers::WithinAbs;
 
 constexpr vecpp::Flags ctf = vecpp::flags::compile_time;
 
+template <typename V>
+constexpr bool vec_close(const V& l, const V& r) {
+  for (std::size_t i = 0; i < V::size(); ++i) {
+    if (vecpp::abs<ctf>(l[i] - r[i]) > 0.0001) {
+      return false;
+    }
+  }
+  return true;
+}
+
 TEST_CASE("abs", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 
@@ -79,6 +89,26 @@ TEST_CASE("floor", "[vec][algo]") {
     constexpr Vec c = floor(ct(a));
 
     static_assert(c == Vec{1.0f, -1.0f, 1.0f, -2.0f});
+  }
+}
+
+TEST_CASE("fract", "[vec][algo]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
+    Vec a = {1.0f, -1.0f, 1.3f, -1.5f};
+
+    auto c = fract(a);
+
+    REQUIRE(vec_close(c, Vec{0.0f, 0.0f, .3f, .5f}));
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {1.0f, -1.0f, 1.3f, -1.5f};
+
+    constexpr Vec c = fract(ct(a));
+
+    static_assert(vec_close(c, Vec{0.0f, 0.0f, .3f, .5f}));
   }
 }
 
