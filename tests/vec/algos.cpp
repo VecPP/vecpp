@@ -271,6 +271,28 @@ TEST_CASE("mod", "[vec][algo]") {
   }
 }
 
+TEST_CASE("step", "[vec][step]") {
+  using Vec = vecpp::Vec<float, 4>;
+
+  SECTION("runtime") {
+    Vec a = {1.3f, 2.3f, 3.3f, 3.0f};
+    Vec b = {3.0f, 3.0f, 3.0f, 3.0f};
+
+    Vec c = step(a, b);
+
+    REQUIRE(c == Vec{1.0f, 1.0f, 0.0f, 1.0f});
+  }
+
+  SECTION("constexpr") {
+    constexpr Vec a = {1.3f, 2.3f, 3.3f, 3.0f};
+    constexpr Vec b = {3.0f, 3.0f, 3.0f, 3.0f};
+
+    constexpr Vec c = step(a, b);
+
+    REQUIRE(c == Vec{1.0f, 1.0f, 0.0f, 1.0f});
+  }
+}
+
 TEST_CASE("length", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 

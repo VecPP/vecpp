@@ -248,6 +248,11 @@ constexpr ScalarT fract(const ScalarT& v) {
 }
 
 template <Flags f = 0, typename ScalarT>
+constexpr ScalarT step(const ScalarT& edge, const ScalarT& x) {
+  return x < edge ? 0.0f : 1.0f;
+}
+
+template <Flags f = 0, typename ScalarT>
 constexpr ScalarT pow(const ScalarT& x, const ScalarT& n) {
   if constexpr (!is_ct(f)) {
     return non_cste::pow(x, n);
