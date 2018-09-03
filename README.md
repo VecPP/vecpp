@@ -14,7 +14,7 @@ A simple vector math library.
 ## Current State
 
 In agressive initial development. Once Matrices are in, we'll do a full feature and interaction coverage pass and
-declare a first usable version.
+declare a first usable version. **This is not production ready** by any stretch of the imagination at the moment.
 
 ## Design Goals
 
@@ -41,7 +41,7 @@ All you need is a standard compliant C++17 compiler.
 ### Installation
 
 #### include
-Vecpp is a header-only library. As such, all you need to do is make the 
+VecPP is a header-only library. As such, all you need to do is make the 
 contents of the `include` directory avilable to your compiler.
 
 #### single-include
@@ -58,7 +58,7 @@ example: like [this](https://gcc.godbolt.org/z/m_Gg-c).
 Finally, while the cmake project is primarily used to manage tests and 
 deployment, it's still set up as a proper target-exporting project. So you can 
 use either `add_subdirectory(path/to/vecpp_source)` or `find_package(VecPP)` and
-use `target_link_libraries(my_target VecPP::VecPP).
+use `target_link_libraries(my_target VecPP::VecPP)`.
 
 ### Usage
 
@@ -113,7 +113,7 @@ int main() {
 }
 ```
 
-** Coming soon!** :
+**Coming soon!** :
 
 #### Matrices
 
@@ -128,7 +128,7 @@ int main() {
   Vec a = {1.0f, 0.0f, 0.0f};
   Mat m = {
     1.0f, 0.0f, 0.0,
-    1.0f, 1.0f, 1.0fl
+    1.0f, 1.0f, 1.0f,
     0.0f, 1.0f , 0.0f
   };
   
