@@ -31,7 +31,7 @@ if(VECPP_BUILD_SINGLE_HEADER)
   add_custom_command(
     OUTPUT ${SINGLE_INCLUDE_FILE}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/include/vecpp.h
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/include/vecpp/vecpp.h
     COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/header_compiler/header_compiler.py 
       --output=${SINGLE_INCLUDE_FILE}
       --notice=${NOTICE_FILE}
