@@ -37,7 +37,14 @@ found [here](https://francoischabot.github.io/vecpp/).
 
 ### Prerequisites
 
-All you need is a standard compliant C++17 compiler.
+All you need is a standard compliant C++17 compiler. The library is sytematically tested on the following compilers, but that does not
+mean that earlier versions will not work.
+
+Compiler | Version
+---------|--------
+GCC      | 7.3.0
+clang    | 6.0.0
+MSVC     | 14.15.26726
 
 ### Installation
 
