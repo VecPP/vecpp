@@ -43,7 +43,7 @@ All you need is a standard compliant C++17 compiler.
 
 #### include
 VecPP is a header-only library. As such, all you need to do is make the 
-contents of the `include` directory avilable to your compiler.
+contents of the `include` directory available to your compiler.
 
 #### single-include
 Alternatively, you can simply copy "vecpp_single.h" into your project and use 
@@ -128,7 +128,7 @@ using Vec = vecpp::Vec<float, 3>;
 int main() {
   Vec a = {1.0f, 0.0f, 0.0f};
   Mat m = {
-    1.0f, 0.0f, 0.0,
+    1.0f, 0.0f, 0.0f,
     1.0f, 1.0f, 1.0f,
     0.0f, 1.0f , 0.0f
   };
