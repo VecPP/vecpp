@@ -11,6 +11,11 @@ A simple vector math library.
 [build]: https://travis-ci.org/FrancoisChabot/vecpp
 [build_win]: https://ci.appveyor.com/project/FrancoisChabot/vecpp/branch/master
 
+## Current State
+
+In agressive initial development. Once Matrices are in, we'll do a full feature and interaction coverage pass and
+declare a first usable version.
+
 ## Design Goals
 
 * Strict adherance to C++ standard (no UB or strict aliasing violation)
