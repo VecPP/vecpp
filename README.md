@@ -14,8 +14,7 @@ A simple vector math library.
 
 ## Current State
 
-In agressive initial development. Once Matrices are in, we'll do a full feature and interaction coverage pass and
-declare a first usable version. **This is not production ready** by any stretch of the imagination at the moment.
+In agressive initial development. The main types for the first release are in place, and the next step is implementing functionallities as needed on them, **This is not production ready** by any stretch of the imagination at the moment.
 
 ## Design Goals
 
