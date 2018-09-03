@@ -1,4 +1,5 @@
 site_name: VecPP documentation
+use_directory_urls: false
 
 nav:
   - Home: index.md
