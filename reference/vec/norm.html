@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Length - VecPP documentation</title>
+        <title>Norm - VecPP documentation</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -90,7 +90,7 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#vecpplengthvecppvec">vecpp::length(vecpp::Vec)</a></li>
+        <li class="main active"><a href="#vecppnormvecppvec">vecpp::norm(vecpp::Vec)</a></li>
             <li><a href="#parameters">Parameters</a></li>
             <li><a href="#return-value">Return value</a></li>
             <li><a href="#example">Example</a></li>
@@ -99,9 +99,9 @@
                 <div class="col-md-9" role="main">
 
 <p><a href="../../../">vecpp</a> :: <a href="../vec.html">Vec&lt;typename, size_t></a></p>
-<h2 id="vecpplengthvecppvec">vecpp::length(vecpp::Vec)</h2>
+<h2 id="vecppnormvecppvec">vecpp::norm(vecpp::Vec)</h2>
 <pre><code>template&lt;typename T, std::size_t L&gt;
-constexpr T length(const Vec&lt;T,L&gt;&amp; arg);
+constexpr T norm(const Vec&lt;T,L&gt;&amp; arg);
 </code></pre>
 
 <p>Returns the eunclidian norm of the vector</p>
@@ -121,7 +121,7 @@ constexpr T length(const Vec&lt;T,L&gt;&amp; arg);
 </tbody>
 </table>
 <h3 id="return-value">Return value</h3>
-<p>The length of the vector.</p>
+<p>The norm of the vector.</p>
 <h3 id="example">Example</h3>
 <pre><code>#include &quot;vecpp/vecpp.h&quot;
 #include &lt;cassert&gt;
@@ -132,8 +132,8 @@ int main() {
   fVec2 a = {3.0f, 0.0f};
   fVec2 b = {1.0f, 1.0f};
 
-  assert(length(a) == 3.0f);
-  assert(length(b) == std::sqrt(2.0f));
+  assert(norm(a) == 3.0f);
+  assert(norm(b) == std::sqrt(2.0f));
 }
 </code></pre></div>
         </div>
