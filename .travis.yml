@@ -38,14 +38,14 @@ deploy:
  - provider: pages
    skip_cleanup: true
    github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-   local_dir: _bld/site
+   local_dir: _bld_rel/site
    keep-history: true
    on:
      branch: master
  - provider: pages
    skip_cleanup: true
    github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-   local_dir: _bld/vecpp
+   local_dir: _bld_rel/vecpp
    keep-history: true
    target-branch: single_header
    on:
