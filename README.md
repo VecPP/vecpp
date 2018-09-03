@@ -159,7 +159,6 @@ vecpp aims to remedy.
 
 - Closely following GLSL creates many layers of abstraction between the interface
   and implentation.
-- GLSL basically cannot be reimplemented without relying on undefined behavior. 
 - Supporting C++ accross the spectrum of versions adds a lot of complexity.
 - There are many ways to compile the library which leads to an inconsistent and 
   confusing API.
