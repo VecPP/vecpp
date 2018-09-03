@@ -13,51 +13,102 @@ A simple vector math library.
 
 ## Design Goals
 
-* C++17
-* No reliance on undefined behavior
-* constexpr everything
-* Be useful within a 3D simulation engine
-* Stable results under fast-math
-* No external non-stl dependencies
-* Code is easy to follow and straightforward
+* Strict adherance to C++ standard (no UB or strict aliasing violation)
 * No multiple ways to achieve the same thing
+* No external non-stl dependencies
+* constexpr everything 
+* Code is easy to follow and straightforward
 
 ## Documentation
 
-The full documentation matching the current state of the master branch can be 
+The full documentation can be found in the `/docs` directory (either in markdown
+or HTML depending on how you obtained the library).
+
+An HTML version matching the current state of the master branch can always be 
 found [here](https://francoischabot.github.io/vecpp/).
 
 ## Quick Start
 
+### Prerequisites
+
+All you need is a standard compliant C++17 compiler.
+
 ### Installation
 
+#### include
 Vecpp is a header-only library. As such, all you need to do is make the 
 contents of the `include` directory avilable to your compiler.
 
-Alternatively, you can simply copy "vecpp_single.h" into your
-project and use that single freestanding header. You can find it in a special `single_header` branch 
-[here](https://github.com/FrancoisChabot/vecpp/tree/single_header).
+#### single-include
+Alternatively, you can simply copy "vecpp_single.h" into your project and use 
+that single freestanding header. (if you are cloning the raw source, you will
+need to generate it using `-DVECPP_BUILD_SINGLE_HEADER`).
 
-**Tip:** This can be used to quickly test generated code on 
-[compiler explorer](godbolt.org). For example like 
-[this](https://gcc.godbolt.org/z/m_Gg-c).
+**Tip:** We maintain a copy of this file in sync with the master branch 
+[here](https://github.com/FrancoisChabot/vecpp/tree/single_header). This can be 
+used to quickly test generated code on [compiler explorer](godbolt.org). For 
+example: like [this](https://gcc.godbolt.org/z/m_Gg-c).
 
-### Vectors
+#### CMake
+Finally, while the cmake project is primarily used to manage tests and 
+deployment, it's still set up as a proper target-exporting project. So you can 
+use either `add_subdirectory(path/to/vecpp_source)` or `find_package(VecPP)` and
+use `target_link_libraries(my_target VecPP::VecPP).
+
+### Usage
+
+#### Vectors
+
+Vectors are declared using the `Vec<TYPE, SIZE>` template (preferably aliased).
+
+Individual vector members are accessed through the `vec[index]` operator. There 
+is no `.x`, `.y`, `.z` etc... members. This is because VecPP avoids redundancy 
+in its interface as much as possible (see the design goals). 
 
 ```cpp
 #include "vecpp/vecpp.h"
 #include <iosteam>
 
 using Vec3 = vecpp::Vec<float, 3>;
+static_assert(sizeof(Vec3) == 3 * sizeof(float)); // guaranteed!
 
 int main() {
   Vec3 ux = {1.0f, 0.0f, 0.0f};
   Vec3 uy = {0.0f, 1.0f, 0.0f};
 
+  std::cout << "ux.x: " << ux[0] << "\n";
+
   std::cout << "ux x uy :" << cross(x, y) << "\n";
   std::cout << "ux . uy :" << dot(x, y) << "\n";
 }
 ```
+
+#### Angles
+
+VecPP angles are strongly-typed, and correctly handle wraparounds and 
+conversions under the hood.
+
+```cpp
+#include "vecpp/vecpp.h"
+
+using Angle = vecpp::Angle<float>;
+using vecpp::pi;
+
+int main() {
+  Angle a = Angle::from_rad(pi<float>);
+  Angle b = Angle::from_deg(20.0f);
+
+  Angle c = a + b; // is now holding -160deg
+  Angle d = c - Angle::from_deg(160.0f); // contains 40deg
+
+  float sin_val = sin(c);
+
+  std::cout << "sin(" << c << ") = " << sin(c);
+  // prints: "sin(-160°) = -0.34202"
+}
+```
+
+
 ## Acknowledgements
 
 - [glm](https://glm.g-truc.net) is used as a reference point for many algorithms.
