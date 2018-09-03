@@ -60,21 +60,6 @@ T trunc(const T& v) {
 }
 
 template <typename T>
-T sin(const T& v) {
-  return std::sin(v);
-}
-
-template <typename T>
-T cos(const T& v) {
-  return std::cos(v);
-}
-
-template <typename T>
-T tan(const T& v) {
-  return std::tan(v);
-}
-
-template <typename T>
 T mod(const T& v, const T& d) {
   if constexpr (std::is_integral_v<T>) {
     return v % d;
@@ -146,21 +131,6 @@ constexpr T trunc(const T& v) {
 template <typename T>
 constexpr T fract(const T& v) {
   return v - floor(v);
-}
-
-template <typename T>
-constexpr T sin(const T& v) {
-  assert(false);
-}
-
-template <typename T>
-constexpr T cos(const T& v) {
-  assert(false);
-}
-
-template <typename T>
-constexpr T tan(const T& v) {
-  return sin(v) / cos(v);
 }
 
 template <typename T>
