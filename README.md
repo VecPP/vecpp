@@ -208,14 +208,14 @@ namespace my_ns {
 }
 ```
 
-### What's with `vecpp::ct()`?
+### constexpr code is broken!
 
 Some functions need to have different implementations between runtime and 
 compile-time evaluation (sqrt() for example), and unfortunately, there
-is currently no known way to achieve that implicitely in C++17.  
-`ct()` is our workaround.
+is currently no known way to achieve that implicitely in C++17. Vecpp
+employs a workaround in the form of the `ct()` (for compile-time) function/
 
-The rule of thumb is: Write code as if everything magically worked.
+The rule of thumb is: Write code as if everything magically works.
 
 ```cpp
 using Vec3 = vecpp::Vec<float, 3>;
@@ -225,7 +225,7 @@ constexpr Vec3 val_len = length(val);
 
 And if you see an error that looks like: 
 
-> call to non-constexpr function ‘float vecpp::sqrt_impl(float)’
+> call to non-constexpr function ‘float vecpp::non_cste::sqrt(float)’
 
 Then you can fix it by wrapping the offending operand with `ct()`:
 
