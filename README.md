@@ -58,7 +58,7 @@ example: like [this](https://gcc.godbolt.org/z/m_Gg-c).
 Finally, while the cmake project is primarily used to manage tests and 
 deployment, it's still set up as a proper target-exporting project. So you can 
 use either `add_subdirectory(path/to/vecpp_source)` or `find_package(VecPP)` and
-use `target_link_libraries(my_target VecPP::VecPP).
+use `target_link_libraries(my_target VecPP::VecPP)`.
 
 ### Usage
 
