@@ -121,8 +121,6 @@ int main() {
 }
 ```
 
-**Coming soon!** :
-
 #### Matrices
 
 ```cpp
