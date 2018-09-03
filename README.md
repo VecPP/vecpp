@@ -4,6 +4,7 @@ A simple vector math library.
 
 [![build][badge.build]][build]
 [![build_win][badge.build_win]][build_win]
+[![CircleCI](https://circleci.com/gh/FrancoisChabot/vecpp.svg?style=svg)](https://circleci.com/gh/FrancoisChabot/vecpp)
 
 [badge.build]: https://travis-ci.org/FrancoisChabot/vecpp.svg?branch=master
 [badge.build_win]: https://ci.appveyor.com/api/projects/status/t7tu1jqmc2wptl1c/branch/master?svg=true
