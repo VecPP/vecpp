@@ -103,11 +103,35 @@ int main() {
 
   float sin_val = sin(c);
 
-  std::cout << "sin(" << c << ") = " << sin(c);
+  std::cout << "sin(" << c << ") = " << sin(c) << "\n";
   // prints: "sin(-160°) = -0.34202"
 }
 ```
 
+** Coming soon!** :
+
+#### Matrices
+
+```cpp
+#include "vecpp/vecpp.h"
+
+using Mat = vecpp::Matrix<float, 3, 3>;
+using Vec = vecpp::Vec<float, 3>;
+
+
+int main() {
+  Vec a = {1.0f, 0.0f, 0.0f};
+  Mat m = {
+    1.0f, 0.0f, 0.0,
+    1.0f, 1.0f, 1.0fl
+    0.0f, 1.0f , 0.0f
+  };
+  
+  Vec b = m * a;
+  std::cout << b << "\n";
+
+}
+```
 
 ## Acknowledgements
 
