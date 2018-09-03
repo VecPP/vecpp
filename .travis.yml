@@ -33,6 +33,9 @@ script:
     - cmake -DCMAKE_BUILD_TYPE=RELEASE -DVECPP_BUILD_TESTS=ON -DVECPP_BUILD_SINGLE_HEADER=ON -DVECPP_BUILD_DOCS=ON ..
     - cmake --build .
     - ctest --output-on-failure
+    - cd ..
+    - cp -R .circleci _bld_rel/site/
+    - cp -R .circleci _bld_rel/vecpp/
 
 deploy:
  - provider: pages
