@@ -351,7 +351,7 @@ TEST_CASE("step", "[vec][step]") {
   }
 }
 
-TEST_CASE("length", "[vec][algo]") {
+TEST_CASE("norm", "[vec][algo]") {
   using Vec = vecpp::Vec<float, 4>;
 
   SECTION("runtime") {
@@ -359,9 +359,9 @@ TEST_CASE("length", "[vec][algo]") {
     Vec b = {1.0f, 0.0f, 0.0f, 0.0f};
     Vec c = {1.0f, -1.0f, 0.0f, 0.0f};
 
-    REQUIRE_THAT(length(a), WithinAbs(0.0f, 0.00001f));
-    REQUIRE_THAT(length(b), WithinAbs(1.0f, 0.00001f));
-    REQUIRE_THAT(length(c), WithinAbs(std::sqrt(2.0f), 0.00001f));
+    REQUIRE_THAT(norm(a), WithinAbs(0.0f, 0.00001f));
+    REQUIRE_THAT(norm(b), WithinAbs(1.0f, 0.00001f));
+    REQUIRE_THAT(norm(c), WithinAbs(std::sqrt(2.0f), 0.00001f));
   }
 
   SECTION("constexpr") {
@@ -369,9 +369,9 @@ TEST_CASE("length", "[vec][algo]") {
     constexpr Vec b = {1.0f, 0.0f, 0.0f, 0.0f};
     constexpr Vec c = {1.0f, -1.0f, 0.0f, 0.0f};
 
-    static_assert(vecpp::abs(length(ct(a)) - 0.0f) < 0.00001f);
-    static_assert(vecpp::abs(length(ct(b)) - 1.0f) < 0.00001f);
-    static_assert(vecpp::abs(length(ct(c)) - vecpp::sqrt<ctf>(2.0f)) <
+    static_assert(vecpp::abs(norm(ct(a)) - 0.0f) < 0.00001f);
+    static_assert(vecpp::abs(norm(ct(b)) - 1.0f) < 0.00001f);
+    static_assert(vecpp::abs(norm(ct(c)) - vecpp::sqrt<ctf>(2.0f)) <
                   0.00001f);
   }
 }
@@ -384,11 +384,11 @@ TEST_CASE("cross", "[vec][algo]") {
     Vec unit_y = {0.0f, 1.0f, 0.0f};
     Vec unit_z = {0.0f, 0.0f, 1.0f};
 
-    REQUIRE_THAT(length(cross(unit_x, unit_y) - unit_z),
+    REQUIRE_THAT(norm(cross(unit_x, unit_y) - unit_z),
                  WithinAbs(0.0f, 0.00001f));
-    REQUIRE_THAT(length(cross(unit_z, unit_x) - unit_y),
+    REQUIRE_THAT(norm(cross(unit_z, unit_x) - unit_y),
                  WithinAbs(0.0f, 0.00001f));
-    REQUIRE_THAT(length(cross(unit_y, unit_z) - unit_x),
+    REQUIRE_THAT(norm(cross(unit_y, unit_z) - unit_x),
                  WithinAbs(0.0f, 0.00001f));
   }
 
@@ -401,8 +401,8 @@ TEST_CASE("cross", "[vec][algo]") {
     constexpr auto z_c_x = cross(unit_z, unit_x);
     constexpr auto y_c_z = cross(unit_y, unit_z);
 
-    static_assert(vecpp::abs(length(ct(x_c_y - unit_z)) - 0.0f) < 0.00001f);
-    static_assert(vecpp::abs(length(ct(z_c_x - unit_y)) - 0.0f) < 0.00001f);
-    static_assert(vecpp::abs(length(ct(y_c_z - unit_x)) - 0.0f) < 0.00001f);
+    static_assert(vecpp::abs(norm(ct(x_c_y - unit_z)) - 0.0f) < 0.00001f);
+    static_assert(vecpp::abs(norm(ct(z_c_x - unit_y)) - 0.0f) < 0.00001f);
+    static_assert(vecpp::abs(norm(ct(y_c_z - unit_x)) - 0.0f) < 0.00001f);
   }
 }

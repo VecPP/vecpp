@@ -58,8 +58,8 @@ using Vec3 = vecpp::Vec<float, 3>;
 
 
 constexpr Vec3 my_vec = {1.0f, 4.0f, 0.0f};
-//constexpr float my_vec_len = length(my_vec); // Error, needs non-constexpr sqrt()
-constexpr float my_vec_len = length(ct(my_vec)); // all clear
+//constexpr float my_vec_len = norm(my_vec); // Error, needs non-constexpr sqrt()
+constexpr float my_vec_len = norm(ct(my_vec)); // all clear
 ```
 
 ## Scalars
@@ -82,7 +82,7 @@ using Vec3 = vecpp::Vec<float, 3>;
 constexpr vecpp::Flags ctf = vecpp::flags::compile_time;
 
 constexpr Vec3 my_vec = {1.0f, 4.0f, 0.0f};
-constexpr float my_vec_len = length<ctf>(my_vec); 
+constexpr float my_vec_len = norm<ctf>(my_vec); 
 // ****************** NOT REAL CODE ****************** //
 ```
 

@@ -213,7 +213,7 @@ The rule of thumb is: Write code as if everything magically worked.
 ```cpp
 using Vec3 = vecpp::Vec<float, 3>;
 constexpr Vec3 val = {1.0f, 1.0f 1.0f};
-constexpr Vec3 val_len = length(val);
+constexpr Vec3 val_len = norm(val);
 ```
 
 And if you see an error that looks like: 
@@ -223,7 +223,7 @@ And if you see an error that looks like:
 Then you can fix it by wrapping the offending operand with `ct()`:
 
 ```cpp
-constexpr Vec3 val_len = length(ct(val));
+constexpr Vec3 val_len = norm(ct(val));
 ```
 
 **N.B.** Only use `ct()` in `constexpr`s! Its usage triggers the use of slower

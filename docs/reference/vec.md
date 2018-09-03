@@ -70,6 +70,6 @@ Function                                                 | Behavior
 
 Function                            | Behavior
 ------------------------------------|------------------------
-[lenght](vec/length.md)             | get vector's euclidian length
+[lenght](vec/norm.md)               | get vector's L2 norm
 [dot](vec/dot.md)                   | dot product
 [cross](vec/cross.md)               | cross product

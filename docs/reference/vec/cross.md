@@ -35,6 +35,6 @@ int main() {
 
   fVec3 cross_val = cross(x, y);
 
-  assert(length(cross_val-z) < 0.0001f);
+  assert(norm(cross_val-z) < 0.0001f);
 }
 ```

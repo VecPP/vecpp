@@ -146,17 +146,17 @@ TEST_CASE("vec/scaling.md", "[documentation]") {
   REQUIRE(b[1] == 3.0f * 5.0f);
 }
 
-TEST_CASE("vec/length.md", "[documentation]") {
+TEST_CASE("vec/norm.md", "[documentation]") {
   using fVec2 = vecpp::Vec<float, 2>;
 
   fVec2 a = {3.0f, 0.0f};
   fVec2 b = {1.0f, 1.0f};
 
-  assert(length(a) == 3.0f);
-  assert(length(b) == std::sqrt(2.0f));
+  assert(norm(a) == 3.0f);
+  assert(norm(b) == std::sqrt(2.0f));
 
-  REQUIRE(length(a) == 3.0f);
-  REQUIRE(length(b) == std::sqrt(2.0f));
+  REQUIRE(norm(a) == 3.0f);
+  REQUIRE(norm(b) == std::sqrt(2.0f));
 }
 
 TEST_CASE("vec/dot.md", "[documentation]") {
@@ -179,8 +179,8 @@ TEST_CASE("vec/cross.md", "[documentation]") {
 
   fVec3 cross_val = cross(x, y);
 
-  assert(length(cross_val - z) < 0.0001f);
-  REQUIRE(length(cross_val - z) < 0.0001f);
+  assert(norm(cross_val - z) < 0.0001f);
+  REQUIRE(norm(cross_val - z) < 0.0001f);
 }
 
 TEST_CASE("vec/abs.md", "[documentation]") {
