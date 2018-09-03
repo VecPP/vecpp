@@ -4,4 +4,4 @@ include/vecpp/vecpp_single.h
 site/
 
 # typical build folder
-_bld/
+_bld*

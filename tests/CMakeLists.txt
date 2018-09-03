@@ -1,52 +1,40 @@
-
-if(MSVC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX")
-else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -Werror -fstrict-aliasing")
-endif()
+include_directories(.)
 
 add_library(catch_main catch_main.cpp)
-target_include_directories(catch_main PUBLIC .)
 set_target_properties(catch_main PROPERTIES FOLDER "tests")
 
-SET( TEST_LIST
-  angle
-  documentation
+SET( VECPP_TESTS
+  angle.cpp
+  documentation.cpp
 
-  vec/algos
-  vec/construction
-  vec/operators
+  vec/algos.cpp
+  vec/construction.cpp
+  vec/operators.cpp
 
-  quat
+  quat.cpp
 
-  scalar
+  scalar.cpp
 )
 
-foreach(TEST_PATH ${TEST_LIST})
-  STRING(REPLACE "/" "_" TGT_NAME ${TEST_PATH})
-  add_executable("${TGT_NAME}" ${TEST_PATH}.cpp)
-  set_target_properties("${TGT_NAME}" PROPERTIES FOLDER "tests")
-  target_link_libraries("${TGT_NAME}" catch_main VecPP)
-  add_test("${TGT_NAME}" "${TGT_NAME}")
-endforeach()
+add_executable(all_tests ${VECPP_TESTS})
+target_link_libraries(all_tests catch_main VecPP::VecPP)
+set_target_properties(all_tests PROPERTIES FOLDER "tests")
+add_test(all_tests all_tests)
 
 if(VECPP_BUILD_SINGLE_HEADER)
-  foreach(TEST_PATH ${TEST_LIST})
-    STRING(REPLACE "/" "_" TGT_NAME ${TEST_PATH})
-    add_executable("${TGT_NAME}_sh" ${TEST_PATH}.cpp)
-    target_compile_definitions(${TGT_NAME}_sh
-      PRIVATE VECPP_TEST_SINGLE_HEADER
-    )
-
-    set_target_properties("${TGT_NAME}_sh" PROPERTIES FOLDER "tests_sh")
-    add_dependencies("${TGT_NAME}_sh" generate_single_include)
-    target_link_libraries("${TGT_NAME}_sh" catch_main VecPP)
-    add_test("${TGT_NAME}_sh" "${TGT_NAME}_sh")
-  endforeach()
+  add_executable(all_tests_sh ${VECPP_TESTS})
+  target_include_directories(all_tests_sh PRIVATE ${CMAKE_CURRENT})
+  target_compile_definitions(all_tests_sh
+    PRIVATE VECPP_TEST_SINGLE_HEADER
+  )
+  add_dependencies(all_tests_sh generate_single_include)
+  target_link_libraries(all_tests_sh catch_main VecPP::VecPP)
+  set_target_properties(all_tests_sh PROPERTIES FOLDER "tests")
+  add_test(all_tests_sh all_tests_sh)
 endif()
 
 if(VECPP_BUILD_FAILING_TESTS)
-  add_executable(failing_tests failing.cpp)
-  target_link_libraries(failing_tests catch_main VecPP)
-  add_test(failing_tests failing)
+  add_executable( failing catch_main.cpp failing.cpp)
+  add_test(failing failing)
+  set_target_properties(failing PROPERTIES FOLDER "tests")
 endif()

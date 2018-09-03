@@ -94,6 +94,5 @@ if(VECPP_BUILD_PACKAGE)
 
   add_custom_target(generate_zip ALL
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/vecpp.zip )
-
-  set_target_properties(generate_zip PROPERTIES FOLDER "prepare_for_deploy")
+    set_target_properties(generate_zip PROPERTIES FOLDER "prepare_for_deploy")
 endif()
