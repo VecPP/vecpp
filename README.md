@@ -41,7 +41,7 @@ All you need is a standard compliant C++17 compiler.
 ### Installation
 
 #### include
-Vecpp is a header-only library. As such, all you need to do is make the 
+VecPP is a header-only library. As such, all you need to do is make the 
 contents of the `include` directory avilable to your compiler.
 
 #### single-include
@@ -113,7 +113,7 @@ int main() {
 }
 ```
 
-** Coming soon!** :
+**Coming soon!** :
 
 #### Matrices
 
@@ -128,7 +128,7 @@ int main() {
   Vec a = {1.0f, 0.0f, 0.0f};
   Mat m = {
     1.0f, 0.0f, 0.0,
-    1.0f, 1.0f, 1.0fl
+    1.0f, 1.0f, 1.0f,
     0.0f, 1.0f , 0.0f
   };
   
