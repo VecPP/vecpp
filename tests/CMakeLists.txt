@@ -11,6 +11,10 @@ SET( VECPP_TESTS
   vec/construction.cpp
   vec/operators.cpp
 
+  mat/construction.cpp
+  mat/mul.cpp
+  mat/operations.cpp
+
   quat.cpp
 
   scalar.cpp
