@@ -1,74 +1,37 @@
-
 cmake_minimum_required(VERSION 3.9)
 
-project(vecpp)
+project(VecPP 
+  VERSION 0.1
+  DESCRIPTION "C++ vector math"
+  LANGUAGES CXX)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Header compilation depends on a git submodule being loaded, so it's
-# off bby default.
 option(VECPP_BUILD_SINGLE_HEADER "Build the vecpp_single.h header" OFF)
-option(VECPP_BUILD_TESTS "Build tests" ON)
 option(VECPP_BUILD_DOCS "Build documentation" OFF)
+option(VECPP_BUILD_TESTS "Build tests" OFF)
 option(VECPP_BUILD_FAILING_TESTS "Build failing tests" OFF)
 
-include_directories(
-  include
-)
-
-if(MSVC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -Werror -fstrict-aliasing")
-endif()
-
 if(VECPP_BUILD_DOCS)
-
-  FILE(GLOB_RECURSE
-    VECPP_DOC_SRC
-    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/docs/*.md
-  )
-
-  LIST(APPEND VECPP_DOC_SRC mkdocs.yml)
-
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/site/index.html
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    DEPENDS ${VECPP_DOC_SRC} 
-    COMMAND mkdocs build --verbose --clean --strict
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/site/index.html
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    DEPENDS mkdocs.yml
+    COMMAND mkdocs build --verbose --clean --strict -f ${CMAKE_CURRENT_SOURCE_DIR}/mkdocs.yml -d ${CMAKE_CURRENT_BINARY_DIR}/site
   )
 
-  add_custom_target(generate_doc ALL DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/site/index.html)
+  add_custom_target(generate_doc ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/site/index.html)
   set_target_properties(generate_doc PROPERTIES FOLDER "prepare_for_deploy")
 endif()
 
 if(VECPP_BUILD_SINGLE_HEADER)
-
-  # List of vecpp headers
-  FILE(GLOB_RECURSE
-    VECPP_HEADERS_GLOBBED
-    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h
-  )
-
-  SET(VECPP_HEADERS "")
-  FOREACH(f ${VECPP_HEADERS_GLOBBED})
-    IF(NOT ${f} MATCHES "vecpp_single.h")
-      LIST(APPEND VECPP_HEADERS "${f}")
-    ENDIF()
-  ENDFOREACH(f)
-
-
-  set(SINGLE_INCLUDE_FILE ${CMAKE_CURRENT_SOURCE_DIR}/include/vecpp/vecpp_single.h)
+  set(SINGLE_INCLUDE_FILE ${CMAKE_CURRENT_BINARY_DIR}/vecpp/vecpp_single.h)
   set(NOTICE_FILE ${CMAKE_CURRENT_SOURCE_DIR}/misc/notice.txt)
 
   add_custom_command(
     OUTPUT ${SINGLE_INCLUDE_FILE}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include
-    DEPENDS ${VECPP_HEADERS} 
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/include/vecpp.h
     COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/header_compiler/header_compiler.py 
       --output=${SINGLE_INCLUDE_FILE}
       --notice=${NOTICE_FILE}
@@ -79,8 +42,27 @@ if(VECPP_BUILD_SINGLE_HEADER)
   set_target_properties(generate_single_include PROPERTIES FOLDER "prepare_for_deploy")
 endif()
 
-#install headers
-install(DIRECTORY include/vecpp DESTINATION include)
+
+add_library(VecPP INTERFACE)
+add_library(VecPP::VecPP ALIAS VecPP)
+
+target_include_directories(VecPP INTERFACE 
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+
+target_compile_features(VecPP INTERFACE cxx_std_17)
+
+install(TARGETS VecPP EXPORT VecPPTargets)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/vecpp DESTINATION include)
+
+install(EXPORT VecPPTargets
+        FILE VecPPConfig.cmake
+        NAMESPACE VecPP::
+        DESTINATION lib/cmake/VecPP
+         )
 
 if(VECPP_BUILD_TESTS)
   enable_testing()

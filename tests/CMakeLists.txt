@@ -1,6 +1,12 @@
-include_directories(.)
+
+if(MSVC)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX")
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -Werror -fstrict-aliasing")
+endif()
 
 add_library(catch_main catch_main.cpp)
+target_include_directories(catch_main PUBLIC .)
 set_target_properties(catch_main PROPERTIES FOLDER "tests")
 
 SET( TEST_LIST
@@ -20,7 +26,7 @@ foreach(TEST_PATH ${TEST_LIST})
   STRING(REPLACE "/" "_" TGT_NAME ${TEST_PATH})
   add_executable("${TGT_NAME}" ${TEST_PATH}.cpp)
   set_target_properties("${TGT_NAME}" PROPERTIES FOLDER "tests")
-  target_link_libraries("${TGT_NAME}" catch_main)
+  target_link_libraries("${TGT_NAME}" catch_main VecPP)
   add_test("${TGT_NAME}" "${TGT_NAME}")
 endforeach()
 
@@ -34,13 +40,13 @@ if(VECPP_BUILD_SINGLE_HEADER)
 
     set_target_properties("${TGT_NAME}_sh" PROPERTIES FOLDER "tests_sh")
     add_dependencies("${TGT_NAME}_sh" generate_single_include)
-    target_link_libraries("${TGT_NAME}_sh" catch_main)
+    target_link_libraries("${TGT_NAME}_sh" catch_main VecPP)
     add_test("${TGT_NAME}_sh" "${TGT_NAME}_sh")
   endforeach()
 endif()
 
 if(VECPP_BUILD_FAILING_TESTS)
   add_executable(failing_tests failing.cpp)
-  target_link_libraries(failing_tests catch_main)
+  target_link_libraries(failing_tests catch_main VecPP)
   add_test(failing_tests failing)
 endif()

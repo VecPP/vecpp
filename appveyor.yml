@@ -26,7 +26,7 @@ install:
 before_build:
   - mkdir _bld
   - cd _bld
-  - cmake -G "%CMAKE_GENERATOR%" -DCMAKE_BUILD_TYPE=%configuration% -DVECPP_BUILD_SINGLE_HEADER=ON ..
+  - cmake -G "%CMAKE_GENERATOR%" -DCMAKE_BUILD_TYPE=%configuration% -DVECPP_BUILD_TESTS=ON -DVECPP_BUILD_SINGLE_HEADER=ON ..
 
 build:
   project: _bld\vecpp.sln
