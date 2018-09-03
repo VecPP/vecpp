@@ -18,14 +18,3 @@ jobs:
             cmake -DCMAKE_BUILD_TYPE=RELEASE -DVECPP_BUILD_TESTS=ON -DVECPP_BUILD_SINGLE_HEADER=ON ..
             make -j4
             ctest
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build:
-        filters:
-          branches:
-           ignore:
-            - gh-pages
-            - single_header
