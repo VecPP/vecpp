@@ -65,6 +65,7 @@ struct Mat {
   std::array<value_type, cols * rows> data_;
 };
 
+
 template <typename T, std::size_t C, std::size_t R, Flags fl, Flags fr>
 constexpr bool operator==(const Mat<T, C, R, fl>& lhs, const Mat<T, C, R, fr>& rhs) {
   for(std::size_t i = 0 ; i < C; ++i) {
@@ -80,14 +81,15 @@ constexpr bool operator==(const Mat<T, C, R, fl>& lhs, const Mat<T, C, R, fr>& r
 template<typename T, std::size_t C, std::size_t R, Flags fl>
 std::ostream& operator<<(std::ostream& stream, const Mat<T, C, R, fl>& lhs) {
   stream << "[";
-  for(int i = 0; i < R; ++i) {
+  for(std::size_t i = 0; i < R; ++i) {
     stream << " ";
-    for(int j = 0; j < C; ++j) {
+    for(std::size_t j = 0; j < C; ++j) {
       stream << lhs(i,j) << ",";
     }
     stream << "\n";
   }
   stream << "]";
+
   return stream;
 }
 

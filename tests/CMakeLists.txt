@@ -20,10 +20,21 @@ SET( VECPP_TESTS
   scalar.cpp
 )
 
+MACRO(config_test_target TGT)
+
+target_link_libraries(${TGT} catch_main VecPP::VecPP)
+set_target_properties(${TGT} PROPERTIES FOLDER "tests")
+add_test(${TGT} ${TGT})
+
+if(MSVC)
+  target_compile_options(${TGT} PRIVATE /W4 /WX)
+else(MSVC)
+  target_compile_options(${TGT} PRIVATE -Wall -Wextra -pedantic -Werror)
+endif(MSVC)
+endmacro()
+
 add_executable(all_tests ${VECPP_TESTS})
-target_link_libraries(all_tests catch_main VecPP::VecPP)
-set_target_properties(all_tests PROPERTIES FOLDER "tests")
-add_test(all_tests all_tests)
+config_test_target(all_tests)
 
 if(VECPP_BUILD_SINGLE_HEADER)
   add_executable(all_tests_sh ${VECPP_TESTS})
@@ -32,13 +43,10 @@ if(VECPP_BUILD_SINGLE_HEADER)
     PRIVATE VECPP_TEST_SINGLE_HEADER
   )
   add_dependencies(all_tests_sh generate_single_include)
-  target_link_libraries(all_tests_sh catch_main VecPP::VecPP)
-  set_target_properties(all_tests_sh PROPERTIES FOLDER "tests")
-  add_test(all_tests_sh all_tests_sh)
+  config_test_target(all_tests_sh)
 endif()
 
 if(VECPP_BUILD_FAILING_TESTS)
   add_executable( failing catch_main.cpp failing.cpp)
-  add_test(failing failing)
-  set_target_properties(failing PROPERTIES FOLDER "tests")
+  config_test_target(failing)
 endif()
