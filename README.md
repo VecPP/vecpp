@@ -164,6 +164,7 @@ vecpp aims to remedy.
   confusing API.
 - The type system cannot be leveraged to its full potential (scalars must be
   scalar values for example).
+- The current implementation relies on Undefined Behavior
 
 ### Why use this over eigen?
 
