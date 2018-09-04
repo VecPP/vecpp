@@ -20,5 +20,6 @@
 #include "vecpp/vec/vec.h"
 
 #include "vecpp/mat/mat.h"
+#include "vecpp/mat/operations.h"
 
 #include "vecpp/quat/quat.h"
