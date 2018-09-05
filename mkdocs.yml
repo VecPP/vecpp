@@ -6,6 +6,7 @@ nav:
   - Dev Guide: dev-guide/index.md
   - User Guide:
     - Installation: user-guide/installation.md
+    - Performance: user-guide/performance.md
   - Reference guide:
     - Home: reference/index.md
     - Angle: reference/angle/index.md
