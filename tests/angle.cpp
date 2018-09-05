@@ -330,5 +330,6 @@ TEST_CASE("basic trig", "[angle]") {
     static_assert(close_vals(sin(ct(0.0_deg)), 0.0f));
     static_assert(close_vals(sin(ct(90.0_deg)), 1.0f));
     static_assert(close_vals(cos(ct(0.0_deg)), 1.0f));
+    static_assert(close_vals(cos(ct(90.0_deg)), 0.0f));
   }
 }

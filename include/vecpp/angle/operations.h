@@ -23,20 +23,32 @@ namespace VECPP_NAMESPACE {
 template <typename T, Flags f>
 constexpr T sin(const Angle<T, f>& a) {
   if constexpr (is_ct(f)) {
-    constexpr std::array<T, 5> taylor_factors = {-6, 120, -5040, 362880,
-                                                 -39916800};
+    double r = a.as_rad();
 
-    T r = a.as_rad();
-    T r_2 = r * r;
+    bool neg = false;
 
-    T result = r;
-
-    for (auto factor : taylor_factors) {
-      r *= r_2;
-      result += r / factor;
+    if(r < 0.0) {
+      r *= -1.0;
+      neg = true;
     }
 
-    return result;
+    if(r > half_pi<double>) {
+      r = pi<double> - r;
+    }
+
+    double r_2 = r*r * -1.0;
+
+    double result = r;
+
+    for (unsigned long long i = 3; i < 19; i+=2) {
+      r *= r_2;
+      result += r / cste::factorial(i);
+    }
+
+    if(neg) {
+      result *= -1.0;
+    }
+    return T(result);
   } else {
     return std::sin(a.as_rad());
   }
