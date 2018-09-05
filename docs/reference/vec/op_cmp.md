@@ -1,5 +1,4 @@
-
-[vecpp](../../../) :: [Vec<typename, size_t\>](../vec.md)
+[vecpp](../../../) :: [Vec<typename, size_t\>](./)
 ## vecpp::operator==,!=(vecpp::Vec)
 
 1)
@@ -14,7 +13,7 @@ template<typename T, std::size_t L>
 constexpr bool operator!=(const Vec<T,L>& lhs, const Vec<T,L>& rhs);
 ```
 
-Compares vectrs for equality.
+Compares vectors for equality.
 
 ### Parameters
 

@@ -1,5 +1,4 @@
-
-[vecpp](../../../) :: [Vec<typename, size_t\>](../vec.md)
+[vecpp](../../../) :: [Vec<typename, size_t\>](./)
 ## vecpp::dot(vecpp::Vec)
 
 ```

@@ -7,5 +7,7 @@ nav:
   - User Guide:
     - Installation: user-guide/installation.md
   - Reference guide:
-    - Angle: reference/angle.md
-    - Vector: reference/vec.md
+    - Home: reference/index.md
+    - Angle: reference/angle/index.md
+    - Vector: reference/vec/index.md
+    - Matrix: reference/mat/index.md

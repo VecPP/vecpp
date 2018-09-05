@@ -1,4 +1,4 @@
-[vecpp](../../../) :: [Angle<typename\>](../angle.md)
+[vecpp](../../) :: [reference](../) :: [Angle<typename\>](./)
 ## vecpp::operator-(vecpp::Angle)<sub>unary</sub>
 
 ```
@@ -17,7 +17,7 @@ Argument | Role
 **rhs**  | The angle to negate
 
 ### Return value
-An angle of inverse magnitude from 'rhs'
+An angle of inverse magnitude as 'rhs'
 
 ### Example
 

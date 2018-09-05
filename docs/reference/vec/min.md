@@ -1,5 +1,4 @@
-
-[vecpp](../../../) :: [Vec<typename, size_t\>](../vec.md)
+[vecpp](../../../) :: [Vec<typename, size_t\>](./)
 ## vecpp::min(vecpp::Vec)
 
 ```
@@ -37,7 +36,6 @@ int main() {
   assert(c[1] == 5.0f);
 }
 ```
-
 
 ### See also
 * [max](max.md) : per-member `max()`

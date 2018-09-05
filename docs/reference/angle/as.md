@@ -1,4 +1,4 @@
-[vecpp](../../../) :: [Angle<typename\>](../angle.md)
+[vecpp](../../) :: [reference](../) :: [Angle<typename\>](./)
 ## vecpp::Angle::as_deg,as_rad
 
 ```

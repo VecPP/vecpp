@@ -1,5 +1,4 @@
-
-[vecpp](../../../) :: [Vec<typename, size_t\>](../vec.md)
+[vecpp](../../../) :: [Vec<typename, size_t\>](./)
 ## vecpp::norm(vecpp::Vec)
 
 ```
@@ -7,7 +6,7 @@ template<typename T, std::size_t L>
 constexpr T norm(const Vec<T,L>& arg);
 ```
 
-Returns the eunclidian norm of the vector
+Returns the euclidian norm of the vector
 
 ### Parameters
 

@@ -1,5 +1,4 @@
-
-[vecpp](../../../) :: [Angle<typename\>](../angle.md)
+[vecpp](../../) :: [reference](../) :: [Angle<typename\>](./)
 ## vecpp::Angle::from_clamped_deg,from_clamped_rad
 
 ```
@@ -21,7 +20,6 @@ you are certain that the precondition is met.
 Argument | Role
 ---------|---------------------------------
 **val**  | The raw angle value in the matching unit
-
 
 ### Return value
 

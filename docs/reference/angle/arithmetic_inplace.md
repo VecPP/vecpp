@@ -1,4 +1,4 @@
-[vecpp](../../../) :: [Angle<typename\>](../angle.md)
+[vecpp](../../) :: [reference](../) :: [Angle<typename\>](./)
 ## vecpp::operator+=,-=(vecpp::Angle)
 
 ```
@@ -8,7 +8,6 @@ constexpr Angle<T>& operator+=(Angle<T>& lhs, const Angle<T>& rhs);
 template<typename T>
 constexpr Angle<T>& operator-=(Angle<T>& lhs, const Angle<T>& rhs);
 ```
-
 Numerically combine two angles, storing the result into the first.
 
 ### Parameters

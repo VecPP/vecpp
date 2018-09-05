@@ -1,4 +1,4 @@
-[vecpp](../../../) :: [Angle<typename\>](../angle.md)
+[vecpp](../../) :: [reference](../) :: [Angle<typename\>](./)
 ## vecpp::operator==,!=,<,<=,>,>=(vecpp::Angle)
 
 ```

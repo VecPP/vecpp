@@ -1,5 +1,9 @@
 # Dev guide
 
+This part of the documentation is intended for people who want to contribute to 
+VecPP. If you only want to use the library, you cansafely ignore everything in 
+here.
+
 ## Coding style
 
 `clang-format -style=file` should be a no-op. If some local formatting would be
@@ -29,7 +33,7 @@ With the exception of `vecpp/vecpp.h`, includes are always in 3 sections:
 
 Every immediate dependency needs to be included in each dependant file.
 
-## guidance
+## General Guidance
 
 ### No macros unless necesary
 

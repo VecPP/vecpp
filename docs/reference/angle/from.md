@@ -1,5 +1,4 @@
-
-[vecpp](../../../) :: [Angle<typename\>](../angle.md)
+[vecpp](../../) :: [reference](../) :: [Angle<typename\>](./)
 ## vecpp::Angle::from_deg,from_rad
 
 ```
@@ -16,7 +15,6 @@ The angle will be re-mapped in the ]-PI,PI] radians range.
 Argument | Role
 ---------|---------------------------------
 **val**  | The raw angle value in the matching unit
-
 
 ### Return value
 

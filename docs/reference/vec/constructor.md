@@ -1,6 +1,4 @@
-
-[vecpp](../../../) :: [Vec<typename, size_t\>](../vec.md)
-
+[vecpp](../../../) :: [Vec<typename, size_t\>](./)
 ## vecpp::Vec::Vec
 
 `Vec<T, L>` does not define a constructor per-se, but instead relies entirely on
