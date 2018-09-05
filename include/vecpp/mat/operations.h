@@ -29,6 +29,15 @@ constexpr typename MatT::value_type determinant(const MatT& mat) {
 
 // SPECIALIZATIONS:
 template <typename T, typename Traits>
+struct Mat_determinant<Mat<T, 1, 1, Traits>> {
+  using MatT = Mat<T, 1, 1, Traits>;
+
+  static constexpr T calc_determinant(const MatT& mat) {
+    return mat(0, 0);
+  }
+};
+
+template <typename T, typename Traits>
 struct Mat_determinant<Mat<T, 2, 2, Traits>> {
   using MatT = Mat<T, 2, 2, Traits>;
 
@@ -48,7 +57,7 @@ struct Mat_determinant<Mat<T, 3, 3, Traits>> {
   }
 };
 
-// GENERAL CASE
+// General case
 template <typename T, std::size_t N, typename Traits>
 struct Mat_determinant<Mat<T, N, N, Traits>> {
   using MatT = Mat<T, N, N, Traits>;
