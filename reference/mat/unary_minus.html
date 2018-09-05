@@ -70,7 +70,7 @@
 </li>
                                     
 <li >
-    <a href="index.html">Angle</a>
+    <a href="../angle/index.html">Angle</a>
 </li>
                                     
 <li >
@@ -78,7 +78,7 @@
 </li>
                                     
 <li >
-    <a href="../mat/index.html">Matrix</a>
+    <a href="index.html">Matrix</a>
 </li>
                                 </ul>
                             </li>
@@ -98,7 +98,7 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#vecppoperator-vecppangleunary">vecpp::operator-(vecpp::Angle)unary</a></li>
+        <li class="main active"><a href="#vecppoperator-vecppmatunary">vecpp::operator-(vecpp::Mat)unary</a></li>
             <li><a href="#parameters">Parameters</a></li>
             <li><a href="#return-value">Return value</a></li>
             <li><a href="#example">Example</a></li>
@@ -106,14 +106,13 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p><a href="../../">vecpp</a> :: <a href="../">reference</a> :: <a href="./">Angle&lt;typename></a></p>
-<h2 id="vecppoperator-vecppangleunary">vecpp::operator-(vecpp::Angle)<sub>unary</sub></h2>
-<pre><code>template&lt;typename T&gt;
-constexpr Angle&lt;T&gt; operator-(const Angle&lt;T&gt;&amp; rhs);
+<p><a href="../../">vecpp</a> :: <a href="../">reference</a> :: <a href="./">Mat&lt;typename, std::size_t, std::size_t></a></p>
+<h2 id="vecppoperator-vecppmatunary">vecpp::operator-(vecpp::Mat)<sub>unary</sub></h2>
+<pre><code>template&lt;typename T, std::size_t L&gt;
+constexpr Vec&lt;T,L&gt; operator-(const Vec&lt;T,L&gt;&amp; rhs);
 </code></pre>
 
-<p>Returns the negated version of the angle</p>
-<p>Keep in mind that in the angle's clamp space, -PI == PI.</p>
+<p>Returns the negated version of the vector</p>
 <h3 id="parameters">Parameters</h3>
 <table>
 <thead>
@@ -125,28 +124,27 @@ constexpr Angle&lt;T&gt; operator-(const Angle&lt;T&gt;&amp; rhs);
 <tbody>
 <tr>
 <td><strong>rhs</strong></td>
-<td>The angle to negate</td>
+<td>The vector to negate</td>
 </tr>
 </tbody>
 </table>
 <h3 id="return-value">Return value</h3>
-<p>An angle of inverse magnitude as 'rhs'</p>
+<p>A vector equivalent to <code>rhs</code> where <code>operator-()</code> has been applied to it 
+element-wise.</p>
 <h3 id="example">Example</h3>
 <pre><code>#include &quot;vecpp/vecpp.h&quot;
 #include &lt;cassert&gt;
 
 int main() {
-  using Angle = vecpp::Angle&lt;float&gt;;
+  using fVec2 = vecpp::Vec&lt;float, 2&gt;;
 
-  auto angle_a = Angle::from_deg(90.0f);
-  auto angle_b = Angle::from_deg(180.0f);
+  fVec2 a = {10.0f, -5.0f};
 
-  std::cout &lt;&lt; -angle_a &lt;&lt; &quot; &quot; &lt;&lt; -angle_b &lt;&lt; &quot;\n&quot;;
+  fVec2 b = -a;
+
+  assert(b[0] == -10.0f);
+  assert(b[1] == 5.0f);
 }
-</code></pre>
-
-<p>Output:</p>
-<pre><code>-90° 180°
 </code></pre></div>
         </div>
 

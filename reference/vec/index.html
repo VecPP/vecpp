@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Unary minus - VecPP documentation</title>
+        <title>Vector - VecPP documentation</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -61,7 +61,7 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference guide <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
@@ -70,11 +70,11 @@
 </li>
                                     
 <li >
-    <a href="index.html">Angle</a>
+    <a href="../angle/index.html">Angle</a>
 </li>
                                     
-<li >
-    <a href="../vec/index.html">Vector</a>
+<li class="active">
+    <a href="index.html">Vector</a>
 </li>
                                     
 <li >
@@ -90,6 +90,16 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
+                            <li >
+                                <a rel="next" href="../angle/index.html">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../mat/index.html">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -98,56 +108,223 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#vecppoperator-vecppangleunary">vecpp::operator-(vecpp::Angle)unary</a></li>
-            <li><a href="#parameters">Parameters</a></li>
-            <li><a href="#return-value">Return value</a></li>
-            <li><a href="#example">Example</a></li>
+        <li class="main active"><a href="#vec">Vec</a></li>
+            <li><a href="#member-types">Member types</a></li>
+            <li><a href="#member-functions">Member functions</a></li>
+            <li><a href="#non-member-functions">Non-member functions</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p><a href="../../">vecpp</a> :: <a href="../">reference</a> :: <a href="./">Angle&lt;typename></a></p>
-<h2 id="vecppoperator-vecppangleunary">vecpp::operator-(vecpp::Angle)<sub>unary</sub></h2>
-<pre><code>template&lt;typename T&gt;
-constexpr Angle&lt;T&gt; operator-(const Angle&lt;T&gt;&amp; rhs);
+<p><a href="../../">vecpp</a> :: <a href="../">reference</a></p>
+<h1 id="vec">Vec</h1>
+<pre><code>template&lt;typename T, std::size_t L&gt;
+struct Vec;
 </code></pre>
 
-<p>Returns the negated version of the angle</p>
-<p>Keep in mind that in the angle's clamp space, -PI == PI.</p>
-<h3 id="parameters">Parameters</h3>
+<p>In many respects, <code>Vec</code> behaves a lot like <code>std::array&lt;&gt;</code>, but with support for mathematical operations.</p>
+<h2 id="member-types">Member types</h2>
 <table>
 <thead>
 <tr>
-<th>Argument</th>
-<th>Role</th>
+<th>Member Type</th>
+<th>Definition</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>rhs</strong></td>
-<td>The angle to negate</td>
+<td><code>value_type</code></td>
+<td><code>T</code></td>
 </tr>
 </tbody>
 </table>
-<h3 id="return-value">Return value</h3>
-<p>An angle of inverse magnitude as 'rhs'</p>
-<h3 id="example">Example</h3>
-<pre><code>#include &quot;vecpp/vecpp.h&quot;
-#include &lt;cassert&gt;
-
-int main() {
-  using Angle = vecpp::Angle&lt;float&gt;;
-
-  auto angle_a = Angle::from_deg(90.0f);
-  auto angle_b = Angle::from_deg(180.0f);
-
-  std::cout &lt;&lt; -angle_a &lt;&lt; &quot; &quot; &lt;&lt; -angle_b &lt;&lt; &quot;\n&quot;;
-}
-</code></pre>
-
-<p>Output:</p>
-<pre><code>-90° 180°
-</code></pre></div>
+<h2 id="member-functions">Member functions</h2>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="constructor.html">(constructor)</a></td>
+<td>initalize using aggregate initialization</td>
+</tr>
+<tr>
+<td>(destructor)</td>
+<td>destroy every element in the vectpr</td>
+</tr>
+<tr>
+<td>operator=</td>
+<td>ovewrite the vector with another vector</td>
+</tr>
+<tr>
+<td><a href="at.html">at</a></td>
+<td>access specific element with bounds checking</td>
+</tr>
+<tr>
+<td><a href="operator_at.html">operator[]</a></td>
+<td>access specific element</td>
+</tr>
+<tr>
+<td><a href="data.html">data</a></td>
+<td>access underlying array</td>
+</tr>
+</tbody>
+</table>
+<h2 id="non-member-functions">Non-member functions</h2>
+<h3 id="language-support">Language support</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="begin.html">begin</a></td>
+<td>iterator to the beginning</td>
+</tr>
+<tr>
+<td><a href="end.html">end</a></td>
+<td>iterator to the end</td>
+</tr>
+<tr>
+<td><a href="format.html">operator&lt;&lt;</a></td>
+<td>print to stream</td>
+</tr>
+</tbody>
+</table>
+<h3 id="per-member-operations">Per-member operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="op_cmp.html">operator==</a></td>
+<td>compares two vectors for equality</td>
+</tr>
+<tr>
+<td><a href="op_cmp.html">operator!=</a></td>
+<td>compares two vectors for inequality</td>
+</tr>
+<tr>
+<td><a href="op_per_mem_compound.html">operator-=</a></td>
+<td>per-member substraction</td>
+</tr>
+<tr>
+<td><a href="op_per_mem_compound.html">operator+=</a></td>
+<td>per-member addition</td>
+</tr>
+<tr>
+<td><a href="op_per_mem_compound.html">operator*=</a></td>
+<td>per-member multiplication</td>
+</tr>
+<tr>
+<td><a href="op_per_mem_compound.html">operator/=</a></td>
+<td>per-member division</td>
+</tr>
+<tr>
+<td><a href="op_per_mem.html">operator-</a></td>
+<td>per-member substraction</td>
+</tr>
+<tr>
+<td><a href="op_per_mem.html">operator+</a></td>
+<td>per-member addition</td>
+</tr>
+<tr>
+<td><a href="op_per_mem.html">operator*</a></td>
+<td>per-member multiplication</td>
+</tr>
+<tr>
+<td><a href="op_per_mem.html">operator/</a></td>
+<td>per-member division</td>
+</tr>
+<tr>
+<td><a href="abs.html">abs</a></td>
+<td>per-member abs()</td>
+</tr>
+<tr>
+<td><a href="min.html">min</a></td>
+<td>per-member min()</td>
+</tr>
+<tr>
+<td><a href="min.html">max</a></td>
+<td>per-member max()</td>
+</tr>
+</tbody>
+</table>
+<h3 id="unary-operations">Unary operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="unary_minus.html">operator-<sub>(unary)</sub></a></td>
+<td>negation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="scalar-operations">Scalar operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="scaling_compound.html">operator/=<sub>(scalar)</sub></a></td>
+<td>vector scaling</td>
+</tr>
+<tr>
+<td><a href="scaling_compound.html">operator*=<sub>(scalar)</sub></a></td>
+<td>vector scaling</td>
+</tr>
+<tr>
+<td><a href="scaling.html">operator/<sub>(scalar)</sub></a></td>
+<td>vector scaling</td>
+</tr>
+<tr>
+<td><a href="scaling.html">operator*<sub>(scalar)</sub></a></td>
+<td>vector scaling</td>
+</tr>
+</tbody>
+</table>
+<h3 id="geometric-functions">Geometric functions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="norm.html">lenght</a></td>
+<td>get vector's L2 norm</td>
+</tr>
+<tr>
+<td><a href="dot.html">dot</a></td>
+<td>dot product</td>
+</tr>
+<tr>
+<td><a href="cross.html">cross</a></td>
+<td>cross product</td>
+</tr>
+</tbody>
+</table></div>
         </div>
 
         <footer class="col-md-12">

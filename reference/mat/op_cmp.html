@@ -7,11 +7,11 @@
         
         
         
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Angle - VecPP documentation</title>
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Op cmp - VecPP documentation</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
@@ -39,7 +39,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../index.html">VecPP documentation</a>
+                    <a class="navbar-brand" href="../../index.html">VecPP documentation</a>
                 </div>
 
                 <!-- Expanded navigation -->
@@ -47,30 +47,38 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li >
-                                <a href="../index.html">Home</a>
+                                <a href="../../index.html">Home</a>
                             </li>
                             <li >
-                                <a href="../dev-guide/index.html">Dev Guide</a>
+                                <a href="../../dev-guide/index.html">Dev Guide</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../user-guide/installation.html">Installation</a>
+    <a href="../../user-guide/installation.html">Installation</a>
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown active">
+                            <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference guide <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
-<li class="active">
-    <a href="angle.html">Angle</a>
+<li >
+    <a href="../index.html">Home</a>
 </li>
                                     
 <li >
-    <a href="vec.html">Vector</a>
+    <a href="../angle/index.html">Angle</a>
+</li>
+                                    
+<li >
+    <a href="../vec/index.html">Vector</a>
+</li>
+                                    
+<li >
+    <a href="index.html">Matrix</a>
 </li>
                                 </ul>
                             </li>
@@ -82,16 +90,6 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li >
-                                <a rel="next" href="../user-guide/installation.html">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li >
-                                <a rel="prev" href="vec.html">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
                     </ul>
                 </div>
             </div>
@@ -100,197 +98,50 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#angle">Angle</a></li>
-            <li><a href="#member-types">Member types</a></li>
-            <li><a href="#member-functions">Member functions</a></li>
-            <li><a href="#non-member-functions">Non-member functions</a></li>
+        <li class="main active"><a href="#vecppoperatorvecppmat">vecpp::operator==,!=(vecpp::Mat)</a></li>
+            <li><a href="#parameters">Parameters</a></li>
+            <li><a href="#return-value">Return value</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="angle">Angle</h1>
-<pre><code>template&lt;typename T&gt;
-struct Angle;
+<p><a href="../../">vecpp</a> :: <a href="../">reference</a> :: <a href="./">Mat&lt;typename, std::size_t, std::size_t></a></p>
+<h2 id="vecppoperatorvecppmat">vecpp::operator==,!=(vecpp::Mat)</h2>
+<p>1)</p>
+<pre><code>template&lt;typename T, std::size_t C, std::size_t R&gt;
+constexpr bool operator==(const Mat&lt;T, C, R&gt;&amp; lhs, const Mat&lt;T, C, R&gt;&amp; rhs);
 </code></pre>
 
-<p>Angle is a wrapper type around a representation that helps manage angles in a
-consistent manner.</p>
-<p>Angle values are always kepts within the ]-PI, PI] range at all times.</p>
-<h2 id="member-types">Member types</h2>
+<p>2)</p>
+<pre><code>template&lt;typename T, std::size_t C, std::size_t R&gt;
+constexpr bool operator!=(const Mat&lt;T, C, R&gt;&amp; lhs, const Mat&lt;T, C, R&gt;&amp; rhs);
+</code></pre>
+
+<p>Compares matrices for equality.</p>
+<h3 id="parameters">Parameters</h3>
 <table>
 <thead>
 <tr>
-<th>Member Type</th>
-<th>Definition</th>
+<th>Argument</th>
+<th>Role</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>value_type</td>
-<td>T</td>
+<td><strong>lhs</strong></td>
+<td>The first matrix to compare</td>
+</tr>
+<tr>
+<td><strong>rhs</strong></td>
+<td>The second matrix to compare</td>
 </tr>
 </tbody>
 </table>
-<h2 id="member-functions">Member functions</h2>
-<table>
-<thead>
-<tr>
-<th>Member</th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>(destructor)</td>
-<td>does nothing</td>
-</tr>
-<tr>
-<td>operator=</td>
-<td>ovewrite the angle with another angle</td>
-</tr>
-<tr>
-<td><a href="angle/from.html">from_deg</a></td>
-<td>new angle from a degree value</td>
-</tr>
-<tr>
-<td><a href="angle/from.html">from_rad</a></td>
-<td>new angle from a radian value</td>
-</tr>
-<tr>
-<td><a href="angle/from_clamped.html">from_clamped_deg</a></td>
-<td>unsafe new angle from a degree value</td>
-</tr>
-<tr>
-<td><a href="angle/from_clamped.html">from_clamped_rad</a></td>
-<td>unsafe new angle from a radian value</td>
-</tr>
-<tr>
-<td><a href="angle/as.html">as_deg</a></td>
-<td>get the angle value as radians</td>
-</tr>
-<tr>
-<td><a href="angle/as.html">as_rad</a></td>
-<td>get the angle value as degrees</td>
-</tr>
-</tbody>
-</table>
-<h2 id="non-member-functions">Non-member functions</h2>
-<h3 id="language-support">Language support</h3>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="angle/format.html">operator&lt;&lt;</a></td>
-<td>print to stream</td>
-</tr>
-</tbody>
-</table>
-<h3 id="binary-operations">Binary operations</h3>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="angle/op_cmp.html">operator==</a></td>
-<td>compares two angles for equality</td>
-</tr>
-<tr>
-<td><a href="angle/op_cmp.html">operator!=</a></td>
-<td>compares two angles for inequality</td>
-</tr>
-<tr>
-<td><a href="angle/op_cmp.html">operator&lt;</a></td>
-<td>compares two angles</td>
-</tr>
-<tr>
-<td><a href="angle/op_cmp.html">operator&lt;=</a></td>
-<td>compares two angles</td>
-</tr>
-<tr>
-<td><a href="angle/op_cmp.html">operator&gt;</a></td>
-<td>compares two angles</td>
-</tr>
-<tr>
-<td><a href="angle/op_cmp.html">operator&gt;=</a></td>
-<td>compares two angles</td>
-</tr>
-<tr>
-<td><a href="angle/arithmetic_inplace.html">operator-=</a></td>
-<td>in-place diff angles</td>
-</tr>
-<tr>
-<td><a href="angle/arithmetic_inplace.html">operator+=</a></td>
-<td>in-place add angles</td>
-</tr>
-<tr>
-<td><a href="angle/arithmetic.html">operator-</a></td>
-<td>diff angles</td>
-</tr>
-<tr>
-<td><a href="angle/arithmetic.html">operator+</a></td>
-<td>add angles</td>
-</tr>
-<tr>
-<td><a href="angle/scale_inplace.html">operator*=</a></td>
-<td>in-place scale angle</td>
-</tr>
-<tr>
-<td><a href="angle/scale_inplace.html">operator/=</a></td>
-<td>in-place scale angle</td>
-</tr>
-<tr>
-<td><a href="angle/scale.html">operator*</a></td>
-<td>scale angle</td>
-</tr>
-<tr>
-<td><a href="angle/scale.html">operator/</a></td>
-<td>scale angle</td>
-</tr>
-</tbody>
-</table>
-<h3 id="unary-operations">Unary operations</h3>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="angle/unary_minus.html">operator-<sub>(unary)</sub></a></td>
-<td>negation</td>
-</tr>
-</tbody>
-</table>
-<h3 id="trigonometric-functions">Trigonometric functions</h3>
-<table>
-<thead>
-<tr>
-<th>Function</th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>sin</td>
-<td>sine</td>
-</tr>
-<tr>
-<td>cos</td>
-<td>cosine</td>
-</tr>
-</tbody>
-</table></div>
+<p><strong>N.B.</strong> <code>lhs</code> and <code>rhs</code> must be the exact same matrix type, mixed type comparisons 
+are not supported.</p>
+<h3 id="return-value">Return value</h3>
+<p>1) <code>true</code> if both matrices are equal element-wise
+2) <code>true</code> if any element at a given location differs between the matrices</p></div>
         </div>
 
         <footer class="col-md-12">
@@ -298,11 +149,11 @@ consistent manner.</p>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = "..",
+            var base_url = "../..",
                 shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
         </script>
-        <script src="../js/base.js" defer></script>
-        <script src="../search/main.js" defer></script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
     <div class="modal-dialog">

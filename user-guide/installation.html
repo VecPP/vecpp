@@ -66,11 +66,19 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../reference/angle.html">Angle</a>
+    <a href="../reference/index.html">Home</a>
 </li>
                                     
 <li >
-    <a href="../reference/vec.html">Vector</a>
+    <a href="../reference/angle/index.html">Angle</a>
+</li>
+                                    
+<li >
+    <a href="../reference/vec/index.html">Vector</a>
+</li>
+                                    
+<li >
+    <a href="../reference/mat/index.html">Matrix</a>
 </li>
                                 </ul>
                             </li>
@@ -88,7 +96,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../reference/angle.html">
+                                <a rel="prev" href="../reference/index.html">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -111,11 +119,37 @@
 of the <code>include/</code> directory available to your compiler.</p>
 <h2 id="cmake">CMake</h2>
 <p>You can use CMake (3.9 or above) to compile the tests and install the library.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>What</th>
+<th>Requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VECPP_BUILD_SINGLE_HEADER</td>
+<td>build <code>vecpp_single.h</code></td>
+<td><code>python</code> and git submodules fetched</td>
+</tr>
+<tr>
+<td>VECPP_BUILD_DOCS</td>
+<td>builds the html version of the documentation</td>
+<td><a href="https://www.mkdocs.org/">mkdocs</a></td>
+</tr>
+<tr>
+<td>VECPP_BUILD_TESTS</td>
+<td>builds the unit tests</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p>On Linux:</p>
 <pre><code class="bash">mkdir bld
 cd bld
-cmake -DCMAKE_INSTALL_PREFIX=insert/install/path/here ..
-make &amp;&amp; make test &amp;&amp; make install
+cmake -DVECPP_BUILD_SINGLE_HEADER=ON -DCMAKE_INSTALL_PREFIX=insert/install/path/here ..
+make &amp;&amp; make install
 </code></pre></div>
         </div>
 

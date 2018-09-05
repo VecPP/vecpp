@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Unary minus - VecPP documentation</title>
+        <title>Cos - VecPP documentation</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -98,22 +98,22 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#vecppoperator-vecppangleunary">vecpp::operator-(vecpp::Angle)unary</a></li>
+        <li class="main active"><a href="#vecppcos">vecpp::cos</a></li>
             <li><a href="#parameters">Parameters</a></li>
             <li><a href="#return-value">Return value</a></li>
             <li><a href="#example">Example</a></li>
+            <li><a href="#see-also">See also</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <p><a href="../../">vecpp</a> :: <a href="../">reference</a> :: <a href="./">Angle&lt;typename></a></p>
-<h2 id="vecppoperator-vecppangleunary">vecpp::operator-(vecpp::Angle)<sub>unary</sub></h2>
-<pre><code>template&lt;typename T&gt;
-constexpr Angle&lt;T&gt; operator-(const Angle&lt;T&gt;&amp; rhs);
+<h2 id="vecppcos">vecpp::cos</h2>
+<pre><code>template &lt;typename T&gt;
+constexpr T cos(const Angle&lt;T&gt;&amp; arg);
 </code></pre>
 
-<p>Returns the negated version of the angle</p>
-<p>Keep in mind that in the angle's clamp space, -PI == PI.</p>
+<p>Computes the cosine of arg</p>
 <h3 id="parameters">Parameters</h3>
 <table>
 <thead>
@@ -124,30 +124,35 @@ constexpr Angle&lt;T&gt; operator-(const Angle&lt;T&gt;&amp; rhs);
 </thead>
 <tbody>
 <tr>
-<td><strong>rhs</strong></td>
-<td>The angle to negate</td>
+<td><strong>arg</strong></td>
+<td>An angle</td>
 </tr>
 </tbody>
 </table>
 <h3 id="return-value">Return value</h3>
-<p>An angle of inverse magnitude as 'rhs'</p>
+<p>The cosine of arg.</p>
 <h3 id="example">Example</h3>
 <pre><code>#include &quot;vecpp/vecpp.h&quot;
-#include &lt;cassert&gt;
+#include &lt;iostream&gt;
 
 int main() {
   using Angle = vecpp::Angle&lt;float&gt;;
 
-  auto angle_a = Angle::from_deg(90.0f);
-  auto angle_b = Angle::from_deg(180.0f);
+  auto angle = Angle::from_deg(90.0f);
 
-  std::cout &lt;&lt; -angle_a &lt;&lt; &quot; &quot; &lt;&lt; -angle_b &lt;&lt; &quot;\n&quot;;
+  std::cout &lt;&lt; cos(angle) &lt;&lt; &quot;\n&quot;;
 }
 </code></pre>
 
 <p>Output:</p>
-<pre><code>-90° 180°
-</code></pre></div>
+<pre><code>0
+</code></pre>
+
+<h3 id="see-also">See also</h3>
+<ul>
+<li><a href="sin.html">sin</a> : computes sine</li>
+<li><a href="tan.html">tan</a> : computes tangent</li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">
