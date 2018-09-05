@@ -40,9 +40,9 @@ constexpr T sin(const Angle<T, f>& a) {
 
     double result = r;
 
-    for (unsigned long long i = 3; i < 19; i+=2) {
+    for (std::size_t i = 3; i < 19; i+=2) {
       r *= r_2;
-      result += r / cste::factorial(i);
+      result += r / factorial(i);
     }
 
     if(neg) {

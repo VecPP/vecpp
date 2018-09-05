@@ -71,14 +71,6 @@ T mod(const T& v, const T& d) {
 
 namespace cste {
 
-constexpr unsigned long long factorial(std::size_t N) {
-  unsigned long long result = 1;
-  for(unsigned long long i = 1 ; i <= N ; ++i) {
-    result *= i;
-  }
-  return result;
-}
-
 template <typename T>
 constexpr T sqrt(const T& v) {
   if (v == T(0)) {
@@ -174,6 +166,14 @@ constexpr ScalarT exp(const ScalarT& v) {
   } else {
     return cste::exp(v);
   }
+}
+
+constexpr unsigned long long factorial(std::size_t N) {
+  unsigned long long result = 1;
+  for(unsigned long long i = 1 ; i <= N ; ++i) {
+    result *= i;
+  }
+  return result;
 }
 
 template <Flags f = 0, typename ScalarT>
