@@ -12,6 +12,7 @@ SET( VECPP_TESTS
   vec/operators.cpp
 
   mat/construction.cpp
+  mat/inversion.cpp
   mat/mul.cpp
   mat/operations.cpp
 

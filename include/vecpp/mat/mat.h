@@ -92,6 +92,32 @@ std::ostream& operator<<(std::ostream& stream,
   return stream;
 }
 
+template <typename T, std::size_t C, std::size_t R, typename Traits>
+constexpr Mat<T, C, R, Traits> operator/(const Mat<T, C, R, Traits>& mat,
+                                         const T& v) {
+  Mat<T, C, R, Traits> result = {};
+
+  for (std::size_t i = 0; i < R; ++i) {
+    for (std::size_t j = 0; j < C; ++j) {
+      result(i, j) = mat(i, j) / v;
+    }
+  }
+  return result;
+}
+
+template <typename T, std::size_t C, std::size_t R, typename Traits>
+constexpr Mat<T, C, R, Traits> operator*(const Mat<T, C, R, Traits>& mat,
+                                         const T& v) {
+  Mat<T, C, R, Traits> result = {};
+
+  for (std::size_t i = 0; i < R; ++i) {
+    for (std::size_t j = 0; j < C; ++j) {
+      result(i, j) = mat(i, j) * v;
+    }
+  }
+  return result;
+}
+
 template <typename T, std::size_t C, std::size_t R, typename M_traits,
           typename V_traits>
 constexpr Vec<T, R, V_traits> operator*(const Mat<T, C, R, M_traits>& mat,
