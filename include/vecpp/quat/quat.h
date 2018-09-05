@@ -23,8 +23,8 @@ template <typename T>
 struct Quat {
   using value_type = T;
 
-  template <Flags af>
-  static constexpr Quat angle_axis(const Angle<T, af>& angle,
+  template <typename A_traits>
+  static constexpr Quat angle_axis(const Angle<T, A_traits>& angle,
                                    const Vec<T, 3>& axis);
 
   // Left public for aggregate initialization.
@@ -35,8 +35,8 @@ struct Quat {
 };
 
 template <typename T>
-template <Flags af>
-constexpr Quat<T> Quat<T>::angle_axis(const Angle<T, af>& angle,
+template <typename A_traits>
+constexpr Quat<T> Quat<T>::angle_axis(const Angle<T, A_traits>& angle,
                                       const Vec<T, 3>& axis) {
   const T s = sin(angle * T(0.5));
   const T c = cos(angle * T(0.5));
@@ -65,11 +65,12 @@ constexpr Quat<T> operator*(const Quat<T>& lhs, const Quat<T>& rhs) {
 }
 
 // Rotate a vector by the quaternion
-template <typename T>
-constexpr Vec<T, 3> operator*(const Quat<T>& lhs, const Vec<T, 3>& rhs) {
-  const Vec<T, 3> q_v = {lhs.x, lhs.y, lhs.z};
-  const Vec<T, 3> uv = cross(q_v, rhs);
-  const Vec<T, 3> uuv = cross(q_v, uv);
+template <typename T, typename V_traits>
+constexpr Vec<T, 3, V_traits> operator*(const Quat<T>& lhs,
+                                        const Vec<T, 3, V_traits>& rhs) {
+  const Vec<T, 3, V_traits> q_v = {lhs.x, lhs.y, lhs.z};
+  const Vec<T, 3, V_traits> uv = cross(q_v, rhs);
+  const Vec<T, 3, V_traits> uuv = cross(q_v, uv);
 
   return rhs + ((uv * lhs.w) + uuv) * T(2);
 }

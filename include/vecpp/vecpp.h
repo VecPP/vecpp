@@ -7,7 +7,7 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/flags.h"
+#include "vecpp/traits.h"
 
 #include "vecpp/scalar/constants.h"
 #include "vecpp/scalar/operations.h"

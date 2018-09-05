@@ -12,9 +12,7 @@ TEST_CASE("Static members assignment", "[vec_construct]") {
   using Vec = vecpp::Vec<float, 2>;
 
   static_assert(std::is_same_v<Vec::value_type, float>);
-  static_assert(Vec::size() == 2);
-  static_assert(
-      std::is_same_v<std::remove_cv_t<decltype(Vec::flags)>, vecpp::Flags>);
+  static_assert(Vec::length == 2);
 }
 
 TEST_CASE("Default construction compiles without warning", "[vec_construct]") {
@@ -48,30 +46,6 @@ TEST_CASE("Build vec2 from aggregate initialization", "[vec_construct]") {
   {
     constexpr Vec a = {1.0f, 2.0f};
     constexpr Vec b{1.0f, 2.0f};
-
-    static_assert(a[0] == 1.0f);
-    static_assert(a[1] == 2.0f);
-    static_assert(a == b);
-  }
-}
-
-TEST_CASE("Vectos transparently assign accross flags", "[vec_construct]") {
-  using Vec = vecpp::Vec<float, 2>;
-  using Flagged_vec = vecpp::Vec<float, 2, vecpp::flags::testing>;
-
-  {
-    Vec a = {1.0f, 2.0f};
-    Flagged_vec b = a;
-
-    REQUIRE(b[0] == a[0]);
-    REQUIRE(b[1] == a[1]);
-
-    REQUIRE(a == b);
-  }
-
-  {
-    constexpr Vec a = {1.0f, 2.0f};
-    constexpr Flagged_vec b = a;
 
     static_assert(a[0] == 1.0f);
     static_assert(a[1] == 2.0f);

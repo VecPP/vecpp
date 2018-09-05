@@ -10,7 +10,7 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/flags.h"
+#include "vecpp/traits.h"
 
 #include <cmath>
 
@@ -61,9 +61,9 @@ T trunc(const T& v) {
 
 template <typename T>
 T mod(const T& v, const T& d) {
-  if constexpr (std::is_integral_v<T>) {
-    return v % d;
-  } else {
+  if
+    constexpr(std::is_integral_v<T>) { return v % d; }
+  else {
     return std::fmod(v, d);
   }
 }
@@ -136,138 +136,138 @@ constexpr T fract(const T& v) {
 
 template <typename T>
 constexpr T mod(const T& v, const T& d) {
-  if constexpr (std::is_integral_v<T>) {
-    return v % d;
-  } else {
+  if
+    constexpr(std::is_integral_v<T>) { return v % d; }
+  else {
     return v - floor(v / d) * d;
   }
 }
 
 }  // namespace cste
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT abs(const ScalarT& v) {
   return v < ScalarT(0) ? -v : v;
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT ceil(const ScalarT& v) {
-  if constexpr (!is_ct(f)) {
+  if
+    constexpr(is_ct<traits>()) { return cste::ceil(v); }
+  else {
     return non_cste::ceil(v);
-  } else {
-    return cste::ceil(v);
   }
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT exp(const ScalarT& v) {
-  if constexpr (!is_ct(f)) {
+  if
+    constexpr(is_ct<traits>()) { return cste::exp(v); }
+  else {
     return non_cste::exp(v);
-  } else {
-    return cste::exp(v);
   }
 }
 
 constexpr unsigned long long factorial(std::size_t N) {
   unsigned long long result = 1;
-  for(unsigned long long i = 1 ; i <= N ; ++i) {
+  for (unsigned long long i = 1; i <= N; ++i) {
     result *= i;
   }
   return result;
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT floor(const ScalarT& v) {
-  if constexpr (!is_ct(f)) {
+  if
+    constexpr(is_ct<traits>()) { return cste::floor(v); }
+  else {
     return non_cste::floor(v);
-  } else {
-    return cste::floor(v);
   }
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT round(const ScalarT& v) {
-  if constexpr (!is_ct(f)) {
+  if
+    constexpr(is_ct<traits>()) { return cste::round(v); }
+  else {
     return non_cste::round(v);
-  } else {
-    return cste::round(v);
   }
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT sign(const ScalarT& v) {
   return v >= 0.0f ? 1.0f : -1.0f;
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT trunc(const ScalarT& v) {
-  if constexpr (!is_ct(f)) {
+  if
+    constexpr(is_ct<traits>()) { return cste::trunc(v); }
+  else {
     return non_cste::trunc(v);
-  } else {
-    return cste::trunc(v);
   }
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT mod(const ScalarT& v, const ScalarT& d) {
-  if constexpr (!is_ct(f)) {
+  if
+    constexpr(is_ct<traits>()) { return cste::mod(v, d); }
+  else {
     return non_cste::mod(v, d);
-  } else {
-    return cste::mod(v, d);
   }
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT fract(const ScalarT& v) {
-  if constexpr (!is_ct(f)) {
+  if
+    constexpr(is_ct<traits>()) { return cste::fract(v); }
+  else {
     return non_cste::fract(v);
-  } else {
-    return cste::fract(v);
   }
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT step(const ScalarT& edge, const ScalarT& x) {
   return x < edge ? 0.0f : 1.0f;
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT min(const ScalarT& lhs, const ScalarT& rhs) {
   return std::min(lhs, rhs);
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT max(const ScalarT& lhs, const ScalarT& rhs) {
   return std::max(lhs, rhs);
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT clamp(const ScalarT& v, const ScalarT& low,
                         const ScalarT& high) {
   return std::clamp(v, low, high);
 }
 
-template <Flags f = 0, typename ScalarT, typename PctT>
+template <typename traits = Scalar_traits, typename ScalarT, typename PctT>
 constexpr ScalarT lerp(const ScalarT& from, const ScalarT& to,
                        const PctT& pct) {
   return from + (to - from) * pct;
 }
 
-template <Flags f = 0, typename ScalarT>
+template <typename traits = Scalar_traits, typename ScalarT>
 constexpr ScalarT pow(const ScalarT& x, const ScalarT& n) {
-  if constexpr (!is_ct(f)) {
+  if
+    constexpr(is_ct<traits>()) { return cste::pow(x, n); }
+  else {
     return non_cste::pow(x, n);
-  } else {
-    return cste::pow(x, n);
   }
 }
 
-template <Flags f = 0, typename T>
+template <typename traits = Scalar_traits, typename T>
 constexpr T sqrt(const T& v) {
-  if constexpr (!is_ct(f)) {
+  if
+    constexpr(is_ct<traits>()) { return cste::sqrt(v); }
+  else {
     return non_cste::sqrt(v);
-  } else {
-    return cste::sqrt(v);
   }
 }
 }  // namespace VECPP_NAMESPACE

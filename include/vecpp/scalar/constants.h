@@ -24,6 +24,5 @@ constexpr Scalar quarter_pi = pi<Scalar> / Scalar(4);
 template <typename Scalar>
 constexpr Scalar two_pi = pi<Scalar>* Scalar(2);
 
-
 }  // namespace VECPP_NAMESPACE
 #endif

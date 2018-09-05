@@ -10,7 +10,7 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/flags.h"
+#include "vecpp/traits.h"
 #include "vecpp/vec/vec.h"
 
 #include <array>
@@ -19,24 +19,23 @@
 
 namespace VECPP_NAMESPACE {
 
-template <typename T, std::size_t C, std::size_t R, Flags f = 0>
+template <typename T, std::size_t C, std::size_t R,
+          typename Traits = Mat_traits<T>>
 struct Mat {
-  static constexpr Flags flags = f;
   static constexpr std::size_t rows = R;
   static constexpr std::size_t cols = C;
 
   using value_type = T;
-  using col_type = Vec<value_type, rows, flags>;
-  using row_type = Vec<value_type, cols, flags>;
+  using traits = Traits;
 
   constexpr value_type& operator()(std::size_t i, std::size_t j) {
     assert(i < cols && j < rows);
-    return data_[i*rows + j];
+    return data_[i * rows + j];
   }
 
   constexpr const value_type& operator()(std::size_t i, std::size_t j) const {
     assert(i < cols && j < rows);
-    return data_[i*rows + j];
+    return data_[i * rows + j];
   }
 
   constexpr value_type& at(std::size_t c, std::size_t r) {
@@ -53,38 +52,36 @@ struct Mat {
     return (*this)(c, r);
   }
 
-  constexpr value_type* data() {
-    return data_.data();
-  }
+  constexpr value_type* data() { return data_.data(); }
 
-  constexpr const value_type* data() const {
-    return data_.data();
-  }
-  
+  constexpr const value_type* data() const { return data_.data(); }
+
   // Left public for aggregate initialization.
   std::array<value_type, cols * rows> data_;
 };
 
-
-template <typename T, std::size_t C, std::size_t R, Flags fl, Flags fr>
-constexpr bool operator==(const Mat<T, C, R, fl>& lhs, const Mat<T, C, R, fr>& rhs) {
-  for(std::size_t i = 0 ; i < C; ++i) {
-    for(std::size_t j = 0 ; j < R; ++j) {
-      if(lhs(i, j) != rhs(i, j)) {
+template <typename T, std::size_t C, std::size_t R, typename L_traits,
+          typename R_traits>
+constexpr bool operator==(const Mat<T, C, R, L_traits>& lhs,
+                          const Mat<T, C, R, R_traits>& rhs) {
+  for (std::size_t i = 0; i < C; ++i) {
+    for (std::size_t j = 0; j < R; ++j) {
+      if (lhs(i, j) != rhs(i, j)) {
         return false;
       }
     }
-  }  
+  }
   return true;
 }
 
-template<typename T, std::size_t C, std::size_t R, Flags fl>
-std::ostream& operator<<(std::ostream& stream, const Mat<T, C, R, fl>& lhs) {
+template <typename T, std::size_t C, std::size_t R, typename Traits>
+std::ostream& operator<<(std::ostream& stream,
+                         const Mat<T, C, R, Traits>& lhs) {
   stream << "[";
-  for(std::size_t i = 0; i < R; ++i) {
+  for (std::size_t i = 0; i < R; ++i) {
     stream << " ";
-    for(std::size_t j = 0; j < C; ++j) {
-      stream << lhs(i,j) << ",";
+    for (std::size_t j = 0; j < C; ++j) {
+      stream << lhs(i, j) << ",";
     }
     stream << "\n";
   }
@@ -93,36 +90,37 @@ std::ostream& operator<<(std::ostream& stream, const Mat<T, C, R, fl>& lhs) {
   return stream;
 }
 
-template <typename T, std::size_t C, std::size_t R, Flags mf, Flags vf>
-constexpr Vec<T, R, vf> operator*(const Mat<T, C, R, mf>& mat,
-                                  const Vec<T, C, vf>& vec) {
-  Vec<T, R, vf> result = {};
+template <typename T, std::size_t C, std::size_t R, typename M_traits,
+          typename V_traits>
+constexpr Vec<T, R, V_traits> operator*(const Mat<T, C, R, M_traits>& mat,
+                                        const Vec<T, C, V_traits>& vec) {
+  Vec<T, R, V_traits> result = {};
 
   for (std::size_t i = 0; i < R; ++i) {
     T v = 0;
     for (std::size_t j = 0; j < C; ++j) {
-      v += mat(j,i) * vec[j];
+      v += mat(j, i) * vec[j];
     }
     result[i] = v;
   }
   return result;
 }
 
-template <typename T, std::size_t C, std::size_t R, Flags mf, Flags vf>
-constexpr Vec<T, C, vf> operator*(const Vec<T, R, vf>& vec,
-                                  const Mat<T, C, R, mf>& mat) {
-  Vec<T, C, vf> result = {};
+template <typename T, std::size_t C, std::size_t R, typename M_traits,
+          typename V_traits>
+constexpr Vec<T, C, V_traits> operator*(const Vec<T, R, V_traits>& vec,
+                                        const Mat<T, C, R, M_traits>& mat) {
+  Vec<T, C, V_traits> result = {};
 
   for (std::size_t j = 0; j < C; ++j) {
     T v = 0;
     for (std::size_t i = 0; i < R; ++i) {
-      v += mat(j,i) * vec[i];
+      v += mat(j, i) * vec[i];
     }
     result[j] = v;
   }
   return result;
 }
-
 }
 
 #endif

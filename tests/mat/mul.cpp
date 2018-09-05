@@ -7,7 +7,6 @@
 #endif
 
 TEST_CASE("Simple mat x vec", "[mat_vec_mul]") {
-
   using Vec2 = vecpp::Vec<int, 2>;
   using Vec3 = vecpp::Vec<int, 3>;
 

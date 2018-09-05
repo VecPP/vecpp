@@ -8,11 +8,11 @@
 
 using Catch::Matchers::WithinAbs;
 
-constexpr vecpp::Flags ctf = vecpp::flags::compile_time;
+using ctf = vecpp::Add_constexpr_t<vecpp::Scalar_traits>;
 
 template <typename V>
 constexpr bool vec_close(const V& l, const V& r) {
-  for (std::size_t i = 0; i < V::size(); ++i) {
+  for (std::size_t i = 0; i < V::length; ++i) {
     if (vecpp::abs<ctf>(l[i] - r[i]) > 0.0001) {
       return false;
     }
@@ -371,8 +371,7 @@ TEST_CASE("norm", "[vec][algo]") {
 
     static_assert(vecpp::abs(norm(ct(a)) - 0.0f) < 0.00001f);
     static_assert(vecpp::abs(norm(ct(b)) - 1.0f) < 0.00001f);
-    static_assert(vecpp::abs(norm(ct(c)) - vecpp::sqrt<ctf>(2.0f)) <
-                  0.00001f);
+    static_assert(vecpp::abs(norm(ct(c)) - vecpp::sqrt<ctf>(2.0f)) < 0.00001f);
   }
 }
 

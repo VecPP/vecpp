@@ -25,7 +25,7 @@ SET(VECPP_HEADERS
   include/vecpp/vec/operations_per_member.h
   include/vecpp/vec/vec.h
   include/vecpp/config.h
-  include/vecpp/flags.h
+  include/vecpp/traits.h
 
   include/vecpp/vecpp.h
 )

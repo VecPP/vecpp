@@ -14,7 +14,8 @@ TEST_CASE("Matrix static members sanity check", "[mat_construct]") {
   static_assert(Mat::rows == 3);
 }
 
-TEST_CASE("Matrix default construction compiles without warning", "[mat_construct]") {
+TEST_CASE("Matrix default construction compiles without warning",
+          "[mat_construct]") {
   using Mat = vecpp::Mat<float, 2, 3>;
 
   {

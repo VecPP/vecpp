@@ -20,54 +20,58 @@ namespace VECPP_NAMESPACE {
 
 // TODO: These placeholder taylor series expansion implementation
 // are temporary, and need to be replaced with something better!
-template <typename T, Flags f>
-constexpr T sin(const Angle<T, f>& a) {
-  if constexpr (is_ct(f)) {
-    double r = a.as_rad();
+template <typename T, typename Traits>
+constexpr T sin(const Angle<T, Traits>& a) {
+  if
+    constexpr(is_ct<Traits>()) {
+      double r = a.as_rad();
 
-    bool neg = false;
+      bool neg = false;
 
-    if(r < 0.0) {
-      r *= -1.0;
-      neg = true;
+      if (r < 0.0) {
+        r *= -1.0;
+        neg = true;
+      }
+
+      if (r > half_pi<double>) {
+        r = pi<double> - r;
+      }
+
+      double r_2 = r * r * -1.0;
+
+      double result = r;
+
+      for (std::size_t i = 3; i < 19; i += 2) {
+        r *= r_2;
+        result += r / factorial(i);
+      }
+
+      if (neg) {
+        result *= -1.0;
+      }
+      return T(result);
     }
-
-    if(r > half_pi<double>) {
-      r = pi<double> - r;
-    }
-
-    double r_2 = r*r * -1.0;
-
-    double result = r;
-
-    for (std::size_t i = 3; i < 19; i+=2) {
-      r *= r_2;
-      result += r / factorial(i);
-    }
-
-    if(neg) {
-      result *= -1.0;
-    }
-    return T(result);
-  } else {
+  else {
     return std::sin(a.as_rad());
   }
 }
 
-template <typename T, Flags f>
-constexpr T cos(const Angle<T, f>& a) {
-  if constexpr (is_ct(f)) {
-    return sin(a + Angle<T, f>::from_rad(half_pi<T>));
-  } else {
+template <typename T, typename Traits>
+constexpr T cos(const Angle<T, Traits>& a) {
+  if
+    constexpr(is_ct<Traits>()) {
+      return sin(a + Angle<T, Traits>::from_rad(half_pi<T>));
+    }
+  else {
     return std::cos(a.as_rad());
   }
 }
 
-template <typename T, Flags f>
-constexpr T tan(const Angle<T, f>& a) {
-  if constexpr (is_ct(f)) {
-    return sin(a) / cos(a);
-  } else {
+template <typename T, typename Traits>
+constexpr T tan(const Angle<T, Traits>& a) {
+  if
+    constexpr(is_ct<Traits>()) { return sin(a) / cos(a); }
+  else {
     return std::tan(a.as_rad());
   }
 }

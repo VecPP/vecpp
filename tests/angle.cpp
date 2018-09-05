@@ -6,8 +6,6 @@
 #include "vecpp/vecpp.h"
 #endif
 
-constexpr vecpp::Flags ctf = vecpp::flags::compile_time;
-
 namespace angle_literals_float {
 constexpr vecpp::Angle<float> operator""_deg(long double v) {
   return vecpp::Angle<float>::from_deg(float(v));
