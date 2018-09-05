@@ -20,12 +20,15 @@
 
 namespace VECPP_NAMESPACE {
 
-template <typename T, std::size_t len, typename traits = Vec_traits<T>>
-struct alignas(traits::align) Vec {
+template <typename T, std::size_t len, typename Traits = Vec_traits<T>>
+struct alignas(Traits::align) Vec {
  public:
-  using value_type = T;
+  static_assert(len > 0);
 
   static constexpr std::size_t length = len;
+
+  using value_type = T;
+  using traits = Traits;
 
   constexpr T& at(std::size_t i) {
     if (i >= len) {

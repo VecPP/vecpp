@@ -22,6 +22,8 @@ namespace VECPP_NAMESPACE {
 template <typename T, std::size_t C, std::size_t R,
           typename Traits = Mat_traits<T>>
 struct Mat {
+  static_assert(C > 0 && R > 0);
+
   static constexpr std::size_t rows = R;
   static constexpr std::size_t cols = C;
 
