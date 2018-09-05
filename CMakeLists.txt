@@ -13,15 +13,32 @@ option(VECPP_BUILD_TESTS "Build tests" OFF)
 option(VECPP_BUILD_FAILING_TESTS "Build failing tests" OFF)
 option(VECPP_BUILD_PACKAGE "Build Release Package" OFF)
 
+SET(VECPP_HEADERS
+  include/vecpp/angle/angle.h
+  include/vecpp/angle/operations.h
+  include/vecpp/mat/mat.h
+  include/vecpp/mat/operations.h
+  include/vecpp/quat/quat.h
+  include/vecpp/scalar/constants.h
+  include/vecpp/scalar/operations.h
+  include/vecpp/vec/operations.h
+  include/vecpp/vec/operations_per_member.h
+  include/vecpp/vec/vec.h
+  include/vecpp/config.h
+  include/vecpp/flags.h
+
+  include/vecpp/vecpp.h
+)
+
 if(VECPP_BUILD_DOCS)
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/site/index.html
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/docs/404.html
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     DEPENDS mkdocs.yml
-    COMMAND mkdocs build --verbose --clean --strict -f ${CMAKE_CURRENT_SOURCE_DIR}/mkdocs.yml -d ${CMAKE_CURRENT_BINARY_DIR}/site
+    COMMAND mkdocs build --verbose --clean --strict -f ${CMAKE_CURRENT_SOURCE_DIR}/mkdocs.yml -d ${CMAKE_CURRENT_BINARY_DIR}/docs
   )
 
-  add_custom_target(generate_doc ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/site/index.html)
+  add_custom_target(generate_doc ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/docs/404.html)
   set_target_properties(generate_doc PROPERTIES FOLDER "prepare_for_deploy")
 endif()
 
@@ -34,7 +51,7 @@ if(VECPP_BUILD_SINGLE_HEADER)
   add_custom_command(
     OUTPUT ${SINGLE_INCLUDE_FILE}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/include/vecpp/vecpp.h
+    DEPENDS ${VECPP_HEADERS}
     COMMAND python ${CMAKE_CURRENT_SOURCE_DIR}/tools/header_compiler/header_compiler.py 
       --output=${SINGLE_INCLUDE_FILE}
       --notice=${NOTICE_FILE}
@@ -79,13 +96,12 @@ if(VECPP_BUILD_PACKAGE)
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/vecpp.zip
     DEPENDS
       ${SINGLE_INCLUDE_FILE}
-      ${CMAKE_CURRENT_BINARY_DIR}/site/index.html
+      ${CMAKE_CURRENT_BINARY_DIR}/docs/404.html
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/site ${CMAKE_CURRENT_BINARY_DIR}/docs
     COMMAND ${CMAKE_COMMAND} -E copy ${SINGLE_INCLUDE_FILE} ${CMAKE_CURRENT_BINARY_DIR}/include
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/README.md ${CMAKE_CURRENT_BINARY_DIR}/README.md
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE ${CMAKE_CURRENT_BINARY_DIR}/LICENSE
-    COMMAND ${CMAKE_COMMAND} -E tar "cfv" "vecpp.zip" --format=zip 
+    COMMAND ${CMAKE_COMMAND} -E tar "cf" "vecpp.zip" --format=zip 
       "${CMAKE_CURRENT_BINARY_DIR}/README.md"
       "${CMAKE_CURRENT_BINARY_DIR}/LICENSE"
       "${CMAKE_CURRENT_BINARY_DIR}/include"
