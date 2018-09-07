@@ -1,3 +1,7 @@
 [submodule "tools/header_compiler"]
 	path = tools/header_compiler
 	url = https://github.com/FrancoisChabot/header_compiler.git
+[submodule "include/cste_math"]
+	path = include/cste_math
+	url = https://github.com/VecPP/cste_math.git
+	branch = built
