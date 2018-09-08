@@ -2,15 +2,9 @@
 
 A simple vector math library.
 
-[![build][badge.build]][build]
-[![build_win][badge.build_win]][build_win]
-[![CircleCI](https://circleci.com/gh/FrancoisChabot/vecpp.svg?style=svg)](https://circleci.com/gh/FrancoisChabot/vecpp)
-
-[badge.build]: https://travis-ci.org/FrancoisChabot/vecpp.svg?branch=master
-[badge.build_win]: https://ci.appveyor.com/api/projects/status/t7tu1jqmc2wptl1c/branch/master?svg=true
-
-[build]: https://travis-ci.org/FrancoisChabot/vecpp
-[build_win]: https://ci.appveyor.com/project/FrancoisChabot/vecpp/branch/master
+[![Build Status](https://travis-ci.com/VecPP/vecpp.svg?branch=master)](https://travis-ci.com/VecPP/vecpp)
+[![CircleCI](https://circleci.com/gh/VecPP/vecpp.svg?style=svg)](https://circleci.com/gh/VecPP/vecpp)
+[![Build status](https://ci.appveyor.com/api/projects/status/9h8uuh5fa4ehavbp/branch/master?svg=true)](https://ci.appveyor.com/project/FrancoisChabot/vecpp/branch/master)
 
 ## Current State
 
