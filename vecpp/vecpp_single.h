@@ -11,7 +11,9 @@
 #include <cassert>
 #include <cmath>
 #include <cstddef>
+#include <iomanip>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 #include <type_traits>
 
@@ -29,6 +31,393 @@
 #ifndef VECPP_NAMESPACE
 #define VECPP_NAMESPACE vecpp
 #endif
+
+#ifdef _MSVC_LANG
+#if _MSVC_LANG < 201703L
+#error C++17 support is required
+#endif
+#elif __cplusplus < 201703L
+#error C++17 support is required
+#endif
+#ifndef CSTE_MATH_NAMESPACE
+#define CSTE_MATH_NAMESPACE cste
+#endif
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T pi = T(3.14159265358979323846264338327950288419L);
+template <typename T>
+constexpr T half_pi = pi<T> / T(2);
+template <typename T>
+constexpr T quarter_pi = pi<T> / T(4);
+template <typename T>
+constexpr T two_pi = pi<T>* T(2);
+template <typename T>
+constexpr T e = T(2.71828182845904523536028747135266249775724709L);
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T sign(const T& v);
+template <typename T>
+constexpr bool is_nan(const T& v);
+template <typename T>
+constexpr bool is_inf(const T& v);
+template <typename T>
+constexpr T absolute(const T& v);
+template <typename T>
+constexpr T fractional(const T& v);
+template <typename T>
+constexpr T round(const T& v);
+template <typename T>
+constexpr T round_down(const T& v);
+template <typename T>
+constexpr T round_up(const T& v);
+template <typename T>
+constexpr T truncate(const T& v);
+template <typename T>
+constexpr T sine(const T&);
+template <typename T>
+constexpr T cosine(const T&);
+template <typename T>
+constexpr T exponential(const T& v);
+template <typename T>
+constexpr T modulo(const T& val, const T& div);
+template <typename T, typename U>
+constexpr T power(const T& v, const U& p);
+template <typename T>
+constexpr T square_root(const T& v);
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T, typename U>
+constexpr T power(const T& v, const U& p) {
+  if constexpr (std::is_integral<U>()) {
+    T result = 1;
+    for (U i = 0; i < p; ++i) {
+      result *= v;
+    }
+    return result;
+  } else {
+    assert(false);
+    return v;
+  }
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr bool is_nan(const T& v) {
+  return !(v == v);
+}
+template <typename T>
+constexpr bool is_inf(const T& v) {
+  constexpr T inf = std::numeric_limits<T>::infinity();
+  return v == inf || v == -inf;
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T round_down(const T& v) {
+  constexpr T range_max = power(T(2), (std::numeric_limits<T>::digits - 1));
+  constexpr T range_min = -range_max;
+  if (v >= range_max || v <= range_min || is_nan(v)) {
+    return v;
+  }
+  long long int x = static_cast<long long int>(v);
+  if (v == T(x) || v > T(0)) {
+    return T(x);
+  }
+  return T(x - 1);
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+namespace exp_details {
+constexpr long double recur_helper(long double x, long double num,
+                                   long double fact, std::size_t i) {
+  fact *= i;
+  num *= x;
+  long double factor = num / fact;
+  if (factor == 0.0L) {
+    return 0.0L;
+  }
+  return factor + recur_helper(x, num, fact, i + 1);
+}
+}  // namespace exp_details
+template <typename T>
+constexpr T exponential(const T& v) {
+  long double v_p = v;
+  bool neg = v < 0;
+  if (neg) {
+    v_p = -v_p;
+  }
+  // separate integral and fractional components
+  uint32_t integral = uint32_t(round_down(v));
+  long double fract = v_p - integral;
+  long double int_val = 1;
+  long double e_fact = e<long double>;
+  while (integral != 0) {
+    if (integral & 1) {
+      int_val *= e_fact;
+    }
+    integral >>= 1;
+    e_fact *= e<long double>;
+  }
+  long double fract_val = exp_details::recur_helper(fract, 1, 1, 1) + 1.0L;
+  long double result = fract_val * int_val;
+  return T(neg ? 1.0L / result : result);
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T modulo(const T& val, const T& div) {
+  if constexpr (std::is_integral_v<T>) {
+    return val % div;
+  } else {
+    return val - round_down(val / div) * div;
+  }
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T square_root(const T& v) {
+  assert(v >= T(0));
+  if (v == T(0)) {
+    return v;
+  }
+  T r = v;
+  // A simple newton-rhapson for now.
+  while (1) {
+    T tmp = (r + v / r) / T(2);
+    if (tmp == r) {
+      break;
+    }
+    r = tmp;
+  }
+  return r;
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T sign(const T& v) {
+  // https://stackoverflow.com/a/4609795/4442671
+  return T((T(0) < v) - (v < T(0)));
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T absolute(const T& v) {
+  return v < 0 ? -v : v;
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T fractional(const T& val) {
+  return val - round_down(val);
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T round(const T& v) {
+  return round_down(v + T(0.5));
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T round_up(const T& v) {
+  constexpr T range_max = power(T(2), (std::numeric_limits<T>::digits - 1));
+  constexpr T range_min = -range_max;
+  if (v >= range_max || v <= range_min || is_nan(v)) {
+    return v;
+  }
+  long long int x = static_cast<long long int>(v);
+  if (v == T(x) || v < T(0)) {
+    return T(x);
+  }
+  return T(x + 1);
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T truncate(const T& v) {
+  long long int x = static_cast<long long int>(v);
+  return T(x);
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+namespace cosine_detail {
+constexpr long double recur_helper(long double r_2, long double num,
+                                   long double fact, std::size_t i) {
+  fact *= (i - 1);
+  fact *= (i);
+  num *= r_2;
+  long double factor = num / fact;
+  if (factor == 0.0L) {
+    return 0.0;
+  }
+  return factor + recur_helper(r_2, num, fact, i + 2);
+}
+}  // namespace cosine_detail
+template <typename T>
+constexpr T cosine_pi4(const T& rad) {
+  assert(rad >= -quarter_pi<T> && rad <= quarter_pi<T>);
+  // Promote to long double
+  long double r = rad;
+  long double r_2 = r * r * -1.0;
+  return cosine_detail::recur_helper(r_2, 1, 1.0L, 2) + 1.0L;
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+namespace sine_detail {
+constexpr long double recur_helper(long double r_2, long double num,
+                                   double fact, std::size_t i) {
+  fact *= (i - 1);
+  fact *= (i);
+  num *= r_2;
+  long double factor = num / fact;
+  if (factor == 0.0L) {
+    return 0.0;
+  }
+  return factor + recur_helper(r_2, num, fact, i + 2);
+}
+}  // namespace sine_detail
+template <typename T>
+constexpr T sine_pi4(const T& rad) {
+  assert(rad >= -quarter_pi<T> && rad <= quarter_pi<T>);
+  // Promote to long double
+  long double r = rad;
+  return sine_detail::recur_helper(r * r * -1.0L, r, 1.0L, 3) + r;
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T cosine(const T& rad) {
+  if (is_nan(rad)) {
+    return rad;
+  }
+  if (is_inf(rad)) {
+    return std::numeric_limits<T>::signaling_NaN();
+  }
+  long double r = rad;
+  // Remap into the -PI->PI range.
+  if (r > pi<T>) {
+    r = modulo(rad, two_pi<T>);
+  } else if (r < -pi<T>) {
+    r = modulo(rad, -two_pi<T>);
+  }
+  if (r > pi<long double>) {
+    r -= two_pi<long double>;
+  } else if (r < -pi<long double>) {
+    r += two_pi<long double>;
+  }
+  // Remap into the -PI/2->PI/2 range.
+  long double neg = 1.0L;
+  if (r > half_pi<long double>) {
+    r -= pi<T>;
+    neg = -1.0L;
+  } else if (r < -half_pi<long double>) {
+    r += pi<T>;
+    neg = -1.0L;
+  }
+  if (r < -quarter_pi<long double>) {
+    return T(neg * sine_pi4(r + half_pi<long double>));
+  } else if (r > quarter_pi<long double>) {
+    return T(neg * -sine_pi4(r - half_pi<long double>));
+  }
+  return T(neg * cosine_pi4(r));
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+template <typename T>
+constexpr T sine(const T& rad) {
+  if (is_nan(rad)) {
+    return rad;
+  }
+  if (is_inf(rad)) {
+    return std::numeric_limits<T>::signaling_NaN();
+  }
+  long double r = rad;
+  // Remap into the -PI->PI range.
+  if (r > pi<long double>) {
+    r = modulo(r, two_pi<long double>);
+  } else if (r < -pi<long double>) {
+    r = modulo(r, -two_pi<long double>);
+  }
+  if (r > pi<long double>) {
+    r -= two_pi<long double>;
+  } else if (r < -pi<long double>) {
+    r += two_pi<long double>;
+  }
+  // Remap into the -PI/2->PI/2 range.
+  if (r > half_pi<long double>) {
+    r = pi<T> - r;
+  } else if (r < -half_pi<long double>) {
+    r = -pi<T> - r;
+  }
+  if (r < -quarter_pi<long double>) {
+    return T(-cosine_pi4(r + half_pi<long double>));
+  } else if (r > quarter_pi<long double>) {
+    return T(cosine_pi4(r - half_pi<long double>));
+  }
+  return T(sine_pi4(r));
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
+namespace CSTE_MATH_NAMESPACE {
+namespace stdlib {
+  template<typename T>
+  constexpr T abs(const T& arg) {
+    return absolute(arg);
+  }
+  template<typename T>
+  constexpr T ceil(const T& arg) {
+    return round_up(arg);
+  }
+  template<typename T>
+  constexpr T exp(const T& arg) {
+    return exponential(arg);
+  }
+  template<typename T>
+  constexpr T floor(const T& arg) {
+    return round_down(arg);
+  }
+  template<typename T>
+  constexpr T fmod(const T& v, const T& d) {
+    return modulo(v, d);
+  }
+  template<typename T>
+  constexpr T fract(const T& arg) {
+    return fractional(arg);
+  }
+  template<typename T>
+  constexpr T round(const T& arg) {
+    return ::CSTE_MATH_NAMESPACE::round(arg);
+  }
+  template<typename T>
+  constexpr T trunc(const T& arg) {
+    return truncate(arg);
+  }
+  template<typename T>
+  constexpr T sqrt(const T& arg) {
+    return square_root(arg);
+  }
+}
+}  // namespace CSTE_MATH_NAMESPACE
+
 
 namespace VECPP_NAMESPACE {
 struct Scalar_traits {
@@ -63,18 +452,11 @@ using Add_constexpr_t = std::conditional_t<
 }  // namespace VECPP_NAMESPACE
 
 namespace VECPP_NAMESPACE {
-template <typename Scalar>
-constexpr Scalar pi = Scalar(3.1415926535897932385);
-template <typename Scalar>
-constexpr Scalar half_pi = pi<Scalar> / Scalar(2);
-template <typename Scalar>
-constexpr Scalar quarter_pi = pi<Scalar> / Scalar(4);
-template <typename Scalar>
-constexpr Scalar two_pi = pi<Scalar>* Scalar(2);
-}  // namespace VECPP_NAMESPACE
-
-namespace VECPP_NAMESPACE {
 namespace non_cste {
+template <typename T>
+T abs(const T& v) {
+  return std::abs(v);
+}
 template <typename T>
 T sqrt(const T& v) {
   return std::sqrt(v);
@@ -108,197 +490,145 @@ T trunc(const T& v) {
   return std::trunc(v);
 }
 template <typename T>
-T mod(const T& v, const T& d) {
-  if
-    constexpr(std::is_integral_v<T>) { return v % d; }
-  else {
-    return std::fmod(v, d);
-  }
+T fmod(const T& v, const T& d) {
+  return std::fmod(v, d);
 }
 }  // namespace non_cste
-namespace cste {
-template <typename T>
-constexpr T sqrt(const T& v) {
-  if (v == T(0)) {
-    return v;
+template <typename traits = Scalar_traits, typename T>
+constexpr T abs(const T& v) {
+  if constexpr(std::is_integral_v<T>) {
+    return v >= 0 ? v : -v;
   }
-  T r = v;
-  // A lazy newton-rhapson for now.
-  while (1) {
-    T tmp = T(0.5) * (r + v / r);
-    if (tmp == r) {
-      break;
-    }
-    r = tmp;
+  else if constexpr (is_ct<traits>()) {
+    return cste::stdlib::abs(v);
   }
-  return r;
+  else {
+    return non_cste::abs(v);
+  }
 }
-template <typename T>
-constexpr T pow(const T& x, const T& n) {
-  assert(false);
-}
-template <typename T>
-constexpr T exp(const T& v) {
-  assert(false);
-}
-template <typename T>
+template <typename traits = Scalar_traits, typename T>
 constexpr T ceil(const T& v) {
-  constexpr long long int range_max = 1LL << std::numeric_limits<T>::digits;
-  constexpr long long int range_min = -range_max;
-  if (v >= range_max || v <= range_min) {
+  if constexpr (std::is_integral_v<T>) {
     return v;
   }
-  long long int x = static_cast<long long int>(v);
-  if (v == T(x) || v < T(0)) {
-    return T(x);
-  }
-  return T(x + 1);
-}
-template <typename T>
-constexpr T floor(const T& v) {
-  constexpr long long int range_max = 1LL << std::numeric_limits<T>::digits;
-  constexpr long long int range_min = -range_max;
-  if (v >= range_max || v <= range_min) {
-    return v;
-  }
-  long long int x = static_cast<long long int>(v);
-  if (v == T(x) || v > T(0)) {
-    return T(x);
-  }
-  return T(x - 1);
-}
-template <typename T>
-constexpr T round(const T& v) {
-  return floor(v + T(0.5));
-}
-template <typename T>
-constexpr T trunc(const T& v) {
-  long long int x = static_cast<long long int>(v);
-  return T(x);
-}
-template <typename T>
-constexpr T fract(const T& v) {
-  return v - floor(v);
-}
-template <typename T>
-constexpr T mod(const T& v, const T& d) {
-  if
-    constexpr(std::is_integral_v<T>) { return v % d; }
-  else {
-    return v - floor(v / d) * d;
+  else if constexpr (is_ct<traits>()) {
+    return cste::stdlib::ceil(v);
+  } else {
+    return std::ceil(v);
   }
 }
-}  // namespace cste
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT abs(const ScalarT& v) {
-  return v < ScalarT(0) ? -v : v;
-}
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT ceil(const ScalarT& v) {
-  if
-    constexpr(is_ct<traits>()) { return cste::ceil(v); }
-  else {
-    return non_cste::ceil(v);
-  }
-}
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT exp(const ScalarT& v) {
-  if
-    constexpr(is_ct<traits>()) { return cste::exp(v); }
-  else {
+template <typename traits = Scalar_traits, typename T>
+constexpr T exp(const T& v) {
+  if constexpr (is_ct<traits>()) {
+    return cste::stdlib::exp(v);
+  } else {
     return non_cste::exp(v);
   }
 }
-constexpr unsigned long long factorial(std::size_t N) {
-  unsigned long long result = 1;
-  for (unsigned long long i = 1; i <= N; ++i) {
-    result *= i;
-  }
-  return result;
-}
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT floor(const ScalarT& v) {
-  if
-    constexpr(is_ct<traits>()) { return cste::floor(v); }
-  else {
+template <typename traits = Scalar_traits, typename T>
+constexpr T floor(const T& v) {
+  if constexpr(std::is_integral_v<T>) {
+    return v;
+  } if constexpr (is_ct<traits>()) {
+    return cste::stdlib::floor(v);
+  } else {
     return non_cste::floor(v);
   }
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT round(const ScalarT& v) {
-  if
-    constexpr(is_ct<traits>()) { return cste::round(v); }
-  else {
+template <typename traits = Scalar_traits, typename T>
+constexpr T round(const T& v) {
+  if constexpr (std::is_integral_v<T>) {
+    return v;
+  } else if constexpr (is_ct<traits>()) {
+    return cste::stdlib::round(v);
+  } else {
     return non_cste::round(v);
   }
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT sign(const ScalarT& v) {
-  return v >= 0.0f ? 1.0f : -1.0f;
+template <typename traits = Scalar_traits, typename T>
+constexpr T sign(const T& v) {
+  return cste::sign(v);
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT trunc(const ScalarT& v) {
-  if
-    constexpr(is_ct<traits>()) { return cste::trunc(v); }
-  else {
+template <typename traits = Scalar_traits, typename T>
+constexpr T trunc(const T& v) {
+  if constexpr (std::is_integral_v<T>) {
+    return v;
+  } else if constexpr (is_ct<traits>()) {
+    return cste::stdlib::trunc(v);
+  } else {
     return non_cste::trunc(v);
   }
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT mod(const ScalarT& v, const ScalarT& d) {
-  if
-    constexpr(is_ct<traits>()) { return cste::mod(v, d); }
-  else {
-    return non_cste::mod(v, d);
+template <typename traits = Scalar_traits, typename T>
+constexpr T mod(const T& v, const T& d) {
+  if constexpr(std::is_integral_v<T>) {
+    return v % d;
+  } else if constexpr (is_ct<traits>()) {
+    return cste::stdlib::fmod(v, d);
+  } else {
+    return non_cste::fmod(v, d);
   }
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT fract(const ScalarT& v) {
-  if
-    constexpr(is_ct<traits>()) { return cste::fract(v); }
-  else {
+template <typename traits = Scalar_traits, typename T>
+constexpr T fract(const T& v) {
+  if constexpr (std::is_integral_v<T>) {
+    return T(0);
+  } else if constexpr (is_ct<traits>()) {
+    return cste::stdlib::fract(v);
+  } else {
     return non_cste::fract(v);
   }
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT step(const ScalarT& edge, const ScalarT& x) {
+template <typename traits = Scalar_traits, typename T>
+constexpr T step(const T& edge, const T& x) {
   return x < edge ? 0.0f : 1.0f;
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT min(const ScalarT& lhs, const ScalarT& rhs) {
+template <typename traits = Scalar_traits, typename T>
+constexpr T min(const T& lhs, const T& rhs) {
   return std::min(lhs, rhs);
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT max(const ScalarT& lhs, const ScalarT& rhs) {
+template <typename traits = Scalar_traits, typename T>
+constexpr T max(const T& lhs, const T& rhs) {
   return std::max(lhs, rhs);
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT clamp(const ScalarT& v, const ScalarT& low,
-                        const ScalarT& high) {
+template <typename traits = Scalar_traits, typename T>
+constexpr T clamp(const T& v, const T& low,
+                        const T& high) {
   return std::clamp(v, low, high);
 }
-template <typename traits = Scalar_traits, typename ScalarT, typename PctT>
-constexpr ScalarT lerp(const ScalarT& from, const ScalarT& to,
+template <typename traits = Scalar_traits, typename T, typename PctT>
+constexpr T lerp(const T& from, const T& to,
                        const PctT& pct) {
   return from + (to - from) * pct;
 }
-template <typename traits = Scalar_traits, typename ScalarT>
-constexpr ScalarT pow(const ScalarT& x, const ScalarT& n) {
-  if
-    constexpr(is_ct<traits>()) { return cste::pow(x, n); }
-  else {
+template <typename traits = Scalar_traits, typename T>
+constexpr T pow(const T& x, const T& n) {
+  if constexpr (is_ct<traits>()) {
+    return cste::pow(x, n);
+  } else {
     return non_cste::pow(x, n);
   }
 }
 template <typename traits = Scalar_traits, typename T>
 constexpr T sqrt(const T& v) {
-  if
-    constexpr(is_ct<traits>()) { return cste::sqrt(v); }
-  else {
+  if constexpr (is_ct<traits>()) {
+    return cste::stdlib::sqrt(v);
+  } else {
     return non_cste::sqrt(v);
   }
 }
 }  // namespace VECPP_NAMESPACE
+
+namespace VECPP_NAMESPACE {
+template <typename T>
+constexpr T pi = cste::pi<T>;
+template <typename T>
+constexpr T half_pi = cste::half_pi<T>;
+template <typename T>
+constexpr T quarter_pi = cste::quarter_pi<T>;
+template <typename T>
+constexpr T two_pi = cste::two_pi<T>;
+}  // namespace CSTE_MATH_NAMESPACE
 
 namespace VECPP_NAMESPACE {
 template <typename T, typename TraitsT = Scalar_traits>
@@ -458,7 +788,7 @@ constexpr Angle<T, Traits> Angle<T, Traits>::from_clamped_deg(const T& v) {
 }
 template <typename T, typename Traits>
 constexpr Angle<T, Traits> Angle<T, Traits>::from_rad(const T& v) {
-  T constrained = cste::mod(v + pi<T>, two_pi<T>);
+  T constrained = cste::modulo(v + pi<T>, two_pi<T>);
   if (constrained <= T(0)) {
     constrained += two_pi<T>;
   }
@@ -486,37 +816,17 @@ constexpr const T& Angle<T, Traits>::raw() const {
 namespace VECPP_NAMESPACE {
 template <typename T, typename Traits>
 constexpr T sin(const Angle<T, Traits>& a) {
-  if
-    constexpr(is_ct<Traits>()) {
-      double r = a.as_rad();
-      bool neg = false;
-      if (r < 0.0) {
-        r *= -1.0;
-        neg = true;
-      }
-      if (r > half_pi<double>) {
-        r = pi<double> - r;
-      }
-      double r_2 = r * r * -1.0;
-      double result = r;
-      for (std::size_t i = 3; i < 19; i += 2) {
-        r *= r_2;
-        result += r / factorial(i);
-      }
-      if (neg) {
-        result *= -1.0;
-      }
-      return T(result);
-    }
+  if constexpr(is_ct<Traits>()) {
+    return cste::sine(a.as_rad());
+  }
   else {
     return std::sin(a.as_rad());
   }
 }
 template <typename T, typename Traits>
 constexpr T cos(const Angle<T, Traits>& a) {
-  if
-    constexpr(is_ct<Traits>()) {
-      return sin(a + Angle<T, Traits>::from_rad(half_pi<T>));
+  if constexpr(is_ct<Traits>()) {
+      return cste::cosine(a.as_rad());
     }
   else {
     return std::cos(a.as_rad());
@@ -976,25 +1286,6 @@ constexpr Vec<T, C, V_traits> operator*(const Vec<T, R, V_traits>& vec,
 }
 
 namespace VECPP_NAMESPACE {
-template <typename T, std::size_t N, std::size_t M, std::size_t P,
-          typename traits>
-constexpr Mat<T, N, P, traits> operator*(const Mat<T, N, M, traits>& lhs,
-                                         const Mat<T, M, P, traits>& rhs) {
-  Mat<T, N, P, traits> result = {};
-  for(std::size_t i = 0; i < N; ++i) {
-    for(std::size_t j = 0; j < P; ++j) {
-      T v = T(0);
-      for(std::size_t k = 0; k < M; ++k) {
-        v += lhs(i, k) * rhs(k, j);
-      }
-      result(i, j) = v;
-    }
-  }
-  return result;
-}
-}
-
-namespace VECPP_NAMESPACE {
 template <typename T, std::size_t N, typename Traits>
 constexpr auto cofactor(const Mat<T, N, N, Traits>& mat, std::size_t row, std::size_t col) {
   Mat<T, N - 1, N - 1, Traits> cf = {};
@@ -1095,6 +1386,25 @@ constexpr Mat<T, N, N, traits> inverse(const Mat<T, N, N, traits>& m) {
 template <typename T, std::size_t N, typename traits>
 constexpr bool is_invertible(const Mat<T, N, N, traits>& m) {
   return Matrix_inversion<Mat<T, N, N, traits>>::is_invertible(m);
+}
+}
+
+namespace VECPP_NAMESPACE {
+template <typename T, std::size_t N, std::size_t M, std::size_t P,
+          typename traits>
+constexpr Mat<T, N, P, traits> operator*(const Mat<T, N, M, traits>& lhs,
+                                         const Mat<T, M, P, traits>& rhs) {
+  Mat<T, N, P, traits> result = {};
+  for(std::size_t i = 0; i < N; ++i) {
+    for(std::size_t j = 0; j < P; ++j) {
+      T v = T(0);
+      for(std::size_t k = 0; k < M; ++k) {
+        v += lhs(i, k) * rhs(k, j);
+      }
+      result(i, j) = v;
+    }
+  }
+  return result;
 }
 }
 

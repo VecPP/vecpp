@@ -10,6 +10,8 @@
 
 #include "vecpp/config.h"
 
+#include "cste_math/stdlib.h"
+
 #include "vecpp/scalar/constants.h"
 #include "vecpp/scalar/operations.h"
 #include "vecpp/traits.h"
@@ -221,7 +223,7 @@ constexpr Angle<T, Traits> Angle<T, Traits>::from_clamped_deg(const T& v) {
 
 template <typename T, typename Traits>
 constexpr Angle<T, Traits> Angle<T, Traits>::from_rad(const T& v) {
-  T constrained = cste::mod(v + pi<T>, two_pi<T>);
+  T constrained = cste::modulo(v + pi<T>, two_pi<T>);
 
   if (constrained <= T(0)) {
     constrained += two_pi<T>;
