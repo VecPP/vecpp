@@ -5,7 +5,7 @@ dist: xenial
 branches:
   except:
   - gh-pages
-  - single_header
+  - built
 
 env:
   - DELAYED_EVAL="CC=gcc-7 && CXX=g++-7"
@@ -20,9 +20,6 @@ addons:
 before_install:
   - eval "${DELAYED_EVAL}"
 
-install:
-- sudo pip install mkdocs
-
 script:
     - mkdir _bld && cd _bld
     - cmake -DCMAKE_BUILD_TYPE=DEBUG -DVECPP_BUILD_TESTS=ON -DVECPP_BUILD_SINGLE_HEADER=ON ..
@@ -30,29 +27,9 @@ script:
     - ctest --output-on-failure
     - cd ..
     - mkdir _bld_rel && cd _bld_rel
-    - cmake -DCMAKE_BUILD_TYPE=RELEASE -DVECPP_BUILD_TESTS=ON -DVECPP_BUILD_SINGLE_HEADER=ON -DVECPP_BUILD_DOCS=ON ..
+    - cmake -DCMAKE_BUILD_TYPE=RELEASE -DVECPP_BUILD_TESTS=ON -DVECPP_BUILD_SINGLE_HEADER=ON ..
     - cmake --build .
     - ctest --output-on-failure
-    - cd ..
-    - cp -R .circleci _bld_rel/site/
-    - cp -R .circleci _bld_rel/vecpp/
-
-deploy:
- - provider: pages
-   skip_cleanup: true
-   github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-   local_dir: _bld_rel/site
-   keep-history: true
-   on:
-     branch: master
- - provider: pages
-   skip_cleanup: true
-   github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-   local_dir: _bld_rel/vecpp
-   keep-history: true
-   target-branch: single_header
-   on:
-     branch: master
 
 notifications:
   email: false
