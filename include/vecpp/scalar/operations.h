@@ -197,7 +197,7 @@ constexpr T lerp(const T& from, const T& to,
 template <typename traits = Scalar_traits, typename T>
 constexpr T pow(const T& x, const T& n) {
   if constexpr (is_ct<traits>()) {
-    return cste::pow(x, n);
+    return cste::stdlib::pow(x, n);
   } else {
     return non_cste::pow(x, n);
   }
