@@ -1,9 +1,8 @@
 skip_tags: true
 
 branches:
-  except:
-    - gh-pages
-    - built
+  only:
+    - master
   
 matrix:
     fast_finish: true
