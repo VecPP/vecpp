@@ -259,6 +259,9 @@ namespace CSTE_MATH_NAMESPACE {
 namespace cosine_detail {
 constexpr long double recur_helper(long double r_2, long double num,
                                    long double fact, std::size_t i) {
+  if(i >= 160) {
+    return 0;
+  }
   fact *= (i - 1);
   fact *= (i);
   num *= r_2;
@@ -283,6 +286,9 @@ namespace CSTE_MATH_NAMESPACE {
 namespace sine_detail {
 constexpr long double recur_helper(long double r_2, long double num,
                                    double fact, std::size_t i) {
+  if(i >= 160) {
+    return 0;
+  }
   fact *= (i - 1);
   fact *= (i);
   num *= r_2;
