@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Angle - VecPP documentation</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../index.html">VecPP documentation</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../index.html">Home</a>
+                            </li>
+                            <li >
+                                <a href="../../dev-guide/index.html">Dev Guide</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../user-guide/installation.html">Installation</a>
+</li>
+                                    
+<li >
+    <a href="../../user-guide/performance.html">Performance</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../index.html">Home</a>
+</li>
+                                    
+<li class="active">
+    <a href="index.html">Angle</a>
+</li>
+                                    
+<li >
+    <a href="../vec/index.html">Vector</a>
+</li>
+                                    
+<li >
+    <a href="../mat/index.html">Matrix</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../index.html">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../vec/index.html">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#angle">Angle</a></li>
+            <li><a href="#member-types">Member types</a></li>
+            <li><a href="#member-functions">Member functions</a></li>
+            <li><a href="#non-member-functions">Non-member functions</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p><a href="../../">vecpp</a> :: <a href="../">reference</a></p>
+<h1 id="angle">Angle</h1>
+<pre><code>template&lt;typename T&gt;
+struct Angle;
+</code></pre>
+
+<p>Angle is a wrapper type around a representation that helps manage angles in a
+consistent manner.</p>
+<p>Angle values are always kepts within the ]-PI, PI] range at all times.</p>
+<h2 id="member-types">Member types</h2>
+<table>
+<thead>
+<tr>
+<th>Member Type</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>value_type</code></td>
+<td><code>T</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="member-functions">Member functions</h2>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(destructor)</td>
+<td>does nothing</td>
+</tr>
+<tr>
+<td>operator=</td>
+<td>ovewrite the angle with another angle</td>
+</tr>
+<tr>
+<td><a href="from.html">from_deg</a></td>
+<td>new angle from a degree value</td>
+</tr>
+<tr>
+<td><a href="from.html">from_rad</a></td>
+<td>new angle from a radian value</td>
+</tr>
+<tr>
+<td><a href="as.html">as_deg</a></td>
+<td>get the angle value as radians</td>
+</tr>
+<tr>
+<td><a href="as.html">as_rad</a></td>
+<td>get the angle value as degrees</td>
+</tr>
+</tbody>
+</table>
+<h2 id="non-member-functions">Non-member functions</h2>
+<h3 id="language-support">Language support</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="format.html">operator&lt;&lt;</a></td>
+<td>print to stream</td>
+</tr>
+</tbody>
+</table>
+<h3 id="binary-operations">Binary operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="op_cmp.html">operator==</a></td>
+<td>compares two angles for equality</td>
+</tr>
+<tr>
+<td><a href="op_cmp.html">operator!=</a></td>
+<td>compares two angles for inequality</td>
+</tr>
+<tr>
+<td><a href="op_cmp.html">operator&lt;</a></td>
+<td>compares two angles</td>
+</tr>
+<tr>
+<td><a href="op_cmp.html">operator&lt;=</a></td>
+<td>compares two angles</td>
+</tr>
+<tr>
+<td><a href="op_cmp.html">operator&gt;</a></td>
+<td>compares two angles</td>
+</tr>
+<tr>
+<td><a href="op_cmp.html">operator&gt;=</a></td>
+<td>compares two angles</td>
+</tr>
+<tr>
+<td><a href="arithmetic_inplace.html">operator-=</a></td>
+<td>in-place diff angles</td>
+</tr>
+<tr>
+<td><a href="arithmetic_inplace.html">operator+=</a></td>
+<td>in-place add angles</td>
+</tr>
+<tr>
+<td><a href="arithmetic.html">operator-</a></td>
+<td>diff angles</td>
+</tr>
+<tr>
+<td><a href="arithmetic.html">operator+</a></td>
+<td>add angles</td>
+</tr>
+<tr>
+<td><a href="scale_inplace.html">operator*=</a></td>
+<td>in-place scale angle</td>
+</tr>
+<tr>
+<td><a href="scale_inplace.html">operator/=</a></td>
+<td>in-place scale angle</td>
+</tr>
+<tr>
+<td><a href="scale.html">operator*</a></td>
+<td>scale angle</td>
+</tr>
+<tr>
+<td><a href="scale.html">operator/</a></td>
+<td>scale angle</td>
+</tr>
+</tbody>
+</table>
+<h3 id="unary-operations">Unary operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="unary_minus.html">operator-<sub>(unary)</sub></a></td>
+<td>negation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="trigonometric-functions">Trigonometric functions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="sin.html">sin</a></td>
+<td>sine</td>
+</tr>
+<tr>
+<td><a href="cos.html">cos</a></td>
+<td>cosine</td>
+</tr>
+<tr>
+<td><a href="tan.html">tan</a></td>
+<td>tangent</td>
+</tr>
+</tbody>
+</table>
+<h3 id="advancedunsafe-functions">Advanced/unsafe functions</h3>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="raw.html">raw</a></td>
+<td>gets the raw internal value of the angle</td>
+</tr>
+<tr>
+<td><a href="from_clamped.html">from_clamped_deg</a></td>
+<td>unsafe new angle from a degree value</td>
+</tr>
+<tr>
+<td><a href="from_clamped.html">from_clamped_rad</a></td>
+<td>unsafe new angle from a radian value</td>
+</tr>
+</tbody>
+</table></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

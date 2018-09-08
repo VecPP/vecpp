@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Vector - VecPP documentation</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../index.html">VecPP documentation</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../index.html">Home</a>
+                            </li>
+                            <li >
+                                <a href="../../dev-guide/index.html">Dev Guide</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../user-guide/installation.html">Installation</a>
+</li>
+                                    
+<li >
+    <a href="../../user-guide/performance.html">Performance</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../index.html">Home</a>
+</li>
+                                    
+<li >
+    <a href="../angle/index.html">Angle</a>
+</li>
+                                    
+<li class="active">
+    <a href="index.html">Vector</a>
+</li>
+                                    
+<li >
+    <a href="../mat/index.html">Matrix</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../angle/index.html">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../mat/index.html">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#vec">Vec</a></li>
+            <li><a href="#member-types">Member types</a></li>
+            <li><a href="#member-functions">Member functions</a></li>
+            <li><a href="#non-member-functions">Non-member functions</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p><a href="../../">vecpp</a> :: <a href="../">reference</a></p>
+<h1 id="vec">Vec</h1>
+<pre><code>template&lt;typename T, std::size_t L&gt;
+struct Vec;
+</code></pre>
+
+<p>In many respects, <code>Vec</code> behaves a lot like <code>std::array&lt;&gt;</code>, but with support for mathematical operations.</p>
+<h2 id="member-types">Member types</h2>
+<table>
+<thead>
+<tr>
+<th>Member Type</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>value_type</code></td>
+<td><code>T</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="member-functions">Member functions</h2>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="constructor.html">(constructor)</a></td>
+<td>initalize using aggregate initialization</td>
+</tr>
+<tr>
+<td>(destructor)</td>
+<td>destroy every element in the vectpr</td>
+</tr>
+<tr>
+<td>operator=</td>
+<td>ovewrite the vector with another vector</td>
+</tr>
+<tr>
+<td><a href="at.html">at</a></td>
+<td>access specific element with bounds checking</td>
+</tr>
+<tr>
+<td><a href="operator_at.html">operator[]</a></td>
+<td>access specific element</td>
+</tr>
+<tr>
+<td><a href="data.html">data</a></td>
+<td>access underlying array</td>
+</tr>
+</tbody>
+</table>
+<h2 id="non-member-functions">Non-member functions</h2>
+<h3 id="language-support">Language support</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="begin.html">begin</a></td>
+<td>iterator to the beginning</td>
+</tr>
+<tr>
+<td><a href="end.html">end</a></td>
+<td>iterator to the end</td>
+</tr>
+<tr>
+<td><a href="format.html">operator&lt;&lt;</a></td>
+<td>print to stream</td>
+</tr>
+</tbody>
+</table>
+<h3 id="per-member-operations">Per-member operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="op_cmp.html">operator==</a></td>
+<td>compares two vectors for equality</td>
+</tr>
+<tr>
+<td><a href="op_cmp.html">operator!=</a></td>
+<td>compares two vectors for inequality</td>
+</tr>
+<tr>
+<td><a href="op_per_mem_compound.html">operator-=</a></td>
+<td>per-member substraction</td>
+</tr>
+<tr>
+<td><a href="op_per_mem_compound.html">operator+=</a></td>
+<td>per-member addition</td>
+</tr>
+<tr>
+<td><a href="op_per_mem_compound.html">operator*=</a></td>
+<td>per-member multiplication</td>
+</tr>
+<tr>
+<td><a href="op_per_mem_compound.html">operator/=</a></td>
+<td>per-member division</td>
+</tr>
+<tr>
+<td><a href="op_per_mem.html">operator-</a></td>
+<td>per-member substraction</td>
+</tr>
+<tr>
+<td><a href="op_per_mem.html">operator+</a></td>
+<td>per-member addition</td>
+</tr>
+<tr>
+<td><a href="op_per_mem.html">operator*</a></td>
+<td>per-member multiplication</td>
+</tr>
+<tr>
+<td><a href="op_per_mem.html">operator/</a></td>
+<td>per-member division</td>
+</tr>
+<tr>
+<td><a href="abs.html">abs</a></td>
+<td>per-member abs()</td>
+</tr>
+<tr>
+<td><a href="min.html">min</a></td>
+<td>per-member min()</td>
+</tr>
+<tr>
+<td><a href="min.html">max</a></td>
+<td>per-member max()</td>
+</tr>
+</tbody>
+</table>
+<h3 id="unary-operations">Unary operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="unary_minus.html">operator-<sub>(unary)</sub></a></td>
+<td>negation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="scalar-operations">Scalar operations</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="scaling_compound.html">operator/=<sub>(scalar)</sub></a></td>
+<td>vector scaling</td>
+</tr>
+<tr>
+<td><a href="scaling_compound.html">operator*=<sub>(scalar)</sub></a></td>
+<td>vector scaling</td>
+</tr>
+<tr>
+<td><a href="scaling.html">operator/<sub>(scalar)</sub></a></td>
+<td>vector scaling</td>
+</tr>
+<tr>
+<td><a href="scaling.html">operator*<sub>(scalar)</sub></a></td>
+<td>vector scaling</td>
+</tr>
+</tbody>
+</table>
+<h3 id="geometric-functions">Geometric functions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="norm.html">lenght</a></td>
+<td>get vector's L2 norm</td>
+</tr>
+<tr>
+<td><a href="dot.html">dot</a></td>
+<td>dot product</td>
+</tr>
+<tr>
+<td><a href="cross.html">cross</a></td>
+<td>cross product</td>
+</tr>
+</tbody>
+</table></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
