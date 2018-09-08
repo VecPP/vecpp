@@ -404,6 +404,10 @@ namespace stdlib {
     return fractional(arg);
   }
   template<typename T>
+  constexpr T pow(const T& v, const T& p) {
+    return power(v, p);
+  }
+  template<typename T>
   constexpr T round(const T& arg) {
     return ::CSTE_MATH_NAMESPACE::round(arg);
   }
@@ -604,7 +608,7 @@ constexpr T lerp(const T& from, const T& to,
 template <typename traits = Scalar_traits, typename T>
 constexpr T pow(const T& x, const T& n) {
   if constexpr (is_ct<traits>()) {
-    return cste::pow(x, n);
+    return cste::stdlib::pow(x, n);
   } else {
     return non_cste::pow(x, n);
   }
