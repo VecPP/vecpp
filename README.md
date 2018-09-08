@@ -51,9 +51,9 @@ that single freestanding header. (if you are cloning the raw source, you will
 need to generate it using `-DVECPP_BUILD_SINGLE_HEADER`).
 
 **Tip:** We maintain a copy of this file in sync with the master branch 
-[here](https://github.com/FrancoisChabot/vecpp/tree/single_header). This can be 
+[here](https://github.com/VecPP/vecpp/blob/built/vecpp/vecpp_single.h). This can be 
 used to quickly test generated code on [compiler explorer](godbolt.org). For 
-example: like [this](https://gcc.godbolt.org/z/m_Gg-c).
+example: like [this](https://gcc.godbolt.org/z/fAgNnH).
 
 #### CMake
 Finally, while the cmake project is primarily used to manage tests and 
