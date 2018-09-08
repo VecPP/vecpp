@@ -33,7 +33,7 @@ using Angle = vecpp::Angle<float>;
 
 template <typename T>
 constexpr bool close_vals(const T& lhs, const T& rhs) {
-  return vecpp::abs(lhs - rhs) < 0.0001f;
+  return cste::absolute(lhs - rhs) < 0.0001f;
 }
 
 TEST_CASE("create from radians or degrees", "[angle]") {
@@ -122,10 +122,10 @@ TEST_CASE("simple constraining", "[angle]") {
     constexpr auto b = 450.0_deg;
     constexpr auto c = 810.0_deg;
 
-    static_assert(vecpp::abs(a.as_deg() - 90.0f) < 0.0001f);
-    static_assert(vecpp::abs(a.as_deg() - b.as_deg()) < 0.0001f);
-    static_assert(vecpp::abs(a.as_deg() - c.as_deg()) < 0.0001f);
-    static_assert(vecpp::abs(b.as_deg() - c.as_deg()) < 0.0001f);
+    static_assert(cste::absolute(a.as_deg() - 90.0f) < 0.0001f);
+    static_assert(cste::absolute(a.as_deg() - b.as_deg()) < 0.0001f);
+    static_assert(cste::absolute(a.as_deg() - c.as_deg()) < 0.0001f);
+    static_assert(cste::absolute(b.as_deg() - c.as_deg()) < 0.0001f);
   }
 }
 
@@ -150,10 +150,10 @@ TEST_CASE("negative constraining", "[angle]") {
     constexpr auto c = -200.0_deg;
     constexpr auto d = -375.0_deg;
 
-    static_assert(vecpp::abs(a.as_deg() - -90.0f) < 0.0001f);
-    static_assert(vecpp::abs(b.as_deg() - 180.0f) < 0.0001f);
-    static_assert(vecpp::abs(c.as_deg() - 160.0f) < 0.0001f);
-    static_assert(vecpp::abs(d.as_deg() - -15.0f) < 0.0001f);
+    static_assert(cste::absolute(a.as_deg() - -90.0f) < 0.0001f);
+    static_assert(cste::absolute(b.as_deg() - 180.0f) < 0.0001f);
+    static_assert(cste::absolute(c.as_deg() - 160.0f) < 0.0001f);
+    static_assert(cste::absolute(d.as_deg() - -15.0f) < 0.0001f);
   }
 }
 
@@ -175,10 +175,10 @@ TEST_CASE("negate", "[angle]") {
     constexpr auto c = -Angle::from_deg(-10.0f);
     constexpr auto d = -Angle::from_deg(180.0f);
 
-    static_assert(vecpp::abs(a.as_deg() - 0.0f) < 0.0001f);
-    static_assert(vecpp::abs(b.as_deg() - -10.0f) < 0.0001f);
-    static_assert(vecpp::abs(c.as_deg() - 10.0f) < 0.0001f);
-    static_assert(vecpp::abs(d.as_deg() - 180.0f) < 0.0001f);
+    static_assert(cste::absolute(a.as_deg() - 0.0f) < 0.0001f);
+    static_assert(cste::absolute(b.as_deg() - -10.0f) < 0.0001f);
+    static_assert(cste::absolute(c.as_deg() - 10.0f) < 0.0001f);
+    static_assert(cste::absolute(d.as_deg() - 180.0f) < 0.0001f);
   }
 }
 
@@ -202,10 +202,10 @@ TEST_CASE("add", "[angle]") {
     constexpr auto c = -10.0_deg + 30.0_deg;
     constexpr auto d = 45.0_deg + 725.0_deg;
 
-    static_assert(vecpp::abs(a.as_deg() - 10.0f) < 0.0001f);
-    static_assert(vecpp::abs(b.as_deg() - -160.0f) < 0.0001f);
-    static_assert(vecpp::abs(c.as_deg() - 20.0f) < 0.0001f);
-    static_assert(vecpp::abs(d.as_deg() - 50.0f) < 0.0001f);
+    static_assert(cste::absolute(a.as_deg() - 10.0f) < 0.0001f);
+    static_assert(cste::absolute(b.as_deg() - -160.0f) < 0.0001f);
+    static_assert(cste::absolute(c.as_deg() - 20.0f) < 0.0001f);
+    static_assert(cste::absolute(d.as_deg() - 50.0f) < 0.0001f);
   }
 }
 
@@ -230,10 +230,10 @@ TEST_CASE("sub", "[angle]") {
     constexpr auto c = -10.0_deg - 30.0_deg;
     constexpr auto d = 45.0_deg - 725.0_deg;
 
-    static_assert(vecpp::abs(a.as_deg() - -10.0f) < 0.0001f);
-    static_assert(vecpp::abs(b.as_deg() - 160.0f) < 0.0001f);
-    static_assert(vecpp::abs(c.as_deg() - -40.0f) < 0.0001f);
-    static_assert(vecpp::abs(d.as_deg() - 40.0f) < 0.0001f);
+    static_assert(cste::absolute(a.as_deg() - -10.0f) < 0.0001f);
+    static_assert(cste::absolute(b.as_deg() - 160.0f) < 0.0001f);
+    static_assert(cste::absolute(c.as_deg() - -40.0f) < 0.0001f);
+    static_assert(cste::absolute(d.as_deg() - 40.0f) < 0.0001f);
   }
 }
 
@@ -255,9 +255,9 @@ TEST_CASE("scale_mul", "[angle]") {
     constexpr auto b = 10.0_deg * 5.0f;
     constexpr auto c = 3.0f * 90.0_deg;
 
-    static_assert(vecpp::abs(a.as_deg() - 0.0f) < 0.0001f);
-    static_assert(vecpp::abs(b.as_deg() - 50.0f) < 0.0001f);
-    static_assert(vecpp::abs(c.as_deg() - -90.0f) < 0.0001f);
+    static_assert(cste::absolute(a.as_deg() - 0.0f) < 0.0001f);
+    static_assert(cste::absolute(b.as_deg() - 50.0f) < 0.0001f);
+    static_assert(cste::absolute(c.as_deg() - -90.0f) < 0.0001f);
   }
 }
 
@@ -281,10 +281,10 @@ TEST_CASE("scale_div", "[angle]") {
     constexpr auto c = 90.0_deg / 3.0f;
     constexpr auto d = 125.0_deg / 0.5f;
 
-    static_assert(vecpp::abs(a.as_deg() - 0.0f) < 0.0001f);
-    static_assert(vecpp::abs(b.as_deg() - 2.0f) < 0.0001f);
-    static_assert(vecpp::abs(c.as_deg() - 30.0f) < 0.0001f);
-    static_assert(vecpp::abs(d.as_deg() - -110.0f) < 0.0001f);
+    static_assert(cste::absolute(a.as_deg() - 0.0f) < 0.0001f);
+    static_assert(cste::absolute(b.as_deg() - 2.0f) < 0.0001f);
+    static_assert(cste::absolute(c.as_deg() - 30.0f) < 0.0001f);
+    static_assert(cste::absolute(d.as_deg() - -110.0f) < 0.0001f);
   }
 }
 
@@ -309,8 +309,8 @@ TEST_CASE("minmax", "[angle]") {
     constexpr auto c = std::min(a, b);
     constexpr auto d = std::max(a, b);
 
-    static_assert(vecpp::abs(c.as_deg() - -10.0f) < 0.0001f);
-    static_assert(vecpp::abs(d.as_deg() - 10.0f) < 0.0001f);
+    static_assert(cste::absolute(c.as_deg() - -10.0f) < 0.0001f);
+    static_assert(cste::absolute(d.as_deg() - 10.0f) < 0.0001f);
   }
 }
 

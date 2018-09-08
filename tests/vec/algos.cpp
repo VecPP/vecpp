@@ -13,7 +13,7 @@ using ctf = vecpp::Add_constexpr_t<vecpp::Scalar_traits>;
 template <typename V>
 constexpr bool vec_close(const V& l, const V& r) {
   for (std::size_t i = 0; i < V::length; ++i) {
-    if (vecpp::abs<ctf>(l[i] - r[i]) > 0.0001) {
+    if (cste::absolute(l[i] - r[i]) > 0.0001) {
       return false;
     }
   }
@@ -37,7 +37,7 @@ TEST_CASE("abs", "[vec][algo]") {
   SECTION("constexpr") {
     constexpr Vec a = {1.0f, -1.0f, 0.0f, -4.0f};
 
-    constexpr auto c = abs(a);
+    constexpr auto c = abs(ct(a));
 
     static_assert(c[0] == 1.0f);
     static_assert(c[1] == 1.0f);
@@ -144,13 +144,13 @@ TEST_CASE("sign", "[vec][algo]") {
   SECTION("runtime") {
     Vec a = {0.0f, 1.0f, -1.0f, -0.0f};
 
-    REQUIRE(sign(a) == Vec{1.0f, 1.0f, -1.0f, 1.0f});
+    REQUIRE(sign(a) == Vec{0.0f, 1.0f, -1.0f, 0.0f});
   }
 
   SECTION("constexpr") {
     constexpr Vec a = {0.0f, 1.0f, -1.0f, -0.0f};
 
-    static_assert(sign(ct(a)) == Vec{1.0f, 1.0f, -1.0f, 1.0f});
+    static_assert(sign(ct(a)) == Vec{0.0f, 1.0f, -1.0f, 0.0f});
   }
 }
 
@@ -369,9 +369,9 @@ TEST_CASE("norm", "[vec][algo]") {
     constexpr Vec b = {1.0f, 0.0f, 0.0f, 0.0f};
     constexpr Vec c = {1.0f, -1.0f, 0.0f, 0.0f};
 
-    static_assert(vecpp::abs(norm(ct(a)) - 0.0f) < 0.00001f);
-    static_assert(vecpp::abs(norm(ct(b)) - 1.0f) < 0.00001f);
-    static_assert(vecpp::abs(norm(ct(c)) - vecpp::sqrt<ctf>(2.0f)) < 0.00001f);
+    static_assert(cste::absolute(norm(ct(a)) - 0.0f) < 0.00001f);
+    static_assert(cste::absolute(norm(ct(b)) - 1.0f) < 0.00001f);
+    static_assert(cste::absolute(norm(ct(c)) - vecpp::sqrt<ctf>(2.0f)) < 0.00001f);
   }
 }
 
@@ -400,8 +400,8 @@ TEST_CASE("cross", "[vec][algo]") {
     constexpr auto z_c_x = cross(unit_z, unit_x);
     constexpr auto y_c_z = cross(unit_y, unit_z);
 
-    static_assert(vecpp::abs(norm(ct(x_c_y - unit_z)) - 0.0f) < 0.00001f);
-    static_assert(vecpp::abs(norm(ct(z_c_x - unit_y)) - 0.0f) < 0.00001f);
-    static_assert(vecpp::abs(norm(ct(y_c_z - unit_x)) - 0.0f) < 0.00001f);
+    static_assert(cste::absolute(norm(ct(x_c_y - unit_z)) - 0.0f) < 0.00001f);
+    static_assert(cste::absolute(norm(ct(z_c_x - unit_y)) - 0.0f) < 0.00001f);
+    static_assert(cste::absolute(norm(ct(y_c_z - unit_x)) - 0.0f) < 0.00001f);
   }
 }

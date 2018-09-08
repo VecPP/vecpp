@@ -10,19 +10,24 @@
 
 #include "vecpp/config.h"
 
+#include "cste_math/constants.h"
+
 namespace VECPP_NAMESPACE {
 
-template <typename Scalar>
-constexpr Scalar pi = Scalar(3.1415926535897932385);
+// Constants are defined with enough precision for a Quadruple precision float
+// which means at least 36 decimal digits.
 
-template <typename Scalar>
-constexpr Scalar half_pi = pi<Scalar> / Scalar(2);
+template <typename T>
+constexpr T pi = cste::pi<T>;
 
-template <typename Scalar>
-constexpr Scalar quarter_pi = pi<Scalar> / Scalar(4);
+template <typename T>
+constexpr T half_pi = cste::half_pi<T>;
 
-template <typename Scalar>
-constexpr Scalar two_pi = pi<Scalar>* Scalar(2);
+template <typename T>
+constexpr T quarter_pi = cste::quarter_pi<T>;
 
-}  // namespace VECPP_NAMESPACE
+template <typename T>
+constexpr T two_pi = cste::two_pi<T>;
+
+}  // namespace CSTE_MATH_NAMESPACE
 #endif
