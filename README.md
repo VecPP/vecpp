@@ -24,7 +24,7 @@ The full documentation can be found in the `/docs` directory (either in markdown
 or HTML depending on how you obtained the library).
 
 An HTML version matching the current state of the master branch can always be 
-found [here](https://francoischabot.github.io/vecpp/).
+found [here](https://vecpp.github.io/vecpp/).
 
 ## Quick Start
 
