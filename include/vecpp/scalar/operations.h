@@ -10,7 +10,7 @@
 
 #include "vecpp/config.h"
 
-#include "cste_math/cste_math.h"
+#include "vecpp/cste_math/cste_math.h"
 #include "vecpp/traits.h"
 
 #include <cmath>
