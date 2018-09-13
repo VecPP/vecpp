@@ -14,6 +14,7 @@
 #include "vecpp/traits.h"
 
 #include <cmath>
+#include <algorithm>
 
 namespace VECPP_NAMESPACE {
 
