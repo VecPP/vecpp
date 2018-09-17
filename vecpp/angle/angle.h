@@ -10,7 +10,7 @@
 
 #include "vecpp/config.h"
 
-#include "cste_math/stdlib.h"
+#include "vecpp/cste_math/stdlib.h"
 
 #include "vecpp/scalar/constants.h"
 #include "vecpp/scalar/operations.h"
