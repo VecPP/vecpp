@@ -14,11 +14,10 @@
 
 namespace VECPP_NAMESPACE {
 
-template <typename T, std::size_t N, std::size_t M, std::size_t P,
-          typename traits>
-constexpr Mat<T, N, P, traits> operator*(const Mat<T, N, M, traits>& lhs,
-                                         const Mat<T, M, P, traits>& rhs) {
-  Mat<T, N, P, traits> result = {};
+template <typename T, std::size_t N, std::size_t M, std::size_t P>
+constexpr Mat<T, N, P> operator*(const Mat<T, N, M>& lhs,
+                                         const Mat<T, M, P>& rhs) {
+  Mat<T, N, P> result = {};
 
   for(std::size_t i = 0; i < N; ++i) {
     for(std::size_t j = 0; j < P; ++j) {

@@ -20,33 +20,19 @@ namespace VECPP_NAMESPACE {
 
 // TODO: These placeholder taylor series expansion implementation
 // are temporary, and need to be replaced with something better!
-template <typename T, typename Traits>
-constexpr T sin(const Angle<T, Traits>& a) {
-  if constexpr(is_ct<Traits>()) {
-    return cste::sine(a.as_rad());
-  }
-  else {
-    return std::sin(a.as_rad());
-  }
+template <typename T>
+constexpr T sine(const Angle<T>& a) {
+  return cste::sine(a.as_rad());
 }
 
-template <typename T, typename Traits>
-constexpr T cos(const Angle<T, Traits>& a) {
-  if constexpr(is_ct<Traits>()) {
-      return cste::cosine(a.as_rad());
-    }
-  else {
-    return std::cos(a.as_rad());
-  }
+template <typename T>
+constexpr T cosine(const Angle<T>& a) {
+  return cste::cosine(a.as_rad());
 }
 
-template <typename T, typename Traits>
-constexpr T tan(const Angle<T, Traits>& a) {
-  if
-    constexpr(is_ct<Traits>()) { return sin(a) / cos(a); }
-  else {
-    return std::tan(a.as_rad());
-  }
+template <typename T>
+constexpr T tangent(const Angle<T>& a) {
+  return cste::tangent(a.as_rad());
 }
 
 }  // namespace VECPP_NAMESPACE

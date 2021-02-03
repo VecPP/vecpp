@@ -1,31 +1,28 @@
-#include "catch.hpp"
+#include "doctest.h"
 
-#ifdef VECPP_TEST_SINGLE_HEADER
-#include "vecpp/vecpp_single.h"
-#else
-#include "vecpp/vecpp.h"
-#endif
+#include "vecpp/quat/quat.h"
+#include "vecpp/vec/operations.h"
+#include <sstream>
 
 using fQuat = vecpp::Quat<float>;
 using fVec3 = vecpp::Vec<float, 3>;
 using fAngle = vecpp::Angle<float>;
 
-using Catch::Matchers::WithinAbs;
 
-TEST_CASE("simple vector rotate", "[quat]") {
+TEST_CASE("simple vector rotate") {
   fVec3 u_x = {1.0f, 0.0f, 0.0f};
   fVec3 u_y = {0.0f, 1.0f, 0.0f};
   fVec3 u_z = {0.0f, 0.0f, 1.0f};
 
   fQuat r_x = fQuat::angle_axis(fAngle::from_deg(90.0f), u_x);
 
-  REQUIRE_THAT(norm(r_x * u_y - u_z), WithinAbs(0.0f, 0.0001f));
+  CHECK(norm(r_x * u_y - u_z) == doctest::Approx(0.0f));
 }
 
-TEST_CASE("angle_axis_constexp", "[quat]") {
+TEST_CASE("angle_axis_constexp") {
   using fQuat = vecpp::Quat<float>;
   constexpr fQuat r_x =
-      fQuat::angle_axis(ct(fAngle::from_deg(90.0f)), {1.0f, 0.0f, 0.0f});
+      fQuat::angle_axis(fAngle::from_deg(90.0f), {1.0f, 0.0f, 0.0f});
 
   (void)r_x;
 }

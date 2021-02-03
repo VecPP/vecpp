@@ -9,8 +9,6 @@
 #define VECPP_MAT_MAT_H_INCLUDED
 
 #include "vecpp/config.h"
-
-#include "vecpp/traits.h"
 #include "vecpp/vec/vec.h"
 
 #include <array>
@@ -19,8 +17,7 @@
 
 namespace VECPP_NAMESPACE {
 
-template <typename T, std::size_t C, std::size_t R,
-          typename Traits = Mat_traits<T>>
+template <typename T, std::size_t C, std::size_t R>
 struct Mat {
   static_assert(C > 0 && R > 0);
 
@@ -28,7 +25,6 @@ struct Mat {
   static constexpr std::size_t cols = C;
 
   using value_type = T;
-  using traits = Traits;
 
   constexpr value_type& operator()(std::size_t i, std::size_t j) {
     assert(i < cols && j < rows);
@@ -62,10 +58,9 @@ struct Mat {
   std::array<value_type, cols * rows> data_;
 };
 
-template <typename T, std::size_t C, std::size_t R, typename L_traits,
-          typename R_traits>
-constexpr bool operator==(const Mat<T, C, R, L_traits>& lhs,
-                          const Mat<T, C, R, R_traits>& rhs) {
+template <typename T, std::size_t C, std::size_t R>
+constexpr bool operator==(const Mat<T, C, R>& lhs,
+                          const Mat<T, C, R>& rhs) {
   for (std::size_t i = 0; i < C; ++i) {
     for (std::size_t j = 0; j < R; ++j) {
       if (lhs(i, j) != rhs(i, j)) {
@@ -76,9 +71,9 @@ constexpr bool operator==(const Mat<T, C, R, L_traits>& lhs,
   return true;
 }
 
-template <typename T, std::size_t C, std::size_t R, typename Traits>
+template <typename T, std::size_t C, std::size_t R>
 std::ostream& operator<<(std::ostream& stream,
-                         const Mat<T, C, R, Traits>& lhs) {
+                         const Mat<T, C, R>& lhs) {
   stream << "[";
   for (std::size_t i = 0; i < R; ++i) {
     stream << " ";
@@ -92,10 +87,10 @@ std::ostream& operator<<(std::ostream& stream,
   return stream;
 }
 
-template <typename T, std::size_t C, std::size_t R, typename Traits>
-constexpr Mat<T, C, R, Traits> operator/(const Mat<T, C, R, Traits>& mat,
+template <typename T, std::size_t C, std::size_t R>
+constexpr Mat<T, C, R> operator/(const Mat<T, C, R>& mat,
                                          const T& v) {
-  Mat<T, C, R, Traits> result = {};
+  Mat<T, C, R> result = {};
 
   for (std::size_t i = 0; i < R; ++i) {
     for (std::size_t j = 0; j < C; ++j) {
@@ -105,10 +100,10 @@ constexpr Mat<T, C, R, Traits> operator/(const Mat<T, C, R, Traits>& mat,
   return result;
 }
 
-template <typename T, std::size_t C, std::size_t R, typename Traits>
-constexpr Mat<T, C, R, Traits> operator*(const Mat<T, C, R, Traits>& mat,
+template <typename T, std::size_t C, std::size_t R>
+constexpr Mat<T, C, R> operator*(const Mat<T, C, R>& mat,
                                          const T& v) {
-  Mat<T, C, R, Traits> result = {};
+  Mat<T, C, R> result = {};
 
   for (std::size_t i = 0; i < R; ++i) {
     for (std::size_t j = 0; j < C; ++j) {
@@ -118,11 +113,10 @@ constexpr Mat<T, C, R, Traits> operator*(const Mat<T, C, R, Traits>& mat,
   return result;
 }
 
-template <typename T, std::size_t C, std::size_t R, typename M_traits,
-          typename V_traits>
-constexpr Vec<T, R, V_traits> operator*(const Mat<T, C, R, M_traits>& mat,
-                                        const Vec<T, C, V_traits>& vec) {
-  Vec<T, R, V_traits> result = {};
+template <typename T, std::size_t C, std::size_t R>
+constexpr Vec<T, R> operator*(const Mat<T, C, R>& mat,
+                                        const Vec<T, C>& vec) {
+  Vec<T, R> result = {};
 
   for (std::size_t i = 0; i < R; ++i) {
     T v = 0;
@@ -134,11 +128,10 @@ constexpr Vec<T, R, V_traits> operator*(const Mat<T, C, R, M_traits>& mat,
   return result;
 }
 
-template <typename T, std::size_t C, std::size_t R, typename M_traits,
-          typename V_traits>
-constexpr Vec<T, C, V_traits> operator*(const Vec<T, R, V_traits>& vec,
-                                        const Mat<T, C, R, M_traits>& mat) {
-  Vec<T, C, V_traits> result = {};
+template <typename T, std::size_t C, std::size_t R>
+constexpr Vec<T, C> operator*(const Vec<T, R>& vec,
+                                        const Mat<T, C, R>& mat) {
+  Vec<T, C> result = {};
 
   for (std::size_t j = 0; j < C; ++j) {
     T v = 0;

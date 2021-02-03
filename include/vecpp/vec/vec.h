@@ -10,8 +10,6 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/traits.h"
-
 #include <array>
 #include <cassert>
 #include <cstddef>
@@ -20,16 +18,15 @@
 
 namespace VECPP_NAMESPACE {
 
-template <typename T, std::size_t len, typename Traits = Vec_traits<T>>
-struct alignas(Traits::align) Vec {
+template <typename T, std::size_t len>
+struct Vec {
  public:
   static_assert(len > 0);
 
   static constexpr std::size_t length = len;
 
   using value_type = T;
-  using traits = Traits;
-
+  
   constexpr T& at(std::size_t i) {
     if (i >= len) {
       throw std::out_of_range("out of range vector access");
@@ -59,47 +56,32 @@ struct alignas(Traits::align) Vec {
 
   // Left public for aggregate initialization.
   std::array<T, len> data_;
-
-  // A vector is implicitely convertible to any vector differing only by flags
-  template <typename new_traits>
-  constexpr operator Vec<T, len, new_traits>() const {
-    Vec<T, len, new_traits> result = {};
-    for (std::size_t i = 0; i < length; ++i) {
-      result[i] = data_[i];
-    }
-    return result;
-  }
 };
 
-template <typename T, std::size_t l, typename traits>
-constexpr auto ct(const Vec<T, l, traits>& v) {
-  return Vec<T, l, Add_constexpr_t<traits>>(v);
-}
-
 // Vectors may as well be ranges.
-template <typename T, std::size_t l, typename traits>
-constexpr T* begin(Vec<T, l, traits>& v) {
+template <typename T, std::size_t l>
+constexpr T* begin(Vec<T, l>& v) {
   return v.data();
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr T* end(Vec<T, l, traits>& v) {
+template <typename T, std::size_t l>
+constexpr T* end(Vec<T, l>& v) {
   return v.data() + v.length;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr const T* begin(const Vec<T, l, traits>& v) {
+template <typename T, std::size_t l>
+constexpr const T* begin(const Vec<T, l>& v) {
   return v.data();
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr const T* end(const Vec<T, l, traits>& v) {
+template <typename T, std::size_t l>
+constexpr const T* end(const Vec<T, l>& v) {
   return v.data() + v.length;
 }
 
 // std::ostream support
-template <typename T, std::size_t l, typename traits>
-std::ostream& operator<<(std::ostream& stream, const Vec<T, l, traits>& vec) {
+template <typename T, std::size_t l>
+std::ostream& operator<<(std::ostream& stream, const Vec<T, l>& vec) {
   stream << "(";
 
   bool first = true;
@@ -118,9 +100,9 @@ std::ostream& operator<<(std::ostream& stream, const Vec<T, l, traits>& vec) {
 }
 
 // Comparisons
-template <typename T, std::size_t l, typename traits1, typename traits2>
-constexpr bool operator==(const Vec<T, l, traits1>& lhs,
-                          const Vec<T, l, traits2>& rhs) {
+template <typename T, std::size_t l>
+constexpr bool operator==(const Vec<T, l>& lhs,
+                          const Vec<T, l>& rhs) {
   for (std::size_t i = 0; i < lhs.length; ++i) {
     if (lhs[i] != rhs[i]) {
       return false;
@@ -129,9 +111,9 @@ constexpr bool operator==(const Vec<T, l, traits1>& lhs,
   return true;
 }
 
-template <typename T, std::size_t l, typename traits1, typename traits2>
-constexpr bool operator!=(const Vec<T, l, traits1>& lhs,
-                          const Vec<T, l, traits2>& rhs) {
+template <typename T, std::size_t l>
+constexpr bool operator!=(const Vec<T, l>& lhs,
+                          const Vec<T, l>& rhs) {
   for (std::size_t i = 0; i < lhs.length; ++i) {
     if (lhs[i] != rhs[i]) {
       return true;
@@ -141,9 +123,9 @@ constexpr bool operator!=(const Vec<T, l, traits1>& lhs,
 }
 
 // Unary Operators
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits> operator-(const Vec<T, l, traits>& rhs) {
-  Vec<T, l, traits> result = {};
+template <typename T, std::size_t l>
+constexpr Vec<T, l> operator-(const Vec<T, l>& rhs) {
+  Vec<T, l> result = {};
   for (std::size_t i = 0; i < rhs.length; ++i) {
     result[i] = -rhs[i];
   }
@@ -151,108 +133,108 @@ constexpr Vec<T, l, traits> operator-(const Vec<T, l, traits>& rhs) {
 }
 
 // Binary Operators
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits>& operator+=(Vec<T, l, traits>& lhs,
-                                        const Vec<T, l, traits>& rhs) {
+template <typename T, std::size_t l>
+constexpr Vec<T, l>& operator+=(Vec<T, l>& lhs,
+                                        const Vec<T, l>& rhs) {
   for (std::size_t i = 0; i < lhs.length; ++i) {
     lhs[i] += rhs[i];
   }
   return lhs;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits> operator+(const Vec<T, l, traits>& lhs,
-                                      const Vec<T, l, traits>& rhs) {
-  Vec<T, l, traits> result = lhs;
+template <typename T, std::size_t l>
+constexpr Vec<T, l> operator+(const Vec<T, l>& lhs,
+                                      const Vec<T, l>& rhs) {
+  Vec<T, l> result = lhs;
   result += rhs;
   return result;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits>& operator-=(Vec<T, l, traits>& lhs,
-                                        const Vec<T, l, traits>& rhs) {
+template <typename T, std::size_t l>
+constexpr Vec<T, l>& operator-=(Vec<T, l>& lhs,
+                                        const Vec<T, l>& rhs) {
   for (std::size_t i = 0; i < lhs.length; ++i) {
     lhs[i] -= rhs[i];
   }
   return lhs;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits> operator-(const Vec<T, l, traits>& lhs,
-                                      const Vec<T, l, traits>& rhs) {
-  Vec<T, l, traits> result = lhs;
+template <typename T, std::size_t l>
+constexpr Vec<T, l> operator-(const Vec<T, l>& lhs,
+                                      const Vec<T, l>& rhs) {
+  Vec<T, l> result = lhs;
   result -= rhs;
   return result;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits>& operator*=(Vec<T, l, traits>& lhs,
-                                        const Vec<T, l, traits>& rhs) {
+template <typename T, std::size_t l>
+constexpr Vec<T, l>& operator*=(Vec<T, l>& lhs,
+                                        const Vec<T, l>& rhs) {
   for (std::size_t i = 0; i < lhs.length; ++i) {
     lhs[i] *= rhs[i];
   }
   return lhs;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits> operator*(const Vec<T, l, traits>& lhs,
-                                      const Vec<T, l, traits>& rhs) {
-  Vec<T, l, traits> result = lhs;
+template <typename T, std::size_t l>
+constexpr Vec<T, l> operator*(const Vec<T, l>& lhs,
+                                      const Vec<T, l>& rhs) {
+  Vec<T, l> result = lhs;
   result *= rhs;
   return result;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits>& operator/=(Vec<T, l, traits>& lhs,
-                                        const Vec<T, l, traits>& rhs) {
+template <typename T, std::size_t l>
+constexpr Vec<T, l>& operator/=(Vec<T, l>& lhs,
+                                        const Vec<T, l>& rhs) {
   for (std::size_t i = 0; i < lhs.length; ++i) {
     lhs[i] /= rhs[i];
   }
   return lhs;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits> operator/(const Vec<T, l, traits>& lhs,
-                                      const Vec<T, l, traits>& rhs) {
-  Vec<T, l, traits> result = lhs;
+template <typename T, std::size_t l>
+constexpr Vec<T, l> operator/(const Vec<T, l>& lhs,
+                                      const Vec<T, l>& rhs) {
+  Vec<T, l> result = lhs;
   result /= rhs;
   return result;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits>& operator*=(Vec<T, l, traits>& lhs, const T& rhs) {
+template <typename T, std::size_t l>
+constexpr Vec<T, l>& operator*=(Vec<T, l>& lhs, const T& rhs) {
   for (std::size_t i = 0; i < lhs.length; ++i) {
     lhs[i] *= rhs;
   }
   return lhs;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits> operator*(const Vec<T, l, traits>& lhs,
+template <typename T, std::size_t l>
+constexpr Vec<T, l> operator*(const Vec<T, l>& lhs,
                                       const T& rhs) {
-  Vec<T, l, traits> result = lhs;
+  Vec<T, l> result = lhs;
   result *= rhs;
   return result;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits> operator*(const T& lhs,
-                                      const Vec<T, l, traits>& rhs) {
+template <typename T, std::size_t l>
+constexpr Vec<T, l> operator*(const T& lhs,
+                                      const Vec<T, l>& rhs) {
   return rhs * lhs;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits>& operator/=(Vec<T, l, traits>& lhs, const T& rhs) {
+template <typename T, std::size_t l>
+constexpr Vec<T, l>& operator/=(Vec<T, l>& lhs, const T& rhs) {
   for (std::size_t i = 0; i < lhs.length; ++i) {
     lhs[i] /= rhs;
   }
   return lhs;
 }
 
-template <typename T, std::size_t l, typename traits>
-constexpr Vec<T, l, traits> operator/(const Vec<T, l, traits>& lhs,
+template <typename T, std::size_t l>
+constexpr Vec<T, l> operator/(const Vec<T, l>& lhs,
                                       const T& rhs) {
-  Vec<T, l, traits> result = lhs;
+  Vec<T, l> result = lhs;
   result /= rhs;
   return result;
 }

@@ -11,6 +11,7 @@
 #include "vecpp/config.h"
 
 #include "vecpp/angle/angle.h"
+#include "vecpp/angle/operations.h"
 #include "vecpp/vec/vec.h"
 
 #include <array>
@@ -23,8 +24,7 @@ template <typename T>
 struct Quat {
   using value_type = T;
 
-  template <typename A_traits>
-  static constexpr Quat angle_axis(const Angle<T, A_traits>& angle,
+  static constexpr Quat angle_axis(const Angle<T>& angle,
                                    const Vec<T, 3>& axis);
 
   // Left public for aggregate initialization.
@@ -35,11 +35,10 @@ struct Quat {
 };
 
 template <typename T>
-template <typename A_traits>
-constexpr Quat<T> Quat<T>::angle_axis(const Angle<T, A_traits>& angle,
+constexpr Quat<T> Quat<T>::angle_axis(const Angle<T>& angle,
                                       const Vec<T, 3>& axis) {
-  const T s = sin(angle * T(0.5));
-  const T c = cos(angle * T(0.5));
+  const T s = sine(angle * T(0.5));
+  const T c = cosine(angle * T(0.5));
 
   return {c, axis[0] * s, axis[1] * s, axis[2] * s};
 }
@@ -65,12 +64,12 @@ constexpr Quat<T> operator*(const Quat<T>& lhs, const Quat<T>& rhs) {
 }
 
 // Rotate a vector by the quaternion
-template <typename T, typename V_traits>
-constexpr Vec<T, 3, V_traits> operator*(const Quat<T>& lhs,
-                                        const Vec<T, 3, V_traits>& rhs) {
-  const Vec<T, 3, V_traits> q_v = {lhs.x, lhs.y, lhs.z};
-  const Vec<T, 3, V_traits> uv = cross(q_v, rhs);
-  const Vec<T, 3, V_traits> uuv = cross(q_v, uv);
+template <typename T>
+constexpr Vec<T, 3> operator*(const Quat<T>& lhs,
+                                        const Vec<T, 3>& rhs) {
+  const Vec<T, 3> q_v = {lhs.x, lhs.y, lhs.z};
+  const Vec<T, 3> uv = cross(q_v, rhs);
+  const Vec<T, 3> uuv = cross(q_v, uv);
 
   return rhs + ((uv * lhs.w) + uuv) * T(2);
 }

@@ -1,21 +1,16 @@
-#include "catch.hpp"
+#include "doctest.h"
 
-#ifdef VECPP_TEST_SINGLE_HEADER
-#include "vecpp/vecpp_single.h"
-#else
-#include "vecpp/vecpp.h"
-#endif
-
+#include "vecpp/vec/vec.h"
 #include <sstream>
 
-TEST_CASE("Static members assignment", "[vec_construct]") {
+TEST_CASE("Static members assignment") {
   using Vec = vecpp::Vec<float, 2>;
 
   static_assert(std::is_same_v<Vec::value_type, float>);
   static_assert(Vec::length == 2);
 }
 
-TEST_CASE("Default construction compiles without warning", "[vec_construct]") {
+TEST_CASE("Default construction compiles without warning") {
   using Vec = vecpp::Vec<float, 2>;
 
   {
@@ -30,17 +25,17 @@ TEST_CASE("Default construction compiles without warning", "[vec_construct]") {
   }
 }
 
-TEST_CASE("Build vec2 from aggregate initialization", "[vec_construct]") {
+TEST_CASE("Build vec2 from aggregate initialization") {
   using Vec = vecpp::Vec<float, 2>;
 
   {
     Vec a = {1.0f, 2.0f};
     Vec b{1.0f, 2.0f};
 
-    REQUIRE(a[0] == 1.0f);
-    REQUIRE(a[1] == 2.0f);
+    CHECK(a[0] == 1.0f);
+    CHECK(a[1] == 2.0f);
 
-    REQUIRE(a == b);
+    CHECK(a == b);
   }
 
   {
@@ -53,7 +48,7 @@ TEST_CASE("Build vec2 from aggregate initialization", "[vec_construct]") {
   }
 }
 
-TEST_CASE("use vec in range-based for", "[vec_iterate]") {
+TEST_CASE("use vec in range-based for") {
   using Vec = vecpp::Vec<float, 4>;
 
   {
@@ -63,16 +58,26 @@ TEST_CASE("use vec in range-based for", "[vec_iterate]") {
       v += 1.0f;
     }
 
-    REQUIRE(a[0] == 1.0f + 1.0f);
-    REQUIRE(a[1] == 2.0f + 1.0f);
-    REQUIRE(a[2] == 3.0f + 1.0f);
-    REQUIRE(a[3] == 4.0f + 1.0f);
+    CHECK(a[0] == 1.0f + 1.0f);
+    CHECK(a[1] == 2.0f + 1.0f);
+    CHECK(a[2] == 3.0f + 1.0f);
+    CHECK(a[3] == 4.0f + 1.0f);
   }
 
-  // No constexpr equivalent
+  constexpr float total = []() {
+    constexpr Vec b = {1.0f, 2.0f, 3.0f, 4.0f};
+    float t = 0.0f;
+    for (auto& v : b) {
+      t += v;
+    }
+    return t;
+  }();
+
+  static_assert(total == 1.0f + 2.0f + 3.0f + 4.0f);
+
 }
 
-TEST_CASE("use const vec in range-based for", "[vec_iterate]") {
+TEST_CASE("use const vec in range-based for") {
   using Vec = vecpp::Vec<float, 4>;
 
   {
@@ -82,22 +87,9 @@ TEST_CASE("use const vec in range-based for", "[vec_iterate]") {
       (void)v;
     }
   }
-  /*
-    {
-      constexpr Vec a = {1.0f, 2.0f, 3.0f, 4.0f};
-      constexpr float b = [=](){
-        float total = 0.0f;
-        for (auto v : a) {
-          total += v;
-        }
-        return total;
-      }();
-      static_assert(b == (1.0f + 2.0f + 3.0f + 4.0f));
-    }
-    */
 }
 
-TEST_CASE("Vec::at() usable to access reference", "[vec_access]") {
+TEST_CASE("Vec::at() usable to access reference") {
   using Vec = vecpp::Vec<float, 4>;
 
   {
@@ -105,7 +97,7 @@ TEST_CASE("Vec::at() usable to access reference", "[vec_access]") {
 
     a.at(2) = 10.0f;
 
-    REQUIRE(a[2] == 10.0f);
+    CHECK(a[2] == 10.0f);
   }
 
   {
@@ -119,14 +111,14 @@ TEST_CASE("Vec::at() usable to access reference", "[vec_access]") {
   }
 }
 
-TEST_CASE("Vec::at() performs bounds-checking", "[vec_access]") {
+TEST_CASE("Vec::at() performs bounds-checking") {
   using Vec = vecpp::Vec<float, 4>;
   {
     const Vec a = {1.0f, 2.0f, 3.0f, 4.0f};
 
-    REQUIRE(a.at(0) == 1.0f);
-    REQUIRE_THROWS(a.at(4));
-    REQUIRE_THROWS(a.at(5));
+    CHECK(a.at(0) == 1.0f);
+    CHECK_THROWS(a.at(4));
+    CHECK_THROWS(a.at(5));
   }
 
   {
@@ -137,18 +129,18 @@ TEST_CASE("Vec::at() performs bounds-checking", "[vec_access]") {
     // Intentionally does not compile:
     // static_assert(a.at(5));
 
-    REQUIRE_THROWS(a.at(5));
+    CHECK_THROWS(a.at(5));
   }
 }
 
-TEST_CASE("Outputs to iostream", "[vec_format]") {
+TEST_CASE("Outputs to iostream") {
   const vecpp::Vec<int, 4> a = {0, 1, 2, 3};
 
   std::ostringstream stream;
 
   stream << a;
 
-  REQUIRE(stream.str() == "(0, 1, 2, 3)");
+  CHECK(stream.str() == "(0, 1, 2, 3)");
 
   // No constexpr equivalent
 }

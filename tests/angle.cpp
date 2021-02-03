@@ -1,10 +1,7 @@
-#include "catch.hpp"
+#include "doctest.h"
 
-#ifdef VECPP_TEST_SINGLE_HEADER
-#include "vecpp/vecpp_single.h"
-#else
-#include "vecpp/vecpp.h"
-#endif
+#include "vecpp/angle/angle.h"
+#include "vecpp/angle/operations.h"
 
 namespace angle_literals_float {
 constexpr vecpp::Angle<float> operator""_deg(long double v) {
@@ -26,8 +23,7 @@ constexpr vecpp::Angle<double> operator""_rad(long double v) {
 }
 }  // namespace angle_literals_double
 
-using Catch::Matchers::WithinAbs;
-using vecpp::pi;
+using cste::pi;
 
 using Angle = vecpp::Angle<float>;
 
@@ -36,9 +32,8 @@ constexpr bool close_vals(const T& lhs, const T& rhs) {
   return cste::absolute(lhs - rhs) < 0.0001f;
 }
 
-TEST_CASE("create from radians or degrees", "[angle]") {
+TEST_CASE("create from radians or degrees") {
   using namespace angle_literals_float;
-
   {
     auto a = 0.0_rad;
     auto b = 0.0_deg;
@@ -49,10 +44,10 @@ TEST_CASE("create from radians or degrees", "[angle]") {
     auto c = Angle::from_rad(pi<float>);
     auto d = 180.0_deg;
 
-    REQUIRE(a == b);
-    REQUIRE(c == d);
-    REQUIRE(a != c);
-    REQUIRE(a != d);
+    CHECK(a == b);
+    CHECK(c == d);
+    CHECK(a != c);
+    CHECK(a != d);
   }
 
   {
@@ -68,7 +63,7 @@ TEST_CASE("create from radians or degrees", "[angle]") {
   }
 }
 
-TEST_CASE("create from double", "[angle]") {
+TEST_CASE("create from double") {
   using namespace angle_literals_double;
 
   auto a = 0.0_rad;
@@ -78,7 +73,7 @@ TEST_CASE("create from double", "[angle]") {
   static_assert(sizeof(a) == sizeof(double));
 }
 
-TEST_CASE("copy_and_reassign", "[angle]") {
+TEST_CASE("copy_and_reassign") {
   using namespace angle_literals_float;
   {
     auto a = 10.0_deg;
@@ -105,16 +100,16 @@ TEST_CASE("copy_and_reassign", "[angle]") {
   }
 }
 
-TEST_CASE("simple constraining", "[angle]") {
+TEST_CASE("simple constraining") {
   using namespace angle_literals_float;
   {
     auto a = 90.0_deg;
     auto b = 450.0_deg;
     auto c = 810.0_deg;
 
-    REQUIRE_THAT(a.as_deg(), WithinAbs(90.0f, 0.0001f));
-    REQUIRE_THAT(b.as_deg(), WithinAbs(90.0f, 0.0001f));
-    REQUIRE_THAT(c.as_deg(), WithinAbs(90.0f, 0.0001f));
+    CHECK(a.as_deg() == doctest::Approx(90.0f));
+    CHECK(b.as_deg() == doctest::Approx(90.0f));
+    CHECK(c.as_deg() == doctest::Approx(90.0f));
   }
 
   {
@@ -129,7 +124,7 @@ TEST_CASE("simple constraining", "[angle]") {
   }
 }
 
-TEST_CASE("negative constraining", "[angle]") {
+TEST_CASE("negative constraining") {
   using namespace angle_literals_float;
 
   {
@@ -138,10 +133,10 @@ TEST_CASE("negative constraining", "[angle]") {
     auto c = -200.0_deg;
     auto d = -375.0_deg;
 
-    REQUIRE_THAT(a.as_deg(), WithinAbs(-90.0f, 0.0001f));
-    REQUIRE_THAT(b.as_deg(), WithinAbs(180.0f, 0.0001f));
-    REQUIRE_THAT(c.as_deg(), WithinAbs(160.0f, 0.0001f));
-    REQUIRE_THAT(d.as_deg(), WithinAbs(-15.0f, 0.0001f));
+    CHECK(a.as_deg() == doctest::Approx(-90.0f));
+    CHECK(b.as_deg() == doctest::Approx(180.0f));
+    CHECK(c.as_deg() == doctest::Approx(160.0f));
+    CHECK(d.as_deg() == doctest::Approx(-15.0f));
   }
 
   {
@@ -157,17 +152,17 @@ TEST_CASE("negative constraining", "[angle]") {
   }
 }
 
-TEST_CASE("negate", "[angle]") {
+TEST_CASE("negate") {
   {
     auto a = -Angle::from_deg(0.0f);
     auto b = -Angle::from_deg(10.0f);
     auto c = -Angle::from_deg(-10.0f);
     auto d = -Angle::from_deg(180.0f);
 
-    REQUIRE_THAT(a.as_deg(), WithinAbs(0.0f, 0.0001f));
-    REQUIRE_THAT(b.as_deg(), WithinAbs(-10.0f, 0.0001f));
-    REQUIRE_THAT(c.as_deg(), WithinAbs(10.0f, 0.0001f));
-    REQUIRE_THAT(d.as_deg(), WithinAbs(180.0f, 0.0001f));
+    CHECK(a.as_deg() == doctest::Approx(0.0f));
+    CHECK(b.as_deg() == doctest::Approx(-10.0f));
+    CHECK(c.as_deg() == doctest::Approx(10.0f));
+    CHECK(d.as_deg() == doctest::Approx(180.0f));
   }
   {
     constexpr auto a = -Angle::from_deg(0.0f);
@@ -182,7 +177,7 @@ TEST_CASE("negate", "[angle]") {
   }
 }
 
-TEST_CASE("add", "[angle]") {
+TEST_CASE("add") {
   using namespace angle_literals_float;
 
   {
@@ -191,10 +186,10 @@ TEST_CASE("add", "[angle]") {
     auto c = -10.0_deg + 30.0_deg;
     auto d = 45.0_deg + 725.0_deg;
 
-    REQUIRE_THAT(a.as_deg(), WithinAbs(10.0f, 0.0001f));
-    REQUIRE_THAT(b.as_deg(), WithinAbs(-160.0f, 0.0001f));
-    REQUIRE_THAT(c.as_deg(), WithinAbs(20.0f, 0.0001f));
-    REQUIRE_THAT(d.as_deg(), WithinAbs(50.0f, 0.0001f));
+    CHECK(a.as_deg() == doctest::Approx(10.0f));
+    CHECK(b.as_deg() == doctest::Approx(-160.0f));
+    CHECK(c.as_deg() == doctest::Approx(20.0f));
+    CHECK(d.as_deg() == doctest::Approx(50.0f));
   }
   {
     constexpr auto a = 0.0_deg + 10.0_deg;
@@ -209,7 +204,7 @@ TEST_CASE("add", "[angle]") {
   }
 }
 
-TEST_CASE("sub", "[angle]") {
+TEST_CASE("sub") {
   using namespace angle_literals_float;
 
   {
@@ -218,10 +213,10 @@ TEST_CASE("sub", "[angle]") {
     auto c = -10.0_deg - 30.0_deg;
     auto d = 45.0_deg - 725.0_deg;
 
-    REQUIRE_THAT(a.as_deg(), WithinAbs(-10.0f, 0.0001f));
-    REQUIRE_THAT(b.as_deg(), WithinAbs(160.0f, 0.0001f));
-    REQUIRE_THAT(c.as_deg(), WithinAbs(-40.0f, 0.0001f));
-    REQUIRE_THAT(d.as_deg(), WithinAbs(40.0f, 0.0001f));
+    CHECK(a.as_deg() == doctest::Approx(-10.0f));
+    CHECK(b.as_deg() == doctest::Approx(160.0f));
+    CHECK(c.as_deg() == doctest::Approx(-40.0f));
+    CHECK(d.as_deg() == doctest::Approx(40.0f));
   }
 
   {
@@ -237,7 +232,7 @@ TEST_CASE("sub", "[angle]") {
   }
 }
 
-TEST_CASE("scale_mul", "[angle]") {
+TEST_CASE("scale_mul") {
   using namespace angle_literals_float;
 
   {
@@ -245,9 +240,9 @@ TEST_CASE("scale_mul", "[angle]") {
     auto b = 10.0_deg * 5.0f;
     auto c = 3.0f * 90.0_deg;
 
-    REQUIRE_THAT(a.as_deg(), WithinAbs(0.0f, 0.0001f));
-    REQUIRE_THAT(b.as_deg(), WithinAbs(50.0f, 0.0001f));
-    REQUIRE_THAT(c.as_deg(), WithinAbs(-90.0f, 0.0001f));
+    CHECK(a.as_deg() == doctest::Approx(0.0f));
+    CHECK(b.as_deg() == doctest::Approx(50.0f));
+    CHECK(c.as_deg() == doctest::Approx(-90.0f));
   }
 
   {
@@ -261,7 +256,7 @@ TEST_CASE("scale_mul", "[angle]") {
   }
 }
 
-TEST_CASE("scale_div", "[angle]") {
+TEST_CASE("scale_div") {
   using namespace angle_literals_float;
 
   {
@@ -270,10 +265,10 @@ TEST_CASE("scale_div", "[angle]") {
     auto c = 90.0_deg / 3.0f;
     auto d = 125.0_deg / 0.5f;
 
-    REQUIRE_THAT(a.as_deg(), WithinAbs(0.0f, 0.0001f));
-    REQUIRE_THAT(b.as_deg(), WithinAbs(2.0f, 0.0001f));
-    REQUIRE_THAT(c.as_deg(), WithinAbs(30.0f, 0.0001f));
-    REQUIRE_THAT(d.as_deg(), WithinAbs(-110.0f, 0.0001f));
+    CHECK(a.as_deg() == doctest::Approx(0.0f));
+    CHECK(b.as_deg() == doctest::Approx(2.0f));
+    CHECK(c.as_deg() == doctest::Approx(30.0f));
+    CHECK(d.as_deg() == doctest::Approx(-110.0f));
   }
   {
     constexpr auto a = 0.0_deg / 10.0f;
@@ -288,7 +283,7 @@ TEST_CASE("scale_div", "[angle]") {
   }
 }
 
-TEST_CASE("minmax", "[angle]") {
+TEST_CASE("minmax") {
   using namespace angle_literals_float;
 
   {
@@ -298,8 +293,8 @@ TEST_CASE("minmax", "[angle]") {
     auto c = std::min(a, b);
     auto d = std::max(a, b);
 
-    REQUIRE_THAT(c.as_deg(), WithinAbs(-10.0f, 0.0001f));
-    REQUIRE_THAT(d.as_deg(), WithinAbs(10.0f, 0.0001f));
+    CHECK(c.as_deg() == doctest::Approx(-10.0f));
+    CHECK(d.as_deg() == doctest::Approx(10.0f));
   }
 
   {
@@ -314,20 +309,20 @@ TEST_CASE("minmax", "[angle]") {
   }
 }
 
-TEST_CASE("basic trig", "[angle]") {
+TEST_CASE("basic trig") {
   using namespace angle_literals_float;
 
   {
-    REQUIRE_THAT(sin(0.0_deg), WithinAbs(0.0f, 0.0001f));
-    REQUIRE_THAT(sin(90.0_deg), WithinAbs(1.0f, 0.0001f));
-    REQUIRE_THAT(cos(0.0_deg), WithinAbs(1.0f, 0.0001f));
-    REQUIRE_THAT(cos(90.0_deg), WithinAbs(0.0f, 0.0001f));
+    CHECK(sine(0.0_deg) == doctest::Approx(0.0f));
+    CHECK(sine(90.0_deg) == doctest::Approx(1.0f));
+    CHECK(cosine(0.0_deg) == doctest::Approx(1.0f));
+    CHECK(cosine(90.0_deg) == doctest::Approx(0.0f));
   }
 
   {
-    static_assert(close_vals(sin(ct(0.0_deg)), 0.0f));
-    static_assert(close_vals(sin(ct(90.0_deg)), 1.0f));
-    static_assert(close_vals(cos(ct(0.0_deg)), 1.0f));
-    static_assert(close_vals(cos(ct(90.0_deg)), 0.0f));
+    static_assert(close_vals(sine(0.0_deg), 0.0f));
+    static_assert(close_vals(sine(90.0_deg), 1.0f));
+    static_assert(close_vals(cosine(0.0_deg), 1.0f));
+    static_assert(close_vals(cosine(90.0_deg), 0.0f));
   }
 }

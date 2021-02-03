@@ -8,9 +8,6 @@
 #include "vecpp/config.h"
 
 #include "vecpp/cste_math/cste_math.h"
-#include "vecpp/traits.h"
-
-#include "vecpp/scalar/operations.h"
 
 #include "vecpp/angle/angle.h"
 #include "vecpp/angle/operations.h"

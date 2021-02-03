@@ -20,9 +20,9 @@ namespace VECPP_NAMESPACE {
 
 
 // ***************** COFACTOR ***************** //
-template <typename T, std::size_t N, typename Traits>
-constexpr auto cofactor(const Mat<T, N, N, Traits>& mat, std::size_t row, std::size_t col) {
-  Mat<T, N - 1, N - 1, Traits> cf = {};
+template <typename T, std::size_t N>
+constexpr auto cofactor(const Mat<T, N, N>& mat, std::size_t row, std::size_t col) {
+  Mat<T, N - 1, N - 1> cf = {};
 
   for (std::size_t i = 0; i < N - 1; ++i) {
     for (std::size_t j = 0; j < N - 1; ++j) {
@@ -37,9 +37,9 @@ constexpr auto cofactor(const Mat<T, N, N, Traits>& mat, std::size_t row, std::s
 }
 
 // ***************** COFACTOR MATRIX ***************** //
-template <typename T, std::size_t N, typename Traits>
-constexpr const Mat<T, N, N, Traits> cofactor(const Mat<T, N, N, Traits>& mat) {
-  Mat<T, N, N, Traits> result = {};
+template <typename T, std::size_t N>
+constexpr const Mat<T, N, N> cofactor(const Mat<T, N, N>& mat) {
+  Mat<T, N, N> result = {};
 
   for (std::size_t i = 0; i < N; ++i) {
     for (std::size_t j = 0; j < N; ++j) {
@@ -59,16 +59,16 @@ constexpr typename MatT::value_type determinant(const MatT& mat) {
 }
 
 // SPECIALIZATIONS:
-template <typename T, typename Traits>
-struct Mat_determinant<Mat<T, 1, 1, Traits>> {
-  using MatT = Mat<T, 1, 1, Traits>;
+template <typename T>
+struct Mat_determinant<Mat<T, 1, 1>> {
+  using MatT = Mat<T, 1, 1>;
 
   static constexpr T calc_determinant(const MatT& mat) { return mat(0, 0); }
 };
 
-template <typename T, typename Traits>
-struct Mat_determinant<Mat<T, 2, 2, Traits>> {
-  using MatT = Mat<T, 2, 2, Traits>;
+template <typename T>
+struct Mat_determinant<Mat<T, 2, 2>> {
+  using MatT = Mat<T, 2, 2>;
 
   static constexpr T calc_determinant(const MatT& mat) {
     return mat(0, 0) * mat(1, 1) - mat(1, 0) * mat(0, 1);
@@ -76,9 +76,9 @@ struct Mat_determinant<Mat<T, 2, 2, Traits>> {
 };
 
 // General case
-template <typename T, std::size_t N, typename Traits>
-struct Mat_determinant<Mat<T, N, N, Traits>> {
-  using MatT = Mat<T, N, N, Traits>;
+template <typename T, std::size_t N>
+struct Mat_determinant<Mat<T, N, N>> {
+  using MatT = Mat<T, N, N>;
   static constexpr T calc_determinant(const MatT& A) {
     T result = T(0);
     for (std::size_t i = 0; i < N; ++i) {
@@ -90,9 +90,9 @@ struct Mat_determinant<Mat<T, N, N, Traits>> {
 };
 
 // ***************** TRANSPOSE ***************** //
-template <typename T, std::size_t C, std::size_t R, typename Traits>
-constexpr Mat<T, R, C, Traits> transpose(const Mat<T, C, R, Traits>& m) {
-  Mat<T, R, C, Traits> result = {};
+template <typename T, std::size_t C, std::size_t R>
+constexpr Mat<T, R, C> transpose(const Mat<T, C, R>& m) {
+  Mat<T, R, C> result = {};
 
   for (std::size_t i = 0; i < R; ++i) {
     for (std::size_t j = 0; j < C; ++j) {

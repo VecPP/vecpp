@@ -10,11 +10,7 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/cste_math/stdlib.h"
-
-#include "vecpp/scalar/constants.h"
-#include "vecpp/scalar/operations.h"
-#include "vecpp/traits.h"
+#include "vecpp/cste_math/cste_math.h"
 
 #include <cassert>
 #include <iostream>
@@ -23,11 +19,10 @@
 namespace VECPP_NAMESPACE {
 
 // Angle always represents value within the ]-PI,PI] radians range.
-template <typename T, typename TraitsT = Scalar_traits>
+template <typename T>
 class Angle {
  public:
   using value_type = T;
-  using traits = TraitsT;
 
   static constexpr Angle from_rad(const value_type&);
   static constexpr Angle from_deg(const value_type&);
@@ -43,9 +38,6 @@ class Angle {
 
   constexpr const value_type& raw() const;
 
-  template <typename New_traits>
-  constexpr operator Angle<T, New_traits>() const;
-
  private:
   value_type value_;
 
@@ -53,19 +45,8 @@ class Angle {
   explicit constexpr Angle(const T&);
 };
 
-template <typename T, typename traits>
-constexpr auto ct(const Angle<T, traits>& v) {
-  return Angle<T, Add_constexpr_t<traits>>(v);
-}
-
-template <typename T, typename Traits>
-template <typename New_traits>
-constexpr Angle<T, Traits>::operator Angle<T, New_traits>() const {
-  return Angle<T, New_traits>::from_clamped_rad(value_);
-}
-
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> operator-(const Angle<T, Traits>& rhs) {
+template <typename T>
+constexpr Angle<T> operator-(const Angle<T>& rhs) {
   T value = rhs.as_rad();
 
   // Special case, we keep positive pi.
@@ -73,89 +54,89 @@ constexpr Angle<T, Traits> operator-(const Angle<T, Traits>& rhs) {
     value = -value;
   }
 
-  return Angle<T, Traits>::from_clamped_rad(value);
+  return Angle<T>::from_clamped_rad(value);
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits>& operator+=(Angle<T, Traits>& lhs,
-                                       const Angle<T, Traits>& rhs) {
+template <typename T>
+constexpr Angle<T>& operator+=(Angle<T>& lhs,
+                                       const Angle<T>& rhs) {
   T val = lhs.as_rad() + rhs.as_rad();
 
   // Since both lhs and rhs are in the ]-PI,PI] range, the sum is in the
   // ]-2PI-1,2PI] range, so we can make assumptions in the constraining process.
   if (val > pi<T>) {
-    val -= two_pi<T>;
+    val -= cste::two_pi<T>;
   } else if (val <= -pi<T>) {
-    val += two_pi<T>;
+    val += cste::two_pi<T>;
   }
 
-  lhs = Angle<T, Traits>::from_clamped_rad(val);
+  lhs = Angle<T>::from_clamped_rad(val);
 
   return lhs;
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> operator+(const Angle<T, Traits>& lhs,
-                                     const Angle<T, Traits>& rhs) {
+template <typename T>
+constexpr Angle<T> operator+(const Angle<T>& lhs,
+                                     const Angle<T>& rhs) {
   auto result = lhs;
   result += rhs;
   return result;
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits>& operator-=(Angle<T, Traits>& lhs,
-                                       const Angle<T, Traits>& rhs) {
+template <typename T>
+constexpr Angle<T>& operator-=(Angle<T>& lhs,
+                                       const Angle<T>& rhs) {
   T val = lhs.as_rad() - rhs.as_rad();
 
   // Since both lhs and rhs are in the ]-PI,PI] range, the difference is in the
   // ]-2PI,2PI[ range, so we can make assumptions in the constraining process.
   if (val > pi<T>) {
-    val -= two_pi<T>;
+    val -= cste::two_pi<T>;
   } else if (val <= -pi<T>) {
-    val += two_pi<T>;
+    val += cste::two_pi<T>;
   }
 
-  lhs = Angle<T, Traits>::from_clamped_rad(val);
+  lhs = Angle<T>::from_clamped_rad(val);
 
   return lhs;
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> operator-(const Angle<T, Traits>& lhs,
-                                     const Angle<T, Traits>& rhs) {
+template <typename T>
+constexpr Angle<T> operator-(const Angle<T>& lhs,
+                                     const Angle<T>& rhs) {
   auto result = lhs;
   result -= rhs;
   return result;
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits>& operator*=(Angle<T, Traits>& lhs, const T& rhs) {
-  lhs = Angle<T, Traits>::from_rad(lhs.as_rad() * rhs);
+template <typename T>
+constexpr Angle<T>& operator*=(Angle<T>& lhs, const T& rhs) {
+  lhs = Angle<T>::from_rad(lhs.as_rad() * rhs);
   return lhs;
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> operator*(const Angle<T, Traits>& lhs,
+template <typename T>
+constexpr Angle<T> operator*(const Angle<T>& lhs,
                                      const T& rhs) {
   auto result = lhs;
   result *= rhs;
   return result;
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> operator*(const T& lhs,
-                                     const Angle<T, Traits>& rhs) {
+template <typename T>
+constexpr Angle<T> operator*(const T& lhs,
+                                     const Angle<T>& rhs) {
   return rhs * lhs;
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits>& operator/=(Angle<T, Traits>& lhs, const T& rhs) {
-  lhs = Angle<T, Traits>::from_rad(lhs.as_rad() / rhs);
+template <typename T>
+constexpr Angle<T>& operator/=(Angle<T>& lhs, const T& rhs) {
+  lhs = Angle<T>::from_rad(lhs.as_rad() / rhs);
   return lhs;
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> operator/(const Angle<T, Traits>& lhs,
+template <typename T>
+constexpr Angle<T> operator/(const Angle<T>& lhs,
                                      const T& rhs) {
   auto result = lhs;
   result /= rhs;
@@ -163,95 +144,95 @@ constexpr Angle<T, Traits> operator/(const Angle<T, Traits>& lhs,
 }
 
 // COMPARISONS
-template <typename T, typename Traits1, typename Traits2>
-constexpr bool operator==(const Angle<T, Traits1>& lhs,
-                          const Angle<T, Traits2>& rhs) {
+template <typename T1, typename T2>
+constexpr bool operator==(const Angle<T1>& lhs,
+                          const Angle<T2>& rhs) {
   return lhs.raw() == rhs.raw();
 }
 
-template <typename T, typename Traits1, typename Traits2>
-constexpr bool operator!=(const Angle<T, Traits1>& lhs,
-                          const Angle<T, Traits2>& rhs) {
+template <typename T1, typename T2>
+constexpr bool operator!=(const Angle<T1>& lhs,
+                          const Angle<T2>& rhs) {
   return lhs.raw() != rhs.raw();
 }
 
-template <typename T, typename Traits1, typename Traits2>
-constexpr bool operator<(const Angle<T, Traits1>& lhs,
-                         const Angle<T, Traits2>& rhs) {
+template <typename T1, typename T2>
+constexpr bool operator<(const Angle<T1>& lhs,
+                         const Angle<T2>& rhs) {
   return lhs.raw() < rhs.raw();
 }
 
-template <typename T, typename Traits1, typename Traits2>
-constexpr bool operator>(const Angle<T, Traits1>& lhs,
-                         const Angle<T, Traits2>& rhs) {
+template <typename T1, typename T2>
+constexpr bool operator>(const Angle<T1>& lhs,
+                         const Angle<T2>& rhs) {
   return lhs.raw() > rhs.raw();
 }
 
-template <typename T, typename Traits1, typename Traits2>
-constexpr bool operator<=(const Angle<T, Traits1>& lhs,
-                          const Angle<T, Traits2>& rhs) {
+template <typename T1, typename T2>
+constexpr bool operator<=(const Angle<T1>& lhs,
+                          const Angle<T2>& rhs) {
   return lhs.raw() <= rhs.raw();
 }
 
-template <typename T, typename Traits1, typename Traits2>
-constexpr bool operator>=(const Angle<T, Traits1>& lhs,
-                          const Angle<T, Traits2>& rhs) {
+template <typename T1, typename T2>
+constexpr bool operator>=(const Angle<T1>& lhs,
+                          const Angle<T2>& rhs) {
   return lhs.raw() >= rhs.raw();
 }
 
 // IOSTREAM
-template <typename T, typename Traits>
-std::ostream& operator<<(std::ostream& stream, const Angle<T, Traits>& v) {
+template <typename T>
+std::ostream& operator<<(std::ostream& stream, const Angle<T>& v) {
   return stream << v.as_deg() << "°";
 }
 
 // CONSTRUCTION
-template <typename T, typename Traits>
-constexpr Angle<T, Traits>::Angle(const T& v) : value_(v) {}
+template <typename T>
+constexpr Angle<T>::Angle(const T& v) : value_(v) {}
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> Angle<T, Traits>::from_clamped_rad(const T& v) {
-  assert(v > -pi<float> && v <= pi<float>);
+template <typename T>
+constexpr Angle<T> Angle<T>::from_clamped_rad(const T& v) {
+  assert(v > -cste::pi<float> && v <= cste::pi<float>);
 
-  return Angle<T, Traits>(v);
+  return Angle<T>(v);
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> Angle<T, Traits>::from_clamped_deg(const T& v) {
-  return from_clamped_rad(v / T(180) * pi<T>);
+template <typename T>
+constexpr Angle<T> Angle<T>::from_clamped_deg(const T& v) {
+  return from_clamped_rad(v / T(180) * cste::pi<T>);
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> Angle<T, Traits>::from_rad(const T& v) {
-  T constrained = cste::modulo(v + pi<T>, two_pi<T>);
+template <typename T>
+constexpr Angle<T> Angle<T>::from_rad(const T& v) {
+  T constrained = cste::modulo(v + cste::pi<T>, cste::two_pi<T>);
 
   if (constrained <= T(0)) {
-    constrained += two_pi<T>;
+    constrained += cste::two_pi<T>;
   }
 
-  constrained -= pi<T>;
+  constrained -= cste::pi<T>;
 
   return from_clamped_rad(constrained);
 }
 
-template <typename T, typename Traits>
-constexpr Angle<T, Traits> Angle<T, Traits>::from_deg(const T& v) {
-  return from_rad(v / T(180) * pi<T>);
+template <typename T>
+constexpr Angle<T> Angle<T>::from_deg(const T& v) {
+  return from_rad(v / T(180) * cste::pi<T>);
 }
 
 // CONVERSION
-template <typename T, typename Traits>
-constexpr T Angle<T, Traits>::as_deg() const {
-  return value_ * T(180) / pi<T>;
+template <typename T>
+constexpr T Angle<T>::as_deg() const {
+  return value_ * T(180) / cste::pi<T>;
 }
 
-template <typename T, typename Traits>
-constexpr T Angle<T, Traits>::as_rad() const {
+template <typename T>
+constexpr T Angle<T>::as_rad() const {
   return value_;
 }
 
-template <typename T, typename Traits>
-constexpr const T& Angle<T, Traits>::raw() const {
+template <typename T>
+constexpr const T& Angle<T>::raw() const {
   return value_;
 }
 }  // namespace VECPP_NAMESPACE

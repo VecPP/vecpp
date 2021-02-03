@@ -1,12 +1,9 @@
-#include "catch.hpp"
+#include "doctest.h"
 
-#ifdef VECPP_TEST_SINGLE_HEADER
-#include "vecpp/vecpp_single.h"
-#else
-#include "vecpp/vecpp.h"
-#endif
+#include "vecpp/mat/mat.h"
+#include <sstream>
 
-TEST_CASE("Matrix static members sanity check", "[mat_construct]") {
+TEST_CASE("Matrix static members sanity check") {
   using Mat = vecpp::Mat<float, 2, 3>;
 
   static_assert(std::is_same_v<Mat::value_type, float>);
@@ -14,8 +11,7 @@ TEST_CASE("Matrix static members sanity check", "[mat_construct]") {
   static_assert(Mat::rows == 3);
 }
 
-TEST_CASE("Matrix default construction compiles without warning",
-          "[mat_construct]") {
+TEST_CASE("Matrix default construction compiles without warning") {
   using Mat = vecpp::Mat<float, 2, 3>;
 
   {
@@ -30,15 +26,15 @@ TEST_CASE("Matrix default construction compiles without warning",
   }
 }
 
-TEST_CASE("Build mat from aggregate initialization", "[mat_construct]") {
+TEST_CASE("Build mat from aggregate initialization") {
   using Mat = vecpp::Mat<int, 2, 2>;
   {
     Mat a = {1, 2, 3, 4};
 
-    REQUIRE(a(0, 0) == 1);
-    REQUIRE(a(0, 1) == 2);
-    REQUIRE(a(1, 0) == 3);
-    REQUIRE(a(1, 1) == 4);
+    CHECK(a(0, 0) == 1);
+    CHECK(a(0, 1) == 2);
+    CHECK(a(1, 0) == 3);
+    CHECK(a(1, 1) == 4);
   }
 
   {
@@ -51,7 +47,7 @@ TEST_CASE("Build mat from aggregate initialization", "[mat_construct]") {
   }
 }
 
-TEST_CASE("Mat::at() usable to access reference", "[mat_access]") {
+TEST_CASE("Mat::at() usable to access reference") {
   using Mat = vecpp::Mat<int, 2, 2>;
 
   {
@@ -59,7 +55,7 @@ TEST_CASE("Mat::at() usable to access reference", "[mat_access]") {
 
     a.at(1, 1) = 12;
 
-    REQUIRE(a(1, 1) == 12.0f);
+    CHECK(a(1, 1) == 12.0f);
   }
 
   {
@@ -74,15 +70,15 @@ TEST_CASE("Mat::at() usable to access reference", "[mat_access]") {
   }
 }
 
-TEST_CASE("Mat::at() performs bounds-checking", "[mat_access]") {
+TEST_CASE("Mat::at() performs bounds-checking") {
   using Mat = vecpp::Mat<int, 2, 2>;
   {
     const Mat a = {1, 2, 3, 4};
 
-    REQUIRE(a.at(0, 0) == 1);
-    REQUIRE_THROWS(a.at(4, 0));
-    REQUIRE_THROWS(a.at(0, 5));
-    REQUIRE_THROWS(a.at(5, 5));
+    CHECK(a.at(0, 0) == 1);
+    CHECK_THROWS(a.at(4, 0));
+    CHECK_THROWS(a.at(0, 5));
+    CHECK_THROWS(a.at(5, 5));
   }
 
   {
@@ -93,19 +89,19 @@ TEST_CASE("Mat::at() performs bounds-checking", "[mat_access]") {
     // Intentionally does not compile:
     // static_assert(a.at(5, 5));
 
-    REQUIRE_THROWS(a.at(5, 5));
+    CHECK_THROWS(a.at(5, 5));
   }
 }
 
-TEST_CASE("use Mat::data() to access underlying data", "[mat_access]") {
+TEST_CASE("use Mat::data() to access underlying data") {
   using Mat = vecpp::Mat<int, 2, 2>;
   {
     const Mat a = {1, 2, 3, 4};
 
-    REQUIRE(a.data()[0] == 1);
-    REQUIRE(a.data()[1] == 2);
-    REQUIRE(a.data()[2] == 3);
-    REQUIRE(a.data()[3] == 4);
+    CHECK(a.data()[0] == 1);
+    CHECK(a.data()[1] == 2);
+    CHECK(a.data()[2] == 3);
+    CHECK(a.data()[3] == 4);
   }
 
   {

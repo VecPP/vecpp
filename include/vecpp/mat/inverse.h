@@ -26,37 +26,37 @@ struct Matrix_inversion {
   }
 };
 
-template <typename T, typename traits>
-struct Matrix_inversion<Mat<T, 1, 1, traits>> {
-  static constexpr bool is_invertible(const Mat<T, 1, 1, traits>& m) {
+template <typename T>
+struct Matrix_inversion<Mat<T, 1, 1>> {
+  static constexpr bool is_invertible(const Mat<T, 1, 1>& m) {
     return m(0, 0) != T(0);
   }
 
-  static constexpr Mat<T, 1, 1, traits> invert(const Mat<T, 1, 1, traits>& m) {
-    return Mat<T, 1, 1, traits>{m(0, 0)};
+  static constexpr Mat<T, 1, 1> invert(const Mat<T, 1, 1>& m) {
+    return Mat<T, 1, 1>{m(0, 0)};
   }
 };
 
-template <typename T, typename traits>
-struct Matrix_inversion<Mat<T, 2, 2, traits>> {
-  static constexpr bool is_invertible(const Mat<T, 2, 2, traits>& m) {
+template <typename T>
+struct Matrix_inversion<Mat<T, 2, 2>> {
+  static constexpr bool is_invertible(const Mat<T, 2, 2>& m) {
     return determinant(m) != T(0);
   }
 
-  static constexpr Mat<T, 2, 2, traits> invert(const Mat<T, 2, 2, traits>& m) {
-    return Mat<T, 2, 2, traits>{m(1, 1), -m(0, 1), -m(1, 0), m(0, 0)} /
+  static constexpr Mat<T, 2, 2> invert(const Mat<T, 2, 2>& m) {
+    return Mat<T, 2, 2>{m(1, 1), -m(0, 1), -m(1, 0), m(0, 0)} /
            determinant(m);
   }
 };
 
-template <typename T, std::size_t N, typename traits>
-constexpr Mat<T, N, N, traits> inverse(const Mat<T, N, N, traits>& m) {
-  return Matrix_inversion<Mat<T, N, N, traits>>::invert(m);
+template <typename T, std::size_t N>
+constexpr Mat<T, N, N> inverse(const Mat<T, N, N>& m) {
+  return Matrix_inversion<Mat<T, N, N>>::invert(m);
 }
 
-template <typename T, std::size_t N, typename traits>
-constexpr bool is_invertible(const Mat<T, N, N, traits>& m) {
-  return Matrix_inversion<Mat<T, N, N, traits>>::is_invertible(m);
+template <typename T, std::size_t N>
+constexpr bool is_invertible(const Mat<T, N, N>& m) {
+  return Matrix_inversion<Mat<T, N, N>>::is_invertible(m);
 }
 }
 
