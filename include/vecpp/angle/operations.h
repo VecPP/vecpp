@@ -22,17 +22,17 @@ namespace VECPP_NAMESPACE {
 // are temporary, and need to be replaced with something better!
 template <typename T>
 constexpr T sine(const Angle<T>& a) {
-  return cste::sine(a.as_rad());
+  return sine(a.as_rad());
 }
 
 template <typename T>
 constexpr T cosine(const Angle<T>& a) {
-  return cste::cosine(a.as_rad());
+  return cosine(a.as_rad());
 }
 
 template <typename T>
 constexpr T tangent(const Angle<T>& a) {
-  return cste::tangent(a.as_rad());
+  return tangent(a.as_rad());
 }
 
 }  // namespace VECPP_NAMESPACE

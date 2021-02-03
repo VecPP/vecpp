@@ -8,15 +8,15 @@
 #ifndef CSTE_MATH_TRIGNOMETRY_SINE_PI4_H_INCLUDED
 #define CSTE_MATH_TRIGNOMETRY_SINE_PI4_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-#include "vecpp/cste_math/constants.h"
+#include "vecpp/scalar/constants.h"
 
 #include <cassert>
 #include <iomanip>
 #include <iostream>
 
-namespace CSTE_MATH_NAMESPACE {
+namespace VECPP_NAMESPACE {
 
 namespace sine_detail {
 

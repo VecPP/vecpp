@@ -6,11 +6,12 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 
-#ifndef CSTE_RT_H_INCLUDED
-#define CSTE_RT_H_INCLUDED
+#ifndef VECPP_SCALAR_FUNCTIONS_RT_H_INCLUDED
+#define VECPP_SCALAR_FUNCTIONS_RT_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
-#include "vecpp/cste_math/functions_ct.h"
+#include "vecpp/config.h"
+
+#include "vecpp/scalar/functions_ct.h"
 
 #include <cmath>
 
@@ -21,7 +22,7 @@
 // It's unlikely that you would use thse directly. Vecpp/cste_math/functions.h contains
 // the same functionallity with a compile-time switch for constant expression evaluation.
 
-namespace CSTE_MATH_NAMESPACE::rt {
+namespace VECPP_NAMESPACE::rt {
 // ************************** Misc Functions ************************** //
 template <typename T>
 T sign(const T& v) {
@@ -48,7 +49,7 @@ template <typename T>
 T fractional(const T& v) {
   T _ = T(0);
   
-  return modf(v, &_);
+  return std::modf(v, &_);
 }
 
 template <typename T>

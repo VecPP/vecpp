@@ -216,7 +216,7 @@ constexpr Vec3 val_len = norm(val);
 
 And if you see an error that looks like: 
 
-> call to non-constexpr function ‘float vecpp::non_cste::sqrt(float)’
+> call to non-constexpr function ‘float vecpp::non_sqrt(float)’
 
 Then you can fix it by wrapping the offending operand with `ct()`:
 

@@ -8,13 +8,15 @@
 #ifndef CSTE_MATH_ROUND_H_INCLUDED
 #define CSTE_MATH_ROUND_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-#include "vecpp/cste_math/ct/rounding/round_down.h"
+#include "vecpp/scalar/ct/rounding/round_down.h"
 
-namespace CSTE_MATH_NAMESPACE {
+#include <type_traits>
+
+namespace VECPP_NAMESPACE {
 namespace ct {
-template <typename T>
+template <typename T, typename = std::enable_if_t<std::is_arithmetic_v<T>>>
 constexpr T round(const T& v) {
   return round_down(v + T(0.5));
 }

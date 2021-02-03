@@ -8,19 +8,19 @@
 #ifndef CSTE_MATH_TRIGNOMETRY_COSINE_H_INCLUDED
 #define CSTE_MATH_TRIGNOMETRY_COSINE_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-#include "vecpp/cste_math/ct/calc/modulo.h"
-#include "vecpp/cste_math/constants.h"
-#include "vecpp/cste_math/ct/misc/inf_nan.h"
-#include "vecpp/cste_math/ct/trigonometry/bound/cosine_pi4.h"
-#include "vecpp/cste_math/ct/trigonometry/bound/sine_pi4.h"
+#include "vecpp/scalar/ct/calc/modulo.h"
+#include "vecpp/scalar/constants.h"
+#include "vecpp/scalar/ct/misc/inf_nan.h"
+#include "vecpp/scalar/ct/trigonometry/bound/cosine_pi4.h"
+#include "vecpp/scalar/ct/trigonometry/bound/sine_pi4.h"
 
 #include <iomanip>
 #include <iostream>
 #include <limits>
 
-namespace CSTE_MATH_NAMESPACE {
+namespace VECPP_NAMESPACE {
 namespace ct {
 //
 template <typename T>

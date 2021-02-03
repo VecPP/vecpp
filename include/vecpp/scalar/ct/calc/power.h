@@ -5,17 +5,16 @@
 //  (See accompanying file LICENSE or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef CSTE_MATH_CALC_POW_H_INCLUDED
-#define CSTE_MATH_CALC_POW_H_INCLUDED
+#ifndef VECPP_SCALAR_CT_CALC_POW_H_INCLUDED
+#define VECPP_SCALAR_CT_CALC_POW_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
 #include <cassert>
 #include <cmath>
 #include <limits>
 
-namespace CSTE_MATH_NAMESPACE {
-namespace ct {
+namespace VECPP_NAMESPACE::ct {
 
 // Raises v by the operand p
 template <typename T, typename U>
@@ -31,7 +30,6 @@ constexpr T power(const T& v, const U& p) {
     return v;
   }
 }
-}  // namespace ct
 }  // namespace CSTE_MATH_NAMESPACE
 
 #endif

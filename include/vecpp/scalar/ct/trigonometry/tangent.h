@@ -8,13 +8,13 @@
 #ifndef CSTE_MATH_TRIGNOMETRY_TANGENT_H_INCLUDED
 #define CSTE_MATH_TRIGNOMETRY_TANGENT_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-#include "vecpp/cste_math/ct/trigonometry/cosine.h"
-#include "vecpp/cste_math/ct/trigonometry/sine.h"
+#include "vecpp/scalar/ct/trigonometry/cosine.h"
+#include "vecpp/scalar/ct/trigonometry/sine.h"
 
 
-namespace CSTE_MATH_NAMESPACE {
+namespace VECPP_NAMESPACE {
 namespace ct {
 //
 template <typename T>

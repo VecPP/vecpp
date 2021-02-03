@@ -21,5 +21,5 @@ SET( VECPP_TESTS
 )
 
 add_executable(vecpp_tests ${VECPP_TESTS})
-target_link_libraries(vecpp_tests  vecppdoctest_main VecPP::VecPP cste_math::cste_math)
+target_link_libraries(vecpp_tests  vecppdoctest_main VecPP::VecPP)
 add_test(vecpp_tests vecpp_tests )

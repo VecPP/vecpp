@@ -2,15 +2,18 @@
 
 #include <sstream>
 
+#include "vecpp/scalar/functions.h"
 #include "vecpp/vec/vec.h"
 #include "vecpp/vec/operations.h"
 #include "vecpp/vec/operations_per_member.h"
 
+using vecpp::absolute;
+using vecpp::square_root;
 
 template <typename V>
 constexpr bool vec_close(const V& l, const V& r) {
   for (std::size_t i = 0; i < V::length; ++i) {
-    if (cste::absolute(l[i] - r[i]) > 0.0001) {
+    if (absolute(l[i] - r[i]) > 0.0001) {
       return false;
     }
   }
@@ -346,9 +349,9 @@ TEST_CASE("norm") {
     constexpr Vec b = {1.0f, 0.0f, 0.0f, 0.0f};
     constexpr Vec c = {1.0f, -1.0f, 0.0f, 0.0f};
 
-    static_assert(cste::absolute(norm(a) - 0.0f) < 0.00001f);
-    static_assert(cste::absolute(norm(b) - 1.0f) < 0.00001f);
-    static_assert(cste::absolute(norm(c) - cste::square_root(2.0f)) < 0.00001f);
+    static_assert(absolute(norm(a) - 0.0f) < 0.00001f);
+    static_assert(absolute(norm(b) - 1.0f) < 0.00001f);
+    static_assert(absolute(norm(c) - square_root(2.0f)) < 0.00001f);
   }
 }
 
@@ -374,8 +377,8 @@ TEST_CASE("cross") {
     constexpr auto z_c_x = cross(unit_z, unit_x);
     constexpr auto y_c_z = cross(unit_y, unit_z);
 
-    static_assert(cste::absolute(norm(x_c_y - unit_z) - 0.0f) < 0.00001f);
-    static_assert(cste::absolute(norm(z_c_x - unit_y) - 0.0f) < 0.00001f);
-    static_assert(cste::absolute(norm(y_c_z - unit_x) - 0.0f) < 0.00001f);
+    static_assert(absolute(norm(x_c_y - unit_z) - 0.0f) < 0.00001f);
+    static_assert(absolute(norm(z_c_x - unit_y) - 0.0f) < 0.00001f);
+    static_assert(absolute(norm(y_c_z - unit_x) - 0.0f) < 0.00001f);
   }
 }

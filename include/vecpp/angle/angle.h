@@ -10,7 +10,8 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/cste_math/cste_math.h"
+#include "vecpp/scalar/functions.h"
+#include "vecpp/scalar/constants.h"
 
 #include <cassert>
 #include <iostream>
@@ -65,9 +66,9 @@ constexpr Angle<T>& operator+=(Angle<T>& lhs,
   // Since both lhs and rhs are in the ]-PI,PI] range, the sum is in the
   // ]-2PI-1,2PI] range, so we can make assumptions in the constraining process.
   if (val > pi<T>) {
-    val -= cste::two_pi<T>;
+    val -= two_pi<T>;
   } else if (val <= -pi<T>) {
-    val += cste::two_pi<T>;
+    val += two_pi<T>;
   }
 
   lhs = Angle<T>::from_clamped_rad(val);
@@ -91,9 +92,9 @@ constexpr Angle<T>& operator-=(Angle<T>& lhs,
   // Since both lhs and rhs are in the ]-PI,PI] range, the difference is in the
   // ]-2PI,2PI[ range, so we can make assumptions in the constraining process.
   if (val > pi<T>) {
-    val -= cste::two_pi<T>;
+    val -= two_pi<T>;
   } else if (val <= -pi<T>) {
-    val += cste::two_pi<T>;
+    val += two_pi<T>;
   }
 
   lhs = Angle<T>::from_clamped_rad(val);
@@ -192,38 +193,38 @@ constexpr Angle<T>::Angle(const T& v) : value_(v) {}
 
 template <typename T>
 constexpr Angle<T> Angle<T>::from_clamped_rad(const T& v) {
-  assert(v > -cste::pi<float> && v <= cste::pi<float>);
+  assert(v > -pi<float> && v <= pi<float>);
 
   return Angle<T>(v);
 }
 
 template <typename T>
 constexpr Angle<T> Angle<T>::from_clamped_deg(const T& v) {
-  return from_clamped_rad(v / T(180) * cste::pi<T>);
+  return from_clamped_rad(v / T(180) * pi<T>);
 }
 
 template <typename T>
 constexpr Angle<T> Angle<T>::from_rad(const T& v) {
-  T constrained = cste::modulo(v + cste::pi<T>, cste::two_pi<T>);
+  T constrained = modulo(v + pi<T>, two_pi<T>);
 
   if (constrained <= T(0)) {
-    constrained += cste::two_pi<T>;
+    constrained += two_pi<T>;
   }
 
-  constrained -= cste::pi<T>;
+  constrained -= pi<T>;
 
   return from_clamped_rad(constrained);
 }
 
 template <typename T>
 constexpr Angle<T> Angle<T>::from_deg(const T& v) {
-  return from_rad(v / T(180) * cste::pi<T>);
+  return from_rad(v / T(180) * pi<T>);
 }
 
 // CONVERSION
 template <typename T>
 constexpr T Angle<T>::as_deg() const {
-  return value_ * T(180) / cste::pi<T>;
+  return value_ * T(180) / pi<T>;
 }
 
 template <typename T>

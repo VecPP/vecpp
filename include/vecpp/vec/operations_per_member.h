@@ -10,7 +10,7 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/cste_math/cste_math.h"
+#include "vecpp/scalar/functions.h"
 #include "vecpp/vec/vec.h"
 
 #include <algorithm>
@@ -24,7 +24,7 @@ template <typename T, std::size_t l>
 constexpr Vec<T, l> absolute(const Vec<T, l>& vec) {
   Vec<T, l> result = {0};
   for (std::size_t i = 0; i < vec.length; ++i) {
-    result[i] = cste::absolute(vec[i]);
+    result[i] = absolute(vec[i]);
   }
   return result;
 }
@@ -34,7 +34,7 @@ template <typename T, std::size_t l>
 constexpr Vec<T, l> round_up(const Vec<T, l>& v) {
   Vec<T, l> result = {0};
   for (std::size_t i = 0; i < v.length; ++i) {
-    result[i] = cste::round_up(v[i]);
+    result[i] = round_up(v[i]);
   }
   return result;
 }
@@ -44,7 +44,7 @@ template <typename T, std::size_t l>
 constexpr Vec<T, l> round_down(const Vec<T, l>& v) {
   Vec<T, l> result = {0};
   for (std::size_t i = 0; i < v.length; ++i) {
-    result[i] = cste::round_down(v[i]);
+    result[i] = round_down(v[i]);
   }
   return result;
 }
@@ -54,7 +54,7 @@ template <typename T, std::size_t l>
 constexpr Vec<T, l> fractional(const Vec<T, l>& v) {
   Vec<T, l> result = {0};
   for (std::size_t i = 0; i < v.length; ++i) {
-    result[i] = cste::fractional(v[i]);
+    result[i] = fractional(v[i]);
   }
   return result;
 }
@@ -64,7 +64,7 @@ template <typename T, std::size_t l>
 constexpr Vec<T, l> round(const Vec<T, l>& v) {
   Vec<T, l> result = {0};
   for (std::size_t i = 0; i < v.length; ++i) {
-    result[i] = cste::round(v[i]);
+    result[i] = round(v[i]);
   }
   return result;
 }
@@ -74,7 +74,7 @@ template <typename T, std::size_t l>
 constexpr Vec<T, l> sign(const Vec<T, l>& v) {
   Vec<T, l> result = {0};
   for (std::size_t i = 0; i < v.length; ++i) {
-    result[i] = cste::sign(v[i]);
+    result[i] = sign(v[i]);
   }
   return result;
 }
@@ -84,7 +84,7 @@ template <typename T, std::size_t l>
 constexpr Vec<T, l> truncate(const Vec<T, l>& v) {
   Vec<T, l> result = {0};
   for (std::size_t i = 0; i < v.length; ++i) {
-    result[i] = cste::truncate(v[i]);
+    result[i] = truncate(v[i]);
   }
   return result;
 }
@@ -118,7 +118,7 @@ constexpr Vec<T, l> modulo(const Vec<T, l>& lhs,
                                 const Vec<T, l>& rhs) {
   Vec<T, l> result = {0};
   for (std::size_t i = 0; i < lhs.length; ++i) {
-    result[i] = cste::modulo(lhs[i], rhs[i]);
+    result[i] = modulo(lhs[i], rhs[i]);
   }
   return result;
 }

@@ -21,7 +21,7 @@ TEST_CASE("Simple 2x2 mat inversion") {
 }
 
 
-TEST_CASE("Simple 3x3 mat inversion", "[mat][invert]") {
+TEST_CASE("Simple 3x3 mat inversion") {
   using Mat3 = vecpp::Mat<float, 3, 3>;
 
   Mat3 m = {

@@ -8,9 +8,9 @@
 #ifndef CSTE_MATH_MISC_NAN_H_INCLUDED
 #define CSTE_MATH_MISC_NAN_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-namespace CSTE_MATH_NAMESPACE {
+namespace VECPP_NAMESPACE {
 namespace ct {
 template <typename T>
 constexpr bool is_nan(const T& v) {

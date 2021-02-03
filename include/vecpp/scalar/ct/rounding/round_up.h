@@ -8,15 +8,15 @@
 #ifndef CSTE_MATH_ROUND_UP_H_INCLUDED
 #define CSTE_MATH_ROUND_UP_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-#include "vecpp/cste_math/ct/calc/power.h"
-#include "vecpp/cste_math/ct/misc/inf_nan.h"
+#include "vecpp/scalar/ct/calc/power.h"
+#include "vecpp/scalar/ct/misc/inf_nan.h"
 
 #include <cmath>
 #include <limits>
 
-namespace CSTE_MATH_NAMESPACE {
+namespace VECPP_NAMESPACE {
 namespace ct {
 template <typename T>
 constexpr T round_up(const T& v) {

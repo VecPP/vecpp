@@ -8,13 +8,13 @@
 #ifndef CSTE_MATH_CALC_SQUARE_ROOT_H_INCLUDED
 #define CSTE_MATH_CALC_SQUARE_ROOT_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
 #include <cassert>
 #include <cmath>
 #include <limits>
 
-namespace CSTE_MATH_NAMESPACE {
+namespace VECPP_NAMESPACE {
 namespace ct {
 
 template <typename T>

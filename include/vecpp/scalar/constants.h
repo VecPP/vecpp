@@ -6,12 +6,12 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 
-#ifndef CSTE_CONSTANTS_H_INCLUDED
-#define CSTE_CONSTANTS_H_INCLUDED
+#ifndef VECPP_SCALAR_CONSTANTS_H_INCLUDED
+#define VECPP_SCALAR_CONSTANTS_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-namespace CSTE_MATH_NAMESPACE {
+namespace VECPP_NAMESPACE {
 
 // Constants are defined with enough precision for a Quadruple precision float
 // which means at least 36 decimal digits.

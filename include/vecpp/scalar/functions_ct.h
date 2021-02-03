@@ -6,14 +6,13 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 
-#ifndef CSTE_CT_H_INCLUDED
-#define CSTE_CT_H_INCLUDED
+#ifndef VECPP_SCALAR_FUNCTIONS_CT_H_INCLUDED
+#define VECPP_SCALAR_FUNCTIONS_CT_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-
-namespace CSTE_MATH_NAMESPACE {
-namespace ct {
+/*
+namespace VECPP_NAMESPACE::ct {
 // ************************** Misc Functions ************************** //
 template <typename T>
 constexpr T sign(const T& v);
@@ -53,27 +52,26 @@ template <typename T, typename U>
 constexpr T power(const T& v, const U& p);
 template <typename T>
 constexpr T square_root(const T& v);
-}  // namespace ct
-}  // namespace CSTE_MATH_NAMESPACE::ct
+}  // namespace VECPP_NAMESPACE::ct
 
+*/
+#include "vecpp/scalar/ct/calc/absolute.h"
+#include "vecpp/scalar/ct/calc/exponential.h"
+#include "vecpp/scalar/ct/calc/modulo.h"
+#include "vecpp/scalar/ct/calc/power.h"
+#include "vecpp/scalar/ct/calc/square_root.h"
 
-#include "vecpp/cste_math/ct/calc/absolute.h"
-#include "vecpp/cste_math/ct/calc/exponential.h"
-#include "vecpp/cste_math/ct/calc/modulo.h"
-#include "vecpp/cste_math/ct/calc/power.h"
-#include "vecpp/cste_math/ct/calc/square_root.h"
+#include "vecpp/scalar/ct/misc/inf_nan.h"
+#include "vecpp/scalar/ct/misc/sign.h"
 
-#include "vecpp/cste_math/ct/misc/inf_nan.h"
-#include "vecpp/cste_math/ct/misc/sign.h"
+#include "vecpp/scalar/ct/rounding/fractional.h"
+#include "vecpp/scalar/ct/rounding/round.h"
+#include "vecpp/scalar/ct/rounding/round_down.h"
+#include "vecpp/scalar/ct/rounding/round_up.h"
+#include "vecpp/scalar/ct/rounding/truncate.h"
 
-#include "vecpp/cste_math/ct/rounding/fractional.h"
-#include "vecpp/cste_math/ct/rounding/round.h"
-#include "vecpp/cste_math/ct/rounding/round_down.h"
-#include "vecpp/cste_math/ct/rounding/round_up.h"
-#include "vecpp/cste_math/ct/rounding/truncate.h"
-
-#include "vecpp/cste_math/ct/trigonometry/cosine.h"
-#include "vecpp/cste_math/ct/trigonometry/sine.h"
-#include "vecpp/cste_math/ct/trigonometry/tangent.h"
+#include "vecpp/scalar/ct/trigonometry/cosine.h"
+#include "vecpp/scalar/ct/trigonometry/sine.h"
+#include "vecpp/scalar/ct/trigonometry/tangent.h"
 
 #endif

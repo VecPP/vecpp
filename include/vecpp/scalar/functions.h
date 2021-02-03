@@ -6,15 +6,15 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 
-#ifndef CSTE_FUNCTIONS_H_INCLUDED
-#define CSTE_FUNCTIONS_H_INCLUDED
+#ifndef VECPP_SCALAR_FUNCTIONS_H_INCLUDED
+#define VECPP_SCALAR_FUNCTIONS_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-#include "vecpp/cste_math/functions_ct.h"
-#include "vecpp/cste_math/functions_rt.h"
+#include "vecpp/scalar/functions_ct.h"
+#include "vecpp/scalar/functions_rt.h"
 
-namespace CSTE_MATH_NAMESPACE {
+namespace VECPP_NAMESPACE {
 
 // ************************** Misc Functions ************************** //
 template <typename T>

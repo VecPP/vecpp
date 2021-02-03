@@ -10,7 +10,7 @@
 
 #include "vecpp/config.h"
 
-#include "vecpp/cste_math/cste_math.h"
+#include "vecpp/scalar/functions.h"
 #include "vecpp/vec/vec.h"
 
 #include <algorithm>
@@ -40,7 +40,7 @@ constexpr T dot(const Vec<T, l>& lhs, const Vec<T, l>& rhs) {
 // Vector legnth
 template <typename T, std::size_t l>
 constexpr T norm(const Vec<T, l>& v) {
-  return cste::square_root(dot(v, v));
+  return square_root(dot(v, v));
 }
 
 // Normalize

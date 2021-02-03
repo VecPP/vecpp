@@ -8,10 +8,10 @@
 #ifndef CSTE_MATH_MISC_SIGN_H_INCLUDED
 #define CSTE_MATH_MISC_SIGN_H_INCLUDED
 
-#include "vecpp/cste_math/config.h"
+#include "vecpp/config.h"
 
-namespace CSTE_MATH_NAMESPACE {
-namespace ct{
+namespace VECPP_NAMESPACE {
+namespace ct {
 template <typename T>
 constexpr T sign(const T& v) {
   // https://stackoverflow.com/a/4609795/4442671
